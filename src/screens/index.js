@@ -1,7 +1,7 @@
 export { default as ActivityDetail } from "./ActivityDetail";
 export { default as Club } from "./Club";
 export { default as Comments } from "./Comments";
-export { default as CreateChallenge } from "./CreateChallenge";
+export { default as CreateChallenge } from "./GroupClub";
 export { default as Feed } from "./Feed";
 export { default as Groups } from "./Groups";
 export { default as Login } from "./Login";

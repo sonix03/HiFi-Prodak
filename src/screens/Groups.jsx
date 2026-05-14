@@ -1,87 +1,190 @@
-import { Search, Settings, Trophy, Users } from "lucide-react";
-import Avatar from "../components/Avatar";
+import {
+  BriefcaseBusiness,
+  FlaskConical,
+  Palette,
+  Search,
+  Settings,
+  Trophy,
+  Watch,
+} from "lucide-react";
 import Nav from "../components/Nav";
 import Phone from "../components/Phone";
-import Pill from "../components/Pill";
+
+const categories = [
+  { name: "Work", icon: BriefcaseBusiness },
+  { name: "Research", icon: FlaskConical },
+  { name: "Arts", icon: Palette },
+  { name: "Laboratory", icon: FlaskConical },
+];
 
 const challenges = [
-  ["Fun Run 10K", "124 runners", "64%"],
-  ["Weekend Cycling", "86 riders", "42%"],
-  ["Gym Consistency", "52 athletes", "78%"],
+  {
+    title: "Overtime Challenge",
+    desc: "Complete 5 hours of overtime",
+    date: "Apr 17 to Apr 30, 2026",
+  },
+  {
+    title: "Overtime Challenge",
+    desc: "Complete 5 hours of overtime",
+    date: "Apr 17 to Apr 30, 2026",
+  },
+  {
+    title: "Overtime Challenge",
+    desc: "Complete 5 hours of overtime",
+    date: "Apr 17 to Apr 30, 2026",
+  },
+  {
+    title: "Overtime Challenge",
+    desc: "Complete 5 hours of overtime",
+    date: "Apr 17 to Apr 30, 2026",
+  },
 ];
 
 export default function Groups() {
   return (
-    <Phone title="Groups">
-      <div className="h-full bg-[#FFE8BE]/45 pb-[112px] text-left">
-        <div className="px-6 pt-10">
+    <Phone title="Challenge">
+      <div className="relative h-full overflow-hidden bg-[#F6FAFD] pb-[96px] text-left">
+        <div className="px-7 pt-8">
           <div className="flex items-center justify-between">
-            <button className="grid h-11 w-11 place-items-center rounded-full border border-[#427AB5]/20 bg-white text-[#427AB5]">
-              <Search size={17} />
+            <button className="grid h-10 w-10 place-items-center rounded-full text-[#050505]">
+              <Search size={19} strokeWidth={2.2} />
             </button>
-            <h2 className="text-[1.5rem] font-black tracking-[-0.02em] text-[#17324D]">Clubs</h2>
-            <button className="grid h-11 w-11 place-items-center rounded-full border border-[#427AB5]/20 bg-white text-[#427AB5]">
-              <Settings size={17} />
+
+            <h2 className="text-[17px] font-black text-[#050505]">
+              Groups
+            </h2>
+
+            <button className="grid h-10 w-10 place-items-center rounded-full text-[#050505]">
+              <Settings size={18} strokeWidth={2.2} />
             </button>
           </div>
+        </div>
 
-          <div className="mt-5 flex gap-2">
-            <Pill active>Challenge</Pill>
-            <Pill>Jogging</Pill>
-            <Pill>Cycling</Pill>
+        <div className="mt-8 border-b border-[#17324D]/15">
+          <div className="grid grid-cols-2 px-7">
+            <button className="border-b-2 border-[#050505] pb-3 text-center text-[11px] font-black text-[#050505]">
+              Challenges
+            </button>
+
+            <button className="pb-3 text-center text-[11px] font-black text-[#050505]/75">
+              Groups
+            </button>
           </div>
+        </div>
 
-          <section className="mt-5 rounded-[28px] border border-[#427AB5]/20 bg-white p-5 shadow-[0_16px_34px_rgba(64,106,175,0.08)]">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#5D6F8B]">
-                  Active challenge
-                </p>
-                <h3 className="mt-2 text-[1.35rem] font-black tracking-[-0.02em] text-[#17324D]">
-                  Compete with friends
-                </h3>
+        <div className="border-b border-[#17324D]/15 px-7 py-3">
+          <div className="flex gap-2 overflow-hidden">
+            {categories.map((category) => {
+              const Icon = category.icon;
+
+              return (
+                <button
+                  key={category.name}
+                  className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#050505] bg-white px-3 py-1.5 text-[9px] font-bold text-[#050505]"
+                >
+                  <Icon size={11} strokeWidth={2.1} />
+                  {category.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="h-[calc(100%-182px)] overflow-y-auto">
+          <section className="border-b border-[#17324D]/15 px-7 py-6">
+            <div className="flex items-start gap-4">
+              <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[#050505] bg-[#427AB5]/10 text-[#050505]">
+                <Watch size={25} strokeWidth={1.8} />
               </div>
-              <div className="grid h-11 w-11 place-items-center rounded-full bg-[#FFE8BE] text-[#406AAF]">
-                <Trophy size={19} />
+
+              <div className="min-w-0 flex-1">
+                <h3 className="text-[14px] font-black leading-tight text-[#050505]">
+                  Now It&apos;s Your Time
+                </h3>
+
+                <div className="mt-1 flex items-center gap-1.5">
+                  <Trophy size={12} className="text-[#050505]" />
+
+                  <p className="text-[10px] font-semibold text-[#050505]/80">
+                    Complete 5 hours of overtime
+                  </p>
+                </div>
+
+                <p className="mt-1 text-[9px] font-semibold text-[#050505]/65">
+                  Apr 17 to Apr 30, 2026
+                </p>
               </div>
             </div>
 
-            <div className="mt-5 space-y-4">
-              {challenges.map(([challenge, members, progress]) => (
-                <div key={challenge} className="border-t border-[#427AB5]/20 pt-4 first:border-t-0 first:pt-0">
-                  <div className="flex items-center gap-3">
-                    <Avatar initials={challenge.slice(0, 2).toUpperCase()} size="sm" tone="cream" />
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-[13px] font-black text-[#17324D]">
-                        {challenge}
-                      </p>
-                      <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#5D6F8B]">
-                        {members}
-                      </p>
-                    </div>
-                    <button className="rounded-full bg-[#427AB5] px-3.5 py-2 text-[10px] font-black uppercase tracking-[0.14em] text-white">
-                      Join
-                    </button>
+            <button className="mt-5 h-8 w-full rounded-full border border-[#050505] bg-[#D8E1EB] text-[11px] font-black text-[#050505]">
+              Join
+            </button>
+          </section>
+
+          <section className="border-b border-[#17324D]/15 px-7 py-6">
+            <h3 className="text-[12px] font-black text-[#050505]">
+              Active Challenge
+            </h3>
+
+            <div className="mt-5 flex items-start gap-4">
+              <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[#050505] bg-[#427AB5]/10 text-[#050505]">
+                <Watch size={25} strokeWidth={1.8} />
+              </div>
+
+              <div>
+                <p className="text-[11px] font-black text-[#050505]">
+                  Overtime
+                </p>
+
+                <p className="mt-1 text-[10px] font-semibold text-[#050505]/75">
+                  Challenge
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className="px-7 py-6">
+            <h3 className="text-[12px] font-black text-[#050505]">
+              Recommended For You
+            </h3>
+
+            <div className="mt-5 grid grid-cols-2 gap-5">
+              {challenges.map((challenge, index) => (
+                <article
+                  key={index}
+                  className="rounded-[28px] border border-[#427AB5]/20 bg-[#D8E1EB] p-4 shadow-[0_14px_30px_rgba(64,106,175,0.1)]"
+                >
+                  <div className="grid h-10 w-10 place-items-center rounded-full border border-[#050505] bg-[#F6FAFD] text-[#050505]">
+                    <Watch size={20} strokeWidth={1.9} />
                   </div>
-                  <div className="mt-3 h-1.5 rounded-full bg-[#FFE8BE]">
-                    <div
-                      className="h-1.5 rounded-full bg-[#F7DD7D]"
-                      style={{ width: progress }}
-                    />
-                  </div>
-                </div>
+
+                  <h4 className="mt-5 text-[12px] font-black leading-tight text-[#050505]">
+                    {challenge.title}
+                  </h4>
+
+                  <Trophy
+                    size={14}
+                    strokeWidth={2.1}
+                    className="mt-2 text-[#050505]"
+                  />
+
+                  <p className="mt-5 text-[9px] font-semibold leading-4 text-[#050505]/80">
+                    {challenge.desc}
+                  </p>
+
+                  <p className="mt-1 text-[8.5px] font-semibold leading-4 text-[#050505]/65">
+                    {challenge.date}
+                  </p>
+
+                  <button className="mt-5 h-7 w-full rounded-full border border-[#050505] bg-[#F6FAFD] text-[10px] font-black text-[#050505]">
+                    Join
+                  </button>
+                </article>
               ))}
             </div>
           </section>
-
-          <section className="mt-5 rounded-[24px] bg-[#406AAF] p-5 text-white">
-            <Users size={18} className="text-[#F7DD7D]" />
-            <p className="mt-3 text-[1.05rem] font-black tracking-[-0.01em]">Create your own club</p>
-            <p className="mt-2 text-[13px] leading-6 text-white/70">
-              Build a route board and keep everyone moving together.
-            </p>
-          </section>
         </div>
+
         <Nav active="groups" />
       </div>
     </Phone>
