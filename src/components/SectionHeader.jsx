@@ -5,7 +5,7 @@ export default function SectionHeader({ title, action, meta }) {
         <h2 className="section-title">{title}</h2>
         {meta ? <p className="meta mt-1">{meta}</p> : null}
       </div>
-      {action ? <button className="text-xs font-extrabold text-[var(--primary)]">{action}</button> : null}
+      {action ? <button className="text-xs font-semibold text-[var(--primary)]">{action}</button> : null}
     </div>
   );
 }

@@ -1,10 +1,10 @@
-import { Edit3, Lock, Share2 } from "lucide-react";
+import ActivityHeader from "../components/ActivityHeader";
 import ActivityMap from "../components/ActivityMap";
 import Avatar from "../components/Avatar";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import CommentItem from "../components/CommentItem";
-import Header from "../components/Header";
+import Icon from "../components/Icon";
 import MetricCard from "../components/MetricCard";
 import Pill from "../components/Pill";
 import SectionHeader from "../components/SectionHeader";
@@ -15,12 +15,12 @@ export default function ActivityDetail({ onNavigate }) {
 
   return (
     <main className="screen screen-pad">
-      <Header title="Activity" onBack={() => onNavigate?.("feed")} right={Share2} />
+      <ActivityHeader title="Activity" onBack={() => onNavigate?.("feed")} />
       <Card>
         <div className="row">
           <Avatar user={activity.user} />
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-extrabold">{activity.user.name}</p>
+            <p className="text-sm font-semibold">{activity.user.name}</p>
             <p className="meta">{activity.time} • {activity.category}</p>
           </div>
           <Pill tone="success">{activity.privacy}</Pill>
@@ -43,7 +43,7 @@ export default function ActivityDetail({ onNavigate }) {
       <section className="mt-4 card card-pad">
         <SectionHeader title="Proof signals" />
         <div className="mt-4 stack">
-          {deviceProofs.map((proof) => <div className="between muted-card" key={proof.label}><div className="row"><proof.icon size={18} className="text-[var(--blue)]" /><span className="text-sm font-bold">{proof.label}</span></div><span className="text-sm font-extrabold">{proof.value}</span></div>)}
+          {deviceProofs.map((proof) => <div className="between muted-card" key={proof.label}><div className="row"><Icon name={proof.icon} size="sm" className="text-[var(--blue)]" /><span className="text-sm font-medium">{proof.label}</span></div><span className="text-sm font-semibold">{proof.value}</span></div>)}
         </div>
       </section>
 
@@ -53,8 +53,8 @@ export default function ActivityDetail({ onNavigate }) {
       </section>
 
       <div className="mt-5 grid-2">
-        <Button variant="outline" icon={Edit3} onClick={() => onNavigate?.("editActivity")}>Edit</Button>
-        <Button icon={Lock} onClick={() => onNavigate?.("share")}>Share</Button>
+        <Button variant="outline" icon="edit" onClick={() => onNavigate?.("editActivity")}>Edit</Button>
+        <Button icon="lock" onClick={() => onNavigate?.("share")}>Share</Button>
       </div>
     </main>
   );

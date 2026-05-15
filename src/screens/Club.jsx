@@ -1,9 +1,9 @@
-import { Globe2, UserCheck, Users } from "lucide-react";
 import ActivityCard from "../components/ActivityCard";
 import Button from "../components/Button";
-import Header from "../components/Header";
+import Icon from "../components/Icon";
 import MetricCard from "../components/MetricCard";
 import Pill from "../components/Pill";
+import ScreenHeader from "../components/ScreenHeader";
 import SectionHeader from "../components/SectionHeader";
 import { activities, clubs } from "../constants/data";
 
@@ -12,10 +12,10 @@ export default function Club({ onNavigate }) {
 
   return (
     <main className="screen screen-pad">
-      <Header title="Club detail" onBack={() => onNavigate?.("groups")} right={Globe2} />
+      <ScreenHeader title="Club detail" onBack={() => onNavigate?.("groups")} action={{ icon: "more", label: "Club actions" }} secondaryAction={{ icon: "share", label: "Share club" }} />
       <section className="card card-pad">
         <div className="between">
-          <span className="grid h-16 w-16 place-items-center rounded-2xl bg-[var(--primary)] text-white"><Users size={28} /></span>
+          <span className="text-[var(--text)]"><Icon name="users" size="xl" /></span>
           <Pill tone="success">Joined</Pill>
         </div>
         <h1 className="mt-5 title">{club.name}</h1>
@@ -25,7 +25,7 @@ export default function Club({ onNavigate }) {
           <div><p className="metric-sm">#2</p><p className="meta">City</p></div>
           <div><p className="metric-sm">74%</p><p className="meta">Goal</p></div>
         </div>
-        <Button className="mt-5 w-full" icon={UserCheck}>Joined club</Button>
+        <Button className="mt-5 w-full" icon="userCheck">Joined club</Button>
       </section>
       <div className="mt-5 grid-2">
         <MetricCard label="Weekly goal" value="240h" sub="Verified focus" tone="orange" progress={74} />

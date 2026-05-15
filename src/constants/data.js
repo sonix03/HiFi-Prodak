@@ -1,18 +1,3 @@
-import {
-  BadgeCheck,
-  BookOpen,
-  Brain,
-  BriefcaseBusiness,
-  Coffee,
-  Flame,
-  Globe2,
-  Laptop,
-  Lock,
-  MessageCircle,
-  Trophy,
-  Users,
-} from "lucide-react";
-
 export const users = [
   { id: "u1", name: "Mika Ananda", handle: "@mika", initials: "MA", role: "Product designer", streak: 18 },
   { id: "u2", name: "Rafi Wirawan", handle: "@rafi", initials: "RW", role: "Founder", streak: 31 },
@@ -81,10 +66,10 @@ export const activities = [
 ];
 
 export const sessions = [
-  { label: "Deep Work", icon: Brain, active: true, description: "Long uninterrupted output" },
-  { label: "Study", icon: BookOpen, active: false, description: "Reading, course, practice" },
-  { label: "Admin", icon: BriefcaseBusiness, active: false, description: "Operational tasks" },
-  { label: "Recovery", icon: Coffee, active: false, description: "Planning and reset" },
+  { label: "Deep Work", icon: "target", active: true, description: "Long uninterrupted output" },
+  { label: "Study", icon: "activity", active: false, description: "Reading, course, practice" },
+  { label: "Admin", icon: "list", active: false, description: "Operational tasks" },
+  { label: "Recovery", icon: "timer", active: false, description: "Planning and reset" },
 ];
 
 export const comments = [
@@ -100,16 +85,16 @@ export const clubs = [
 ];
 
 export const challenges = [
-  { title: "May Focus 50K", progress: 72, reward: "Gold badge", icon: Trophy },
-  { title: "7-Day Morning Streak", progress: 86, reward: "Streak flame", icon: Flame },
-  { title: "Proof Verified Week", progress: 55, reward: "Verified mark", icon: BadgeCheck },
+  { title: "May Focus 50K", progress: 72, reward: "Gold badge", icon: "trophy" },
+  { title: "7-Day Morning Streak", progress: 86, reward: "Streak flame", icon: "fire" },
+  { title: "Proof Verified Week", progress: 55, reward: "Verified mark", icon: "proof" },
 ];
 
 export const notifications = [
-  { id: "n1", type: "kudos", icon: Flame, title: "Rafi gave kudos", body: "On Shipped the onboarding prototype", time: "3m" },
-  { id: "n2", type: "comment", icon: MessageCircle, title: "Naya commented", body: "This is the kind of morning block I need.", time: "18m" },
-  { id: "n3", type: "club", icon: Users, title: "Deep Work Jakarta moved up", body: "Your club is now #2 in the city leaderboard.", time: "1h" },
-  { id: "n4", type: "achievement", icon: Trophy, title: "18-day streak", body: "You kept your productivity identity alive.", time: "Today" },
+  { id: "n1", type: "kudos", icon: "fire", title: "Rafi gave kudos", body: "On Shipped the onboarding prototype", time: "3m" },
+  { id: "n2", type: "comment", icon: "comment", title: "Naya commented", body: "This is the kind of morning block I need.", time: "18m" },
+  { id: "n3", type: "club", icon: "users", title: "Deep Work Jakarta moved up", body: "Your club is now #2 in the city leaderboard.", time: "1h" },
+  { id: "n4", type: "achievement", icon: "trophy", title: "18-day streak", body: "You kept your productivity identity alive.", time: "Today" },
 ];
 
 export const weeklyStats = [
@@ -123,9 +108,9 @@ export const weeklyStats = [
 ];
 
 export const proofStatuses = [
-  { label: "Verified proof", tone: "success", icon: BadgeCheck },
-  { label: "Map context", tone: "blue", icon: Globe2 },
-  { label: "Private proof", tone: "neutral", icon: Lock },
+  { label: "Verified proof", tone: "success", icon: "proof" },
+  { label: "Map context", tone: "blue", icon: "globe" },
+  { label: "Private proof", tone: "neutral", icon: "lock" },
 ];
 
 export const privacyStatuses = ["Public", "Followers", "Club", "Private"];
@@ -145,7 +130,7 @@ export const leaderboard = [
 ];
 
 export const deviceProofs = [
-  { label: "Laptop activity", value: "2h 18m", icon: Laptop },
-  { label: "Distraction blocks", value: "17", icon: Lock },
-  { label: "Output events", value: "42", icon: BadgeCheck },
+  { label: "Laptop activity", value: "2h 18m", icon: "laptop" },
+  { label: "Distraction blocks", value: "17", icon: "lock" },
+  { label: "Output events", value: "42", icon: "proof" },
 ];

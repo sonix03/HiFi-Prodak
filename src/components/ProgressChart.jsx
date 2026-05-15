@@ -9,7 +9,7 @@ export default function ProgressChart({ data = [] }) {
             <div className="flex h-28 w-full items-end rounded-full bg-[var(--surface-muted)]">
               <div className="w-full rounded-full bg-[var(--primary)]" style={{ height: `${Math.max((item.hours / max) * 100, 12)}%` }} />
             </div>
-            <span className="text-[11px] font-extrabold text-[var(--text-secondary)]">{item.day}</span>
+            <span className="text-[11px] font-medium text-[var(--text-secondary)]">{item.day}</span>
           </div>
         ))}
       </div>

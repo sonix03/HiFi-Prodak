@@ -1,7 +1,6 @@
-import { Plus } from "lucide-react";
 import ActivityCard from "../components/ActivityCard";
+import AppHeader from "../components/AppHeader";
 import Button from "../components/Button";
-import Header from "../components/Header";
 import MetricCard from "../components/MetricCard";
 import Pill from "../components/Pill";
 import SectionHeader from "../components/SectionHeader";
@@ -10,19 +9,19 @@ import { activities, challenges } from "../constants/data";
 export default function Feed({ onNavigate }) {
   return (
     <main className="screen screen-pad">
-      <Header title="Prodak" eyebrow="Home feed" right="bell" />
-      <section className="card primary-gradient card-pad text-white">
+      <AppHeader title="Home feed" eyebrow="Today" right="notification" secondaryAction={{ icon: "search", label: "Search" }} />
+      <section className="card primary-gradient card-pad">
         <div className="between">
           <div>
-            <p className="text-sm font-bold opacity-85">Today’s training load</p>
-            <p className="mt-2 text-4xl font-black">3h 10m</p>
+            <p className="text-sm font-semibold text-[var(--blue)]">Today’s training load</p>
+            <p className="mt-2 text-[26px] font-bold">3h 10m</p>
           </div>
-          <Button variant="secondary" size="sm" icon={Plus} onClick={() => onNavigate?.("record")}>Record</Button>
+          <Button variant="secondary" size="sm" icon="record" onClick={() => onNavigate?.("record")}>Record</Button>
         </div>
         <div className="mt-5 grid-3">
-          <div><p className="text-xl font-black">91</p><p className="text-xs font-bold opacity-75">Avg score</p></div>
-          <div><p className="text-xl font-black">18d</p><p className="text-xs font-bold opacity-75">Streak</p></div>
-          <div><p className="text-xl font-black">#4</p><p className="text-xs font-bold opacity-75">Club rank</p></div>
+          <div><p className="text-lg font-semibold text-[var(--blue)]">91</p><p className="text-[11px] font-medium text-[var(--text-secondary)]">Avg score</p></div>
+          <div><p className="text-lg font-semibold">18d</p><p className="text-[11px] font-medium text-[var(--text-secondary)]">Streak</p></div>
+          <div><p className="text-lg font-semibold">#4</p><p className="text-[11px] font-medium text-[var(--text-secondary)]">Club rank</p></div>
         </div>
       </section>
 

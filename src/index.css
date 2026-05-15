@@ -2,33 +2,34 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #fc5a1f;
-  --primary-dark: #c2410c;
-  --primary-soft: #fff1e8;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-soft: #eff6ff;
+  --black: #0a0a0a;
   --blue: #2563eb;
-  --blue-soft: #dbeafe;
+  --blue-soft: #eff6ff;
   --yellow: #facc15;
-  --yellow-soft: #fef3c7;
-  --success: #22c55e;
+  --yellow-soft: #fef9c3;
+  --success: #16a34a;
   --warning: #f59e0b;
-  --danger: #ef4444;
+  --danger: #dc2626;
   --bg: #f7f7f4;
   --surface: #ffffff;
-  --surface-muted: #f3f4f6;
-  --text: #111827;
-  --text-secondary: #6b7280;
-  --text-tertiary: #9ca3af;
-  --border: #e5e7eb;
-  --divider: #f1f5f9;
+  --surface-muted: #f5f5f5;
+  --text: #0a0a0a;
+  --text-secondary: #525252;
+  --text-tertiary: #8a8a8a;
+  --border: #e5e5e5;
+  --divider: #eeeeee;
   --heading: "Plus Jakarta Sans", Manrope, Inter, system-ui, sans-serif;
   --ui: "Plus Jakarta Sans", Inter, system-ui, sans-serif;
-  --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.06);
-  --shadow-floating: 0 12px 32px rgba(15, 23, 42, 0.12);
-  --shadow-button: 0 6px 16px rgba(252, 90, 31, 0.2);
+  --shadow-card: 0 8px 24px rgba(10, 10, 10, 0.04);
+  --shadow-floating: 0 12px 32px rgba(10, 10, 10, 0.1);
+  --shadow-button: 0 6px 16px rgba(10, 10, 10, 0.12);
   color: var(--text);
   background: #e9e9e4;
   font-family: var(--ui);
-  font-size: 16px;
+  font-size: 15px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -47,9 +48,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100svh;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(252, 90, 31, 0.12), transparent 26rem),
-    linear-gradient(180deg, #fafaf8 0%, #e6e6df 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #ededE8 100%);
 }
 
 button,
@@ -75,5 +74,5 @@ p {
 }
 
 ::selection {
-  background: rgba(252, 90, 31, 0.2);
+  background: rgba(37, 99, 235, 0.18);
 }

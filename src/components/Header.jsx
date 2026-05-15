@@ -1,28 +1,67 @@
-import { ArrowLeft, Bell, MoreHorizontal, Search, Settings, Share2 } from "lucide-react";
+import Icon from "./Icon";
 
-const iconMap = { bell: Bell, search: Search, settings: Settings, share: Share2, more: MoreHorizontal };
-
-export default function Header({ title, eyebrow, onBack, right = "bell", transparent = false }) {
-  const RightIcon = typeof right === "string" ? iconMap[right] : right;
+function HeaderAction({ icon, label, onClick }) {
+  if (!icon) return null;
 
   return (
-    <header className={`between ${transparent ? "" : "mb-5"}`}>
-      <div className="row min-w-0">
-        {onBack ? (
-          <button className="icon-btn" onClick={onBack} aria-label="Back">
-            <ArrowLeft size={19} />
+    <button className="header-action" onClick={onClick} aria-label={label || icon}>
+      <Icon name={icon} size={22} />
+    </button>
+  );
+}
+
+export default function Header({
+  title,
+  eyebrow,
+  mode = "main",
+  onBack,
+  primaryAction,
+  secondaryAction,
+  right = "notification",
+  status,
+}) {
+  const isDetail = mode === "detail" || mode === "form" || Boolean(onBack);
+  const isFocused = mode === "record";
+
+  return (
+    <header className={`app-header app-header-${mode}`}>
+      <div className="header-main">
+        {isDetail ? (
+          <button className="header-action" onClick={onBack} aria-label="Back">
+            <Icon name="arrowLeft" size={22} />
           </button>
-        ) : null}
-        <div className="min-w-0">
-          {eyebrow ? <p className="meta mb-1 uppercase tracking-[0.14em] text-[var(--primary)]">{eyebrow}</p> : null}
-          <h1 className="title truncate">{title}</h1>
+        ) : isFocused ? null : (
+          <div className="prodak-mark" aria-label="Prodak">
+            <span />
+            <strong>Prodak</strong>
+          </div>
+        )}
+
+        <div className="header-title-block">
+          {eyebrow ? <p>{eyebrow}</p> : null}
+          <h1>{title}</h1>
+          {status ? <span>{status}</span> : null}
         </div>
       </div>
-      {RightIcon ? (
-        <button className="icon-btn" aria-label="Screen action">
-          <RightIcon size={19} />
-        </button>
-      ) : null}
+
+      <div className="header-actions">
+        {secondaryAction ? <HeaderAction {...secondaryAction} /> : null}
+        {primaryAction ? (
+          typeof primaryAction === "string" ? (
+            <button className="header-text-action">{primaryAction}</button>
+          ) : primaryAction.text ? (
+            <button className="header-text-action" onClick={primaryAction.onClick}>
+              {primaryAction.text}
+            </button>
+          ) : (
+            <HeaderAction {...primaryAction} />
+          )
+        ) : (
+          <HeaderAction icon={right} label={right} />
+        )}
+      </div>
     </header>
   );
 }
+
+export { HeaderAction };

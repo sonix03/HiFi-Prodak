@@ -1,4 +1,4 @@
-import { BadgeCheck, MapPin } from "lucide-react";
+import Icon from "./Icon";
 
 export default function ActivityMap({ label = "Focus route", proof = "Proof verified", height = 180 }) {
   return (
@@ -8,15 +8,15 @@ export default function ActivityMap({ label = "Focus route", proof = "Proof veri
         <path d="M22 132 C82 72 118 118 158 62 C194 10 246 36 266 88 C284 132 316 106 328 42" fill="none" stroke="rgba(255,255,255,.86)" strokeWidth="18" strokeLinecap="round" />
         <path d="M22 132 C82 72 118 118 158 62 C194 10 246 36 266 88 C284 132 316 106 328 42" fill="none" stroke="#2563EB" strokeWidth="6" strokeLinecap="round" />
       </svg>
-      <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-extrabold text-[var(--blue)]">{label}</div>
+      <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-semibold text-[var(--blue)]">{label}</div>
       <div className="absolute bottom-4 left-4 right-4 between rounded-2xl bg-white/90 p-3 backdrop-blur">
         <div>
-          <p className="text-sm font-extrabold">Productivity context</p>
+          <p className="text-sm font-semibold">Productivity context</p>
           <p className="meta">{proof}</p>
         </div>
-        <span className="grid h-10 w-10 place-items-center rounded-full bg-[var(--blue)] text-white"><MapPin size={17} /></span>
+        <span className="text-[var(--blue)]"><Icon name="route" size="md" /></span>
       </div>
-      <BadgeCheck className="absolute right-4 top-4 text-[var(--blue)]" size={22} />
+      <Icon name="proof" size={22} className="absolute right-4 top-4 text-[var(--blue)]" />
     </div>
   );
 }

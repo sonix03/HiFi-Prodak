@@ -1,6 +1,5 @@
-import { CalendarRange, Filter, Route } from "lucide-react";
 import ActivityCard from "../components/ActivityCard";
-import Header from "../components/Header";
+import AppHeader from "../components/AppHeader";
 import MetricCard from "../components/MetricCard";
 import Pill from "../components/Pill";
 import SectionHeader from "../components/SectionHeader";
@@ -9,10 +8,10 @@ import { activities } from "../constants/data";
 export default function Activities({ onNavigate }) {
   return (
     <main className="screen screen-pad">
-      <Header title="Activities" eyebrow="History" right={Filter} />
+      <AppHeader title="Activities" eyebrow="History" right="filter" secondaryAction={{ icon: "search", label: "Search activities" }} />
       <div className="grid-2">
-        <MetricCard label="May focus" value="42h" sub="+14% vs Apr" icon={CalendarRange} tone="orange" />
-        <MetricCard label="Output eq" value="118 km" sub="Productivity distance" icon={Route} tone="blue" />
+        <MetricCard label="May focus" value="42h" sub="+14% vs Apr" icon="calendar" tone="neutral" />
+        <MetricCard label="Output eq" value="118 km" sub="Productivity distance" icon="route" tone="blue" />
       </div>
       <div className="mt-5 tab-row">
         {["All", "Deep Work", "Study", "Club", "Proof"].map((tab, index) => <Pill key={tab} active={index === 0}>{tab}</Pill>)}

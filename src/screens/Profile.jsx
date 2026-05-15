@@ -1,8 +1,7 @@
-import { Settings, Share2 } from "lucide-react";
 import Avatar from "../components/Avatar";
 import Button from "../components/Button";
-import Header from "../components/Header";
 import MetricCard from "../components/MetricCard";
+import ProfileHeader from "../components/ProfileHeader";
 import SectionHeader from "../components/SectionHeader";
 import { activities, users } from "../constants/data";
 
@@ -11,7 +10,7 @@ export default function Profile({ onNavigate }) {
 
   return (
     <main className="screen screen-pad">
-      <Header title="Profile" eyebrow="Identity" right={Settings} />
+      <ProfileHeader user={user} />
       <section className="card card-pad text-center">
         <Avatar user={user} size="xl" />
         <h1 className="mt-4 title">{user.name}</h1>
@@ -22,7 +21,7 @@ export default function Profile({ onNavigate }) {
           <div><p className="metric-sm">8.7k</p><p className="meta">Kudos</p></div>
         </div>
         <div className="mt-5 grid-2">
-          <Button variant="outline" icon={Share2} onClick={() => onNavigate?.("share")}>Share</Button>
+          <Button variant="outline" icon="share" onClick={() => onNavigate?.("share")}>Share</Button>
           <Button onClick={() => onNavigate?.("progress")}>Progress</Button>
         </div>
       </section>
@@ -33,7 +32,7 @@ export default function Profile({ onNavigate }) {
       </section>
       <section className="mt-5 stack">
         <SectionHeader title="Recent activity" />
-        {activities.slice(0, 2).map((activity) => <div className="card card-pad" key={activity.id}><p className="font-extrabold">{activity.title}</p><p className="meta mt-1">{activity.duration} • Score {activity.focusScore}</p></div>)}
+        {activities.slice(0, 2).map((activity) => <div className="card card-pad" key={activity.id}><p className="font-semibold">{activity.title}</p><p className="meta mt-1">{activity.duration} • Score {activity.focusScore}</p></div>)}
       </section>
     </main>
   );
