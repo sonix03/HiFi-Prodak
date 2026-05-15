@@ -2,6 +2,7 @@ import Button from "../components/Button";
 import Icon from "../components/Icon";
 import ScreenHeader from "../components/ScreenHeader";
 import SearchBar from "../components/SearchBar";
+import bk from "../assets/bk.png";
 import { clubs } from "../constants/data";
 
 function SearchTabs({ active, onNavigate }) {
@@ -28,14 +29,12 @@ export default function SearchClub({ onNavigate }) {
         <SearchBar placeholder="Search clubs to join" />
       </div>
 
-      <section className="mt-5 stack">
+      <section className="mt-5 stack overflow-hidden">
         <p className="meta">Recommended clubs</p>
         {clubs.map((club) => (
-          <article className="between rounded-2xl border border-[var(--border)] bg-white p-3 shadow-[var(--shadow-card)]" key={club.id}>
+          <article className="between overflow-hidden rounded-2xl border border-[var(--border)] bg-white p-3 shadow-[var(--shadow-card)]" key={club.id}>
             <div className="row min-w-0">
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[var(--primary-soft)] text-[var(--blue)]">
-                <Icon name="users" size="md" />
-              </span>
+              <img className="h-12 w-12 shrink-0 rounded-full object-cover" src={bk} alt="" />
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold">{club.name}</p>
                 <p className="meta truncate">{club.members} members • {club.goal}</p>

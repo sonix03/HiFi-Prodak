@@ -5,8 +5,8 @@ import googleLogo from "../assets/google-logo.png";
 
 function SocialButton({ logo, label }) {
   return (
-    <button className="row h-12 w-full rounded-xl border-2 border-[var(--text)] bg-white px-4 text-sm font-semibold">
-      <span className="grid h-8 w-8 place-items-center rounded-lg bg-[var(--surface-muted)]">
+    <button className="row h-12 w-full rounded-xl border border-[var(--text)] bg-white px-4 text-sm font-semibold shadow-sm">
+      <span className="grid h-8 w-8 place-items-center rounded-lg">
         <img className="h-5 w-5 object-contain" src={logo} alt="" />
       </span>
       <span className="flex-1 text-center">{label}</span>

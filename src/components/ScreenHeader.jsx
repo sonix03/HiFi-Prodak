@@ -8,6 +8,7 @@ export default function ScreenHeader({
   secondaryAction,
   mode = "detail",
   status,
+  right,
 }) {
   return (
     <Header
@@ -18,6 +19,7 @@ export default function ScreenHeader({
       secondaryAction={secondaryAction}
       status={status}
       title={title}
+      right={right}
     />
   );
 }

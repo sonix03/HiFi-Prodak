@@ -9,7 +9,7 @@ const steps = [
     title: "Choose your club’s productivity",
     helper: "Pick the activity identity people will rally around.",
     options: [
-      ["All Productivity", "list"],
+      ["All Focus", "list"],
       ["Deep Work", "target"],
       ["Study Group", "activity"],
       ["Creator", "edit"],
@@ -109,11 +109,7 @@ function CustomizeStep() {
         <label>Description</label>
         <textarea className="textarea" defaultValue="A club for verified focus sessions and weekly output challenges." />
       </div>
-      <div className="tab-row">
-        <Pill active tone="blue">Proof required</Pill>
-        <Pill tone="yellow">Weekly goal</Pill>
       </div>
-    </div>
   );
 }
 

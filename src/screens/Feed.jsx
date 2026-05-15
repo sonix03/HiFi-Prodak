@@ -1,13 +1,18 @@
+import { useState } from "react";
 import ActivityMap from "../components/ActivityMap";
 import AppHeader from "../components/AppHeader";
 import Avatar from "../components/Avatar";
 import Icon from "../components/Icon";
 import Pill from "../components/Pill";
+import ShareSheet from "../components/ShareSheet";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
 import { activities, clubs } from "../constants/data";
 
 export default function Feed({ onNavigate }) {
+  const [showShare, setShowShare] = useState(false);
+  const [shareMedia, setShareMedia] = useState([]);
+
   const posts = [
     {
       activity: activities[0],
@@ -15,8 +20,8 @@ export default function Feed({ onNavigate }) {
       headline: "ASIKKK",
       body: "Working 9 to 5 at NVIDIA",
       media: [
-        { type: "map", src: mapPic, label: "Map" },
-        { type: "photo", src: landscapeItb, label: "Photo" },
+        { type: "map", src: mapPic },
+        { type: "photo", src: landscapeItb },
       ],
     },
     {
@@ -24,32 +29,39 @@ export default function Feed({ onNavigate }) {
       club: clubs[0],
       label: "Posted in club",
       place: clubs[0].name,
-      media: [{ type: "photo", src: landscapeItb, label: "Photo" }],
+      media: [{ type: "photo", src: landscapeItb }],
     },
     {
       activity: activities[2],
       place: "Personal study log",
-      media: [{ type: "map", src: mapPic, label: "Map" }],
+      media: [{ type: "map", src: mapPic }],
     },
   ];
 
+  const handleShare = (media) => {
+    setShareMedia(media);
+    setShowShare(true);
+  };
+
   return (
-    <main className="screen screen-pad">
-      <AppHeader right="notification" secondaryAction={{ icon: "search", label: "Search" }} />
+    <main className="screen screen-pad relative">
+      <AppHeader right="notification" rightSecondary="profile" secondaryAction={{ icon: "search", label: "Search" }} />
       <section className="stack">
         {posts.map((post) => (
-          <FeedPost key={post.activity.id} onNavigate={onNavigate} {...post} />
+          <FeedPost key={post.activity.id} onNavigate={onNavigate} {...post} onShare={() => handleShare(post.media)} />
         ))}
       </section>
+
+      {showShare && <ShareSheet onClose={() => setShowShare(false)} onShare={() => setShowShare(false)} media={shareMedia} />}
     </main>
   );
 }
 
-function FeedPost({ activity, club, label, place, headline, body, media = [], onNavigate }) {
+function FeedPost({ activity, club, label, place, headline, body, media = [], onNavigate, onShare }) {
   const isFeatured = media.length > 1;
 
   return (
-    <article className="stack border-b border-[var(--divider)] pb-5 last:border-b-0">
+    <article className="stack gap-2">
       <div className="row">
         <Avatar user={activity.user} />
         <div className="min-w-0 flex-1">
@@ -91,17 +103,12 @@ function FeedPost({ activity, club, label, place, headline, body, media = [], on
         <button className="grid justify-items-center gap-1 text-[12px] font-semibold text-[var(--text-secondary)]" onClick={() => onNavigate?.("comments")}>
           <Icon name="comment" size="sm" /> {activity.comments}
         </button>
-        <button className="grid justify-items-center gap-1 text-[12px] font-semibold text-[var(--text-secondary)]" onClick={() => onNavigate?.("share")}>
+        <button className="grid justify-items-center gap-1 text-[12px] font-semibold text-[var(--text-secondary)]" onClick={onShare}>
           <Icon name="share" size="sm" /> Share
         </button>
       </div>
 
-      <div className="tab-row">
-        <Pill active>{activity.privacy}</Pill>
-        <Pill tone="success">Proof verified</Pill>
-        {club ? <Pill icon="users">{club.name}</Pill> : null}
-      </div>
-    </article>
+      </article>
   );
 }
 
@@ -112,11 +119,10 @@ function MediaRow({ media, proof }) {
     <div className={`grid gap-3 ${media.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
       {media.map((item) => (
         item.type === "map" ? (
-          <ActivityMap height={media.length > 1 ? 170 : 220} imageSrc={item.src} key={`${item.type}-${item.src}`} label={item.label} proof={proof} />
+          <ActivityMap height={media.length > 1 ? 170 : 220} imageSrc={item.src} key={`${item.type}-${item.src}`} />
         ) : (
           <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] shadow-[var(--shadow-card)]" key={`${item.type}-${item.src}`}>
             <img className="h-[170px] w-full object-cover" src={item.src} alt="Uploaded activity" />
-            <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold text-[var(--text)]">{item.label}</span>
           </div>
         )
       ))}

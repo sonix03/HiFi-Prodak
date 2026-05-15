@@ -16,7 +16,7 @@ export default function ActivityDetail({ onNavigate }) {
   return (
     <main className="screen screen-pad">
       <ActivityHeader title="Activity" onBack={() => onNavigate?.("feed")} />
-      <section className="hero-panel">
+      <section className="hero-panel stack gap-3" style={{ borderBottom: 'none' }}>
         <div className="row">
           <Avatar user={activity.user} />
           <div className="min-w-0 flex-1">
@@ -25,11 +25,11 @@ export default function ActivityDetail({ onNavigate }) {
           </div>
           <Pill tone="success">{activity.privacy}</Pill>
         </div>
-        <h1 className="mt-5 title">{activity.title}</h1>
-        <p className="mt-3 body">{activity.caption}</p>
+        <h1 className="text-[22px] font-bold leading-tight">{activity.title}</h1>
+        <p className="body">{activity.caption}</p>
       </section>
 
-      <div className="mt-4">
+      <div>
         <ActivityMap height={220} proof={activity.proof} label="Proof map" imageSrc={mapPic} />
       </div>
 

@@ -30,7 +30,7 @@ export default function Activities({ onNavigate }) {
       </div>
       <section className="section">
         <SectionHeader title="Mika's activities" meta="Tap any activity to review proof and comments." />
-        <div className="list mt-2">
+        <div className="stack gap-2 mt-2">
           {mikaActivities.map((activity, index) => <ActivityRow key={activity.id} activity={activity} expanded={index === 0} onOpen={() => onNavigate?.("activityDetail")} />)}
         </div>
       </section>

@@ -31,7 +31,7 @@ export default function Share({ onNavigate }) {
         <h2 className="section-title mt-2">Share to</h2>
         <div className="grid grid-cols-4 gap-x-3 gap-y-5">
           {destinations.map(([label, icon]) => (
-            <button className="grid justify-items-center gap-2 text-center text-[10px] font-medium text-[var(--text-secondary)]" key={label}>
+            <button className="grid justify-items-center gap-2 text-center text-[6px] font-medium text-[var(--text-secondary)]" key={label}>
               <span className="grid h-12 w-12 place-items-center rounded-full border border-[var(--border)] bg-white text-[var(--text)]">
                 <Icon name={icon} size="md" />
               </span>

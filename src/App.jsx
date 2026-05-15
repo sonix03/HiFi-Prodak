@@ -34,7 +34,7 @@ const artboards = [
   { title: "Record Playing", Screen: Record, props: { initialPlaying: true }, nav: "record" },
   { title: "Save Activity", Screen: SaveActivity },
   { title: "Edit Activity 1", Screen: EditActivity, props: { initialStep: 0 } },
-  { title: "Edit Activity 2", Screen: EditActivity, props: { initialStep: 1 } },
+  // { title: "Edit Activity 2", Screen: EditActivity, props: { initialStep: 1 } },
   { title: "Progress", Screen: Progress, nav: "progress" },
   { title: "Groups - Clubs", Screen: Groups, nav: "groups" },
   { title: "Groups - Challenges", Screen: GroupClub, nav: "groups" },
@@ -52,7 +52,6 @@ const artboards = [
   { title: "Notifications", Screen: Notifications },
   { title: "Profile", Screen: Profile, nav: "progress" },
   { title: "Preview", Screen: Preview },
-  { title: "Share Activity", Screen: Share },
   { title: "Share Club", Screen: ShareClub },
 ];
 

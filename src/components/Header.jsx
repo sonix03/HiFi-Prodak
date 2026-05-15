@@ -18,8 +18,10 @@ export default function Header({
   primaryAction,
   secondaryAction,
   right = "notification",
+  rightSecondary,
   status,
 }) {
+  const showRightAction = right !== null && right !== false;
   const isDetail = mode === "detail" || mode === "form" || Boolean(onBack);
   const isFocused = mode === "record";
   const hasTitleContent = Boolean(title || eyebrow || status);
@@ -49,6 +51,7 @@ export default function Header({
 
       <div className="header-actions">
         {secondaryAction ? <HeaderAction {...secondaryAction} /> : null}
+        {rightSecondary ? <HeaderAction icon={rightSecondary} label={rightSecondary} /> : null}
         {primaryAction ? (
           typeof primaryAction === "string" ? (
             <button className="header-text-action">{primaryAction}</button>
@@ -59,9 +62,9 @@ export default function Header({
           ) : (
             <HeaderAction {...primaryAction} />
           )
-        ) : (
+        ) : showRightAction ? (
           <HeaderAction icon={right} label={right} />
-        )}
+        ) : null}
       </div>
     </header>
   );

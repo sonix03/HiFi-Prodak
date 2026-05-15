@@ -1,6 +1,6 @@
 import Icon from "./Icon";
 
-export default function ActivityMap({ label = "Focus route", proof = "Proof verified", height = 180, imageSrc }) {
+export default function ActivityMap({ label = "Focus route", height = 180, imageSrc }) {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--blue-soft)]" style={{ height }}>
       {imageSrc ? (
@@ -15,15 +15,7 @@ export default function ActivityMap({ label = "Focus route", proof = "Proof veri
         </>
       )}
       <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-white/45" />
-      <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-semibold text-[var(--blue)]">{label}</div>
-      <div className="absolute bottom-4 left-4 right-4 between rounded-2xl bg-white/90 p-3 backdrop-blur">
-        <div>
-          <p className="text-sm font-semibold">Productivity context</p>
-          <p className="meta">{proof}</p>
-        </div>
-        <span className="text-[var(--blue)]"><Icon name="route" size="md" /></span>
-      </div>
-      <Icon name="proof" size={22} className="absolute right-4 top-4 text-[var(--blue)]" />
+      <Icon name="route" size={22} className="absolute left-4 top-4 text-[var(--blue)]" />
     </div>
   );
 }

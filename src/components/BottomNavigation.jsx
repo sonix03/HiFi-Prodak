@@ -17,7 +17,7 @@ export default function BottomNavigation({ active, onNavigate }) {
           return (
             <button
               key={item.key}
-              className={`grid justify-items-center gap-1 text-[11px] font-extrabold ${isActive ? "text-[var(--blue)]" : "text-[var(--text-tertiary)]"}`}
+              className={`grid justify-items-center gap-1 text-[11px] font-black ${isActive ? "text-[var(--blue)]" : "text-[var(--text-tertiary)]"}`}
               onClick={() => onNavigate?.(item.key)}
             >
               <span

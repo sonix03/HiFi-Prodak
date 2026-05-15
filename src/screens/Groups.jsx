@@ -12,8 +12,8 @@ export default function Groups({ onNavigate }) {
 
       <section className="mt-4 stack">
         <div className="between rounded-xl border border-[var(--border)] bg-white px-3 py-2">
-          <span className="text-xs font-medium text-[var(--text-secondary)]">Create your own Prodak group</span>
-          <Button size="sm" variant="outline" onClick={() => onNavigate?.("createClub")}>Create a Group</Button>
+          <span className="text-xs font-medium text-[var(--text-secondary)]">Create your own Prodak club</span>
+          <Button size="sm" variant="outline" onClick={() => onNavigate?.("createClub")}>Create a Club</Button>
         </div>
         <div className="between rounded-xl border border-[var(--border)] bg-white px-3 py-2">
           <span className="text-xs font-medium text-[var(--text-secondary)]">Find events near you</span>
