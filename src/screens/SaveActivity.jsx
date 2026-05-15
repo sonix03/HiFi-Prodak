@@ -1,6 +1,7 @@
 import Button from "../components/Button";
+import FormField from "../components/FormField";
 import MediaPlaceholder from "../components/MediaPlaceholder";
-import MetricCard from "../components/MetricCard";
+import MetricGrid from "../components/MetricGrid";
 import Pill from "../components/Pill";
 import ScreenHeader from "../components/ScreenHeader";
 import { activities, privacyStatuses } from "../constants/data";
@@ -11,21 +12,15 @@ export default function SaveActivity({ onNavigate }) {
   return (
     <main className="screen screen-pad">
       <ScreenHeader title="Save activity" mode="form" onBack={() => onNavigate?.("record")} action={{ text: "Done", onClick: () => onNavigate?.("feed") }} />
-      <div className="grid-3">
-        <MetricCard label="Duration" value={activity.duration} tone="orange" />
-        <MetricCard label="Score" value={activity.focusScore} tone="blue" />
-        <MetricCard label="Output" value="42" sub="events" tone="yellow" />
-      </div>
+      <MetricGrid columns={3} items={[
+        { label: "Duration", value: activity.duration },
+        { label: "Score", value: activity.focusScore, tone: "blue" },
+        { label: "Output", value: "42", sub: "events", tone: "yellow" },
+      ]} />
 
-      <section className="mt-5 stack">
-        <div className="form-field">
-          <label>Activity title</label>
-          <input className="input" defaultValue={activity.title} />
-        </div>
-        <div className="form-field">
-          <label>Notes</label>
-          <textarea className="textarea" defaultValue={activity.caption} />
-        </div>
+      <section className="section form-section">
+        <FormField label="Activity title" defaultValue={activity.title} />
+        <FormField label="Notes" textarea defaultValue={activity.caption} />
         <MediaPlaceholder icon="upload" title="Attach proof" body="Figma version, document history, screenshot, or output log." />
         <div className="tab-row">
           {privacyStatuses.map((status, index) => <Pill key={status} active={index === 0}>{status}</Pill>)}

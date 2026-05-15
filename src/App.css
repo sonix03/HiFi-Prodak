@@ -113,16 +113,66 @@
 }
 
 .screen-pad {
-  padding: 8px 20px 132px;
+  padding: 6px 20px 132px;
 }
 
 .screen-pad-tight {
-  padding: 8px 16px 124px;
+  padding: 6px 16px 124px;
 }
 
 .stack {
   display: grid;
   gap: 14px;
+}
+
+.section {
+  margin-top: 18px;
+}
+
+.section:first-child {
+  margin-top: 0;
+}
+
+.list {
+  display: grid;
+}
+
+.list-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--divider);
+}
+
+.list-row:last-child {
+  border-bottom: 0;
+}
+
+.list-row-button {
+  width: 100%;
+  text-align: left;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.metric-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.metric-item {
+  min-width: 0;
+  padding: 4px 0;
+}
+
+.hero-panel {
+  border-bottom: 1px solid var(--divider);
+  padding-bottom: 18px;
 }
 
 .grid-2 {
@@ -141,7 +191,7 @@
   border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--surface);
-  box-shadow: var(--shadow-card);
+  box-shadow: none;
 }
 
 .card-pad {
@@ -152,6 +202,12 @@
   border-radius: 14px;
   background: var(--surface-muted);
   padding: 14px;
+}
+
+.form-section {
+  display: grid;
+  gap: 14px;
+  padding: 4px 0;
 }
 
 .title {
@@ -235,19 +291,19 @@
   top: 0;
   z-index: 25;
   display: flex;
-  min-height: 50px;
+  min-height: 44px;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: -8px -20px 14px;
+  margin: -6px -20px 18px;
   border-bottom: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.96);
-  padding: 6px 20px;
+  padding: 2px 18px;
   backdrop-filter: blur(14px);
 }
 
 .app-header-main {
-  min-height: 54px;
+  min-height: 46px;
 }
 
 .app-header-record {
@@ -303,8 +359,8 @@
 
 .header-action {
   display: grid;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   place-items: center;
   border-radius: 999px;
   background: transparent;
@@ -322,7 +378,7 @@
 
 .header-text-action {
   min-width: 54px;
-  height: 34px;
+  height: 32px;
   border-radius: 999px;
   background: var(--primary);
   padding: 0 14px;
@@ -363,7 +419,7 @@
   flex: 1;
   align-items: center;
   gap: 10px;
-  height: 40px;
+  height: 38px;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--surface-muted);
@@ -395,7 +451,7 @@
 
 .form-field {
   display: grid;
-  gap: 8px;
+  gap: 7px;
 }
 
 .form-field label {
@@ -420,21 +476,46 @@
 }
 
 .textarea {
-  min-height: 96px;
+  min-height: 88px;
   padding: 14px;
   resize: none;
 }
 
+.video-hero {
+  position: relative;
+  min-height: 360px;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--surface-muted);
+}
+
+.video-hero video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.78) 72%, #ffffff 100%);
+}
+
+.video-hero-content {
+  position: absolute;
+  inset: auto 18px 18px;
+  z-index: 1;
+}
+
 .primary-gradient {
-  background:
-    linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(250, 204, 21, 0.18) 100%),
-    #ffffff;
+  background: #ffffff;
 }
 
 .blue-gradient {
-  background:
-    linear-gradient(135deg, rgba(37, 99, 235, 0.10) 0%, rgba(250, 204, 21, 0.14) 100%),
-    #ffffff;
+  background: #ffffff;
 }
 
 .safe-bottom {

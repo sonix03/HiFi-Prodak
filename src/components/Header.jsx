@@ -22,6 +22,7 @@ export default function Header({
 }) {
   const isDetail = mode === "detail" || mode === "form" || Boolean(onBack);
   const isFocused = mode === "record";
+  const hasTitleContent = Boolean(title || eyebrow || status);
 
   return (
     <header className={`app-header app-header-${mode}`}>
@@ -37,11 +38,13 @@ export default function Header({
           </div>
         )}
 
-        <div className="header-title-block">
-          {eyebrow ? <p>{eyebrow}</p> : null}
-          <h1>{title}</h1>
-          {status ? <span>{status}</span> : null}
-        </div>
+        {hasTitleContent ? (
+          <div className="header-title-block">
+            {eyebrow ? <p>{eyebrow}</p> : null}
+            {title ? <h1>{title}</h1> : null}
+            {status ? <span>{status}</span> : null}
+          </div>
+        ) : null}
       </div>
 
       <div className="header-actions">

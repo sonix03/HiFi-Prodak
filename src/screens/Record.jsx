@@ -1,6 +1,6 @@
 import Button from "../components/Button";
-import Card from "../components/Card";
 import Icon from "../components/Icon";
+import ListItem from "../components/ListItem";
 import Pill from "../components/Pill";
 import ScreenHeader from "../components/ScreenHeader";
 import SectionHeader from "../components/SectionHeader";
@@ -10,7 +10,7 @@ export default function Record({ onNavigate }) {
   return (
     <main className="screen screen-pad">
       <ScreenHeader title="Record" mode="record" eyebrow="Deep Work" status="Private proof ready" action={{ icon: "lock", label: "Privacy" }} />
-      <section className="grid place-items-center rounded-[28px] border border-[var(--border)] bg-white px-6 py-9 text-center shadow-[var(--shadow-card)]">
+      <section className="grid place-items-center border-b border-[var(--divider)] px-6 pb-8 pt-4 text-center">
         <span className="grid h-24 w-24 place-items-center rounded-full bg-[var(--primary-soft)] text-[var(--blue)] ring-8 ring-[var(--yellow-soft)]">
           <Icon name="record" size={54} />
         </span>
@@ -19,12 +19,14 @@ export default function Record({ onNavigate }) {
         <Button className="mt-8 w-full" size="lg" icon="play" onClick={() => onNavigate?.("saveActivity")}>Start focus</Button>
       </section>
 
-      <section className="mt-6 stack">
+      <section className="section">
         <SectionHeader title="Session type" />
-        {sessions.map((session) => <Card key={session.label} className={session.active ? "border-[var(--blue)] bg-[var(--blue-soft)]" : ""}><div className="row"><span className={session.active ? "text-[var(--blue)]" : "text-[var(--text)]"}><Icon name={session.icon} size="md" /></span><div><p className="font-semibold">{session.label}</p><p className="meta">{session.description}</p></div></div></Card>)}
+        <div className="list mt-2">
+          {sessions.map((session) => <ListItem key={session.label} icon={session.icon} accent={session.active ? "blue" : "neutral"} title={session.label} meta={session.description} action={session.active ? <Pill tone="blue">Selected</Pill> : null} />)}
+        </div>
       </section>
 
-      <section className="mt-5 card card-pad">
+      <section className="section">
         <SectionHeader title="Privacy and proof" />
         <div className="mt-4 tab-row">
           {privacyStatuses.map((status, index) => <Pill key={status} active={index === 0} icon={index === 3 ? "lock" : undefined}>{status}</Pill>)}

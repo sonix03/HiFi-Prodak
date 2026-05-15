@@ -13,7 +13,7 @@ export const theme = {
     warning: "#F59E0B",
     danger: "#DC2626",
     base: "#FFFFFF",
-    background: "#F7F7F4",
+    background: "#FFFFFF",
     surface: "#FFFFFF",
     surfaceMuted: "#F5F5F5",
     text: "#0A0A0A",
@@ -24,7 +24,7 @@ export const theme = {
   },
   base: {
     background: "#FFFFFF",
-    appBackground: "#F7F7F4",
+    appBackground: "#FFFFFF",
     surface: "#FFFFFF",
     surfaceMuted: "#F5F5F5",
   },
@@ -68,6 +68,14 @@ export const theme = {
     lg: "16px",
     xl: "24px",
     "2xl": "32px",
+  },
+  layout: {
+    sectionGap: "18px",
+    rowHeight: "64px",
+    rowPaddingY: "12px",
+    rowPaddingX: "0px",
+    listDivider: "#EEEEEE",
+    gridGap: "12px",
   },
   radius: {
     card: "16px",
