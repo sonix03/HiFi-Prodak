@@ -1,115 +1,39 @@
-import {
-  ArrowLeft,
-  Expand,
-  Flag,
-  ImagePlus,
-  Layers,
-  Play,
-  Target,
-} from "lucide-react";
-import Nav from "../components/Nav";
-import Phone from "../components/Phone";
+import { BadgeCheck, Circle, Lock, Play, TimerReset } from "lucide-react";
+import Button from "../components/Button";
+import Card from "../components/Card";
+import Header from "../components/Header";
+import Pill from "../components/Pill";
+import SectionHeader from "../components/SectionHeader";
+import { privacyStatuses, sessions } from "../constants/data";
 
-export default function Record() {
+export default function Record({ onNavigate }) {
   return (
-    <Phone title="Record">
-      <div className="relative h-full overflow-hidden bg-[#F6FAFD] pb-[96px] text-left">
-        <div className="absolute inset-0 grid place-items-center bg-[#D8E1EB]">
-          <div className="grid h-28 w-28 place-items-center rounded-[30px] border-2 border-dashed border-white/90 bg-white/20 shadow-[0_18px_38px_rgba(23,50,77,0.16)] backdrop-blur-md">
-            <ImagePlus size={38} className="text-white" />
-          </div>
+    <main className="screen screen-pad">
+      <Header title="Record" eyebrow="Start a session" right={TimerReset} />
+      <section className="grid place-items-center rounded-[30px] bg-[var(--text)] px-6 py-9 text-center text-white shadow-[var(--shadow-floating)]">
+        <span className="grid h-24 w-24 place-items-center rounded-full bg-white/10 ring-8 ring-white/5">
+          <Circle size={54} className="text-[var(--primary)]" strokeWidth={1.5} />
+        </span>
+        <p className="mt-6 text-sm font-bold opacity-70">Ready for Deep Work</p>
+        <p className="mt-2 text-[52px] font-black leading-none">00:00</p>
+        <Button className="mt-8 w-full" size="lg" icon={Play} onClick={() => onNavigate?.("saveActivity")}>Start focus</Button>
+      </section>
 
-          <span className="absolute bottom-[260px] rounded-full bg-white/85 px-4 py-1.5 text-[10px] font-bold text-[#427AB5]">
-            Map image placeholder
-          </span>
+      <section className="mt-6 stack">
+        <SectionHeader title="Session type" />
+        {sessions.map((session) => <Card key={session.label} className={session.active ? "border-[var(--primary)] bg-[var(--primary-soft)]" : ""}><div className="row"><span className="grid h-11 w-11 place-items-center rounded-2xl bg-white text-[var(--primary)]"><session.icon size={20} /></span><div><p className="font-extrabold">{session.label}</p><p className="meta">{session.description}</p></div></div></Card>)}
+      </section>
+
+      <section className="mt-5 card card-pad">
+        <SectionHeader title="Privacy and proof" />
+        <div className="mt-4 tab-row">
+          {privacyStatuses.map((status, index) => <Pill key={status} active={index === 0} icon={index === 3 ? Lock : undefined}>{status}</Pill>)}
         </div>
-
-        <div className="relative z-10 flex items-center justify-between px-8 pt-8">
-          <button className="grid h-11 w-11 place-items-center rounded-full border border-[#050505]/70 bg-[#F6FAFD]/65 text-[#050505] backdrop-blur-md">
-            <ArrowLeft size={20} strokeWidth={2.2} />
-          </button>
+        <div className="mt-4 row rounded-2xl bg-[var(--surface-muted)] p-4">
+          <BadgeCheck className="text-[var(--success)]" size={20} />
+          <p className="text-sm font-bold">Attach verified proof after finishing</p>
         </div>
-
-        <div className="absolute right-7 top-[240px] z-10 flex flex-col gap-3">
-          <button className="grid h-10 w-10 place-items-center rounded-full border border-[#050505]/60 bg-[#F6FAFD]/85 text-[#050505] shadow-[0_10px_24px_rgba(64,106,175,0.14)] backdrop-blur-md">
-            <Layers size={17} />
-          </button>
-
-          <button className="grid h-10 w-10 place-items-center rounded-full border border-[#050505]/60 bg-[#F6FAFD]/85 text-[#050505] shadow-[0_10px_24px_rgba(64,106,175,0.14)] backdrop-blur-md">
-            <span className="text-[11px] font-black">3D</span>
-          </button>
-
-          <button className="grid h-10 w-10 place-items-center rounded-full border border-[#050505]/60 bg-[#F6FAFD]/85 text-[#050505] shadow-[0_10px_24px_rgba(64,106,175,0.14)] backdrop-blur-md">
-            <Target size={17} />
-          </button>
-        </div>
-
-        <div className="absolute bottom-[166px] left-5 right-5 z-20 overflow-hidden rounded-[24px] border border-[#427AB5]/20 bg-[#F6FAFD] shadow-[0_18px_38px_rgba(23,50,77,0.18)]">
-          <div className="relative border-b border-[#17324D]/10 px-5 py-4 text-center">
-            <p className="text-[12px] font-black text-[#050505]">
-              Stopped
-            </p>
-
-            <Expand
-              size={15}
-              className="absolute right-5 top-4 text-[#050505]"
-              strokeWidth={2.2}
-            />
-          </div>
-
-          <div className="grid grid-cols-3 px-5 py-5">
-            <div className="text-center">
-              <p className="text-[20px] font-black tracking-[-0.03em] text-[#050505]">
-                00:13
-              </p>
-
-              <p className="mt-1 text-[10px] font-medium text-[#050505]/75">
-                Time
-              </p>
-            </div>
-
-            <div className="text-center">
-              <p className="text-[20px] font-black tracking-[-0.03em] text-[#050505]">
-                -:--
-              </p>
-
-              <p className="mt-1 text-[10px] font-medium text-[#050505]/75">
-                Focus Score
-              </p>
-            </div>
-
-            <div className="text-center">
-              <p className="text-[20px] font-black tracking-[-0.03em] text-[#050505]">
-                0.00
-              </p>
-
-              <p className="mt-1 text-[10px] font-medium text-[#050505]/75">
-                Working Time
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute bottom-[104px] left-5 right-5 z-20 rounded-[24px] border border-[#427AB5]/20 bg-[#F6FAFD]/95 px-6 py-5 shadow-[0_18px_38px_rgba(23,50,77,0.16)] backdrop-blur-md">
-          <div className="flex items-center justify-center gap-7">
-            <button className="flex h-10 min-w-[116px] items-center justify-center gap-2 rounded-full border border-[#050505] bg-[#D8E1EB] px-5 text-[12px] font-black text-[#050505]">
-              <Play size={15} fill="#050505" />
-              Resume
-            </button>
-
-            <button className="flex h-10 min-w-[116px] items-center justify-center gap-2 rounded-full border border-[#050505] bg-[#D8E1EB] px-5 text-[12px] font-black text-[#050505]">
-              <Flag size={15} />
-              Finish
-            </button>
-          </div>
-        </div>
-
-        <button className="absolute bottom-[142px] right-[-6px] z-20 grid h-12 w-12 place-items-center rounded-full border border-[#050505] bg-[#F6FAFD] text-[#050505] shadow-[0_12px_26px_rgba(23,50,77,0.18)]">
-          <Play size={18} fill="#050505" />
-        </button>
-
-        <Nav active="record" />
-      </div>
-    </Phone>
+      </section>
+    </main>
   );
 }

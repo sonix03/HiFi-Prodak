@@ -1,14 +1,16 @@
-import { C } from "./constants/theme";
+import "./App.css";
+import BottomNav from "./components/BottomNav";
+import Phone from "./components/Phone";
 import {
   Activities,
   ActivityDetail,
   Club,
   Comments,
   CreateClub,
-  CreateChallenge,
   CreatePost,
   EditActivity,
   Feed,
+  GroupClub,
   Groups,
   Login,
   Notifications,
@@ -17,79 +19,66 @@ import {
   Progress,
   Record,
   SaveActivity,
+  SearchFriend,
   Share,
   ShareClub,
-  SearchFriend,
 } from "./screens";
 
-const screens = [
-  Preview,
-  Login,
-  Feed,
-  Share,
-  ShareClub,
-  SearchFriend,
-  CreateClub,
-  CreatePost,
-  EditActivity,
-  Activities,
-  Profile,
-  Progress,
-  Club,
-  Groups,
-  CreateChallenge,
-  Record,
-  ActivityDetail,
-  Comments,
-  SaveActivity,
-  Notifications,
+const artboards = [
+  { key: "login", title: "Login", component: Login },
+  { key: "feed", title: "Feed", component: Feed, nav: "feed" },
+  { key: "activities", title: "Activities", component: Activities, nav: "activities" },
+  { key: "activityDetail", title: "Activity Detail", component: ActivityDetail, nav: "feed" },
+  { key: "record", title: "Record", component: Record, nav: "record" },
+  { key: "saveActivity", title: "Save Activity", component: SaveActivity, nav: "record" },
+  { key: "editActivity", title: "Edit Activity", component: EditActivity, nav: "feed" },
+  { key: "progress", title: "Progress", component: Progress, nav: "profile" },
+  { key: "profile", title: "Profile", component: Profile, nav: "profile" },
+  { key: "groups", title: "Groups", component: Groups, nav: "groups" },
+  { key: "groupClub", title: "Group Club", component: GroupClub, nav: "groups" },
+  { key: "club", title: "Club Detail", component: Club, nav: "groups" },
+  { key: "createClub", title: "Create Club", component: CreateClub, nav: "groups" },
+  { key: "createPost", title: "Create Post", component: CreatePost, nav: "feed" },
+  { key: "searchFriend", title: "Search Friend", component: SearchFriend, nav: "feed" },
+  { key: "comments", title: "Comments", component: Comments, nav: "feed" },
+  { key: "notifications", title: "Notifications", component: Notifications, nav: "feed" },
+  { key: "share", title: "Share Activity", component: Share, nav: "feed" },
+  { key: "shareClub", title: "Share Club", component: ShareClub, nav: "groups" },
+  { key: "preview", title: "Preview", component: Preview, nav: "feed" },
 ];
+
+const noopNavigate = () => {};
 
 export default function App() {
   return (
-    <div className="min-h-screen px-5 py-8 font-sans text-[#17324D] lg:px-8 lg:py-10">
-      <div className="mx-auto max-w-[1640px]">
-        <div className="relative isolate mb-10 overflow-hidden rounded-[36px] border border-[#427AB5]/20 bg-[linear-gradient(135deg,#ffffff_0%,#fff8e8_48%,#dfeafd_100%)] p-6 shadow-[0_24px_70px_rgba(64,106,175,0.14)] sm:p-8 lg:p-10">
-          <div className="pointer-events-none absolute -right-14 top-6 z-0 h-36 w-36 rounded-full bg-[#F7DD7D]/45" />
-          <div className="pointer-events-none absolute bottom-0 right-20 z-0 h-24 w-24 rounded-full bg-[#427AB5]/18 blur-2xl" />
-          <p className="relative z-10 text-[11px] font-bold uppercase tracking-[0.28em] text-[#427AB5]">
-            PRODAK Hi-Fi Mobile UI
-          </p>
-          <h1 className="relative z-10 mt-4 max-w-4xl text-4xl font-black leading-[1.02] text-[#17324D] sm:text-5xl lg:text-[3.5rem]">
-            Cleaner mobile artboards with a blue and sunny hierarchy
-          </h1>
-          <p className="relative z-10 mt-5 max-w-3xl text-sm leading-7 text-[#5D6F8B] sm:text-[15px]">
-            Spacing, layer order, and typography are tuned so decorative shapes
-            stay behind the content while the requested palette leads every
-            screen.
-          </p>
-          <div className="relative z-10 mt-7 flex flex-wrap gap-3">
-            {Object.entries(C)
-              .slice(0, 4)
-              .map(([key, value]) => (
-                <div
-                  key={key}
-                  className="flex items-center gap-2 rounded-full border border-[#427AB5]/20 bg-white/90 px-3 py-2"
-                >
-                  <span
-                    className="h-5 w-5 rounded-full border border-white"
-                    style={{ background: value }}
-                  />
-                  <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#5D6F8B]">
-                    {key}
-                  </span>
-                  <span className="text-xs font-bold text-[#17324D]">{value}</span>
-                </div>
-              ))}
-          </div>
-        </div>
+    <main className="app">
+      <header className="canvas-header">
+        <p className="canvas-eyebrow">Prodak Hi-Fi Mobile Prototype</p>
+        <h1>Separated screen artboards</h1>
+        <p>
+          Setiap screen dirender sebagai artboard mandiri dari file di
+          <span> src/screens</span>, seperti canvas presentasi Figma.
+        </p>
+      </header>
 
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(340px,390px))] justify-center gap-9">
-          {screens.map((Screen) => (
-            <Screen key={Screen.name} />
-          ))}
-        </div>
-      </div>
-    </div>
+      <section className="artboard-grid" aria-label="Prodak screens">
+        {artboards.map(({ key, title, component: Screen, nav }) => (
+          <article className="artboard" key={key}>
+            <div className="artboard-label">
+              <div>
+                <p>Screen</p>
+                <h2>{title}</h2>
+              </div>
+              <span>390 x 844</span>
+            </div>
+
+            <Phone>
+              <Screen onNavigate={noopNavigate} />
+              {nav ? <BottomNav active={nav} onNavigate={noopNavigate} /> : null}
+            </Phone>
+          </article>
+        ))}
+      </section>
+    </main>
   );
 }

@@ -1,12 +1,11 @@
-export default function Stat({ n, label }) {
+export default function Stat({ value, label, align = "left", tone = "dark" }) {
+  const textAlign = align === "center" ? "text-center" : "text-left";
+  const valueTone = tone === "orange" ? "text-[var(--primary)]" : tone === "blue" ? "text-[var(--blue)]" : "text-[var(--text)]";
+
   return (
-    <div className="min-w-0 text-left">
-      <div className="truncate text-[1.05rem] font-black leading-none tracking-[-0.02em] text-[#17324D]">
-        {n}
-      </div>
-      <div className="mt-1.5 truncate text-[10px] font-bold uppercase tracking-[0.16em] text-[#5D6F8B]">
-        {label}
-      </div>
+    <div className={textAlign}>
+      <p className={`metric-sm ${valueTone}`}>{value}</p>
+      <p className="mt-1 text-[11px] font-bold text-[var(--text-secondary)]">{label}</p>
     </div>
   );
 }
