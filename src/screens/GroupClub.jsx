@@ -1,32 +1,46 @@
 import Button from "../components/Button";
-import ListItem from "../components/ListItem";
-import MetricGrid from "../components/MetricGrid";
-import ScreenHeader from "../components/ScreenHeader";
+import GroupsHeader from "../components/GroupsHeader";
+import Icon from "../components/Icon";
+import Pill from "../components/Pill";
 import SectionHeader from "../components/SectionHeader";
-import { leaderboard } from "../constants/data";
+import { challenges } from "../constants/data";
 
 export default function GroupClub({ onNavigate }) {
   return (
     <main className="screen screen-pad">
-      <ScreenHeader title="League" onBack={() => onNavigate?.("groups")} action={{ icon: "trophy", label: "League rewards" }} />
-      <section className="hero-panel">
-        <p className="text-sm font-semibold text-[var(--blue)]">May Focus League</p>
-        <h1 className="mt-2 text-2xl font-bold">Deep Work Jakarta</h1>
-        <p className="mt-3 text-sm font-medium text-[var(--text-secondary)]">Compete on verified hours, streak consistency, and output proof.</p>
-        <Button className="mt-5" variant="secondary" icon="users">Active roster</Button>
-      </section>
+      <GroupsHeader active="challenges" onNavigate={onNavigate} />
+
+      <div className="mt-4 tab-row">
+        {["Work", "Research", "Arts", "Laboratory"].map((item, index) => <Pill key={item} active={index === 0}>{item}</Pill>)}
+      </div>
+
       <section className="section">
-        <SectionHeader title="Leaderboard" />
-        <div className="list mt-2">
-          {leaderboard.map((row) => <ListItem key={row.name} icon="profile" title={`${row.rank}. ${row.name}`} value={row.metric} />)}
+        <SectionHeader title="Active Challenge" />
+        <div className="row mt-3">
+          <span className="grid h-14 w-14 place-items-center rounded-full bg-[var(--primary-soft)] text-[var(--blue)]">
+            <Icon name="timer" size="lg" />
+          </span>
+          <div>
+            <p className="font-semibold">Overtime Challenge</p>
+            <p className="meta">Complete 5 hours before Apr 30</p>
+          </div>
         </div>
       </section>
-      <div className="section">
-        <MetricGrid columns={2} items={[
-          { label: "Weekly goal", value: "240h", sub: "Club target", tone: "blue" },
-          { label: "Members active", value: "812", sub: "This week" },
-        ]} />
-      </div>
+
+      <section className="section">
+        <SectionHeader title="Recommended For You" />
+        <div className="grid-2 mt-3">
+          {challenges.concat(challenges).slice(0, 4).map((challenge, index) => (
+            <article className="card card-pad min-h-[190px]" key={`${challenge.title}-${index}`}>
+              <Icon name={challenge.icon} size="lg" className="text-[var(--blue)]" />
+              <h2 className="mt-4 card-title">{challenge.title}</h2>
+              <p className="body mt-2">{challenge.reward}</p>
+              <p className="meta mt-2">Apr 17 to Apr 30, 2026</p>
+              <Button className="mt-4 w-full" size="sm" variant="outline">Join</Button>
+            </article>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

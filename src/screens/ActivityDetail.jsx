@@ -7,6 +7,7 @@ import Icon from "../components/Icon";
 import MetricGrid from "../components/MetricGrid";
 import Pill from "../components/Pill";
 import SectionHeader from "../components/SectionHeader";
+import mapPic from "../assets/map-pic.png";
 import { activities, comments, deviceProofs } from "../constants/data";
 
 export default function ActivityDetail({ onNavigate }) {
@@ -29,7 +30,7 @@ export default function ActivityDetail({ onNavigate }) {
       </section>
 
       <div className="mt-4">
-        <ActivityMap height={220} proof={activity.proof} label="Proof map" />
+        <ActivityMap height={220} proof={activity.proof} label="Proof map" imageSrc={mapPic} />
       </div>
 
       <div className="mt-4">

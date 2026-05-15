@@ -117,8 +117,8 @@ function CustomizeStep() {
   );
 }
 
-export default function CreateClub({ onNavigate }) {
-  const [currentStep, setCurrentStep] = useState(0);
+export default function CreateClub({ onNavigate, initialStep = 0 }) {
+  const [currentStep, setCurrentStep] = useState(initialStep);
   const [selected, setSelected] = useState({
     0: "All Productivity",
     1: "Team",

@@ -15,6 +15,7 @@ export { default as Profile } from "./Profile";
 export { default as Progress } from "./Progress";
 export { default as Record } from "./Record";
 export { default as SaveActivity } from "./SaveActivity";
+export { default as SearchClub } from "./SearchClub";
 export { default as SearchFriend } from "./SearchFriend";
 export { default as Share } from "./Share";
 export { default as ShareClub } from "./ShareClub";

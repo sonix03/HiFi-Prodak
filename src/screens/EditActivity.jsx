@@ -6,8 +6,8 @@ import Pill from "../components/Pill";
 import ScreenHeader from "../components/ScreenHeader";
 import { activities, privacyStatuses, sessions } from "../constants/data";
 
-export default function EditActivity({ onNavigate }) {
-  const [step, setStep] = useState(0);
+export default function EditActivity({ onNavigate, initialStep = 0 }) {
+  const [step, setStep] = useState(initialStep);
   const activity = activities[0];
   const isForm = step === 0;
 

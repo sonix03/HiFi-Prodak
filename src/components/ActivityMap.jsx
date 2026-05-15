@@ -1,13 +1,20 @@
 import Icon from "./Icon";
 
-export default function ActivityMap({ label = "Focus route", proof = "Proof verified", height = 180 }) {
+export default function ActivityMap({ label = "Focus route", proof = "Proof verified", height = 180, imageSrc }) {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--blue-soft)]" style={{ height }}>
-      <div className="absolute inset-0 opacity-80" style={{ backgroundImage: "linear-gradient(90deg, rgba(37,99,235,.12) 1px, transparent 1px), linear-gradient(0deg, rgba(37,99,235,.12) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
-      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 340 180" preserveAspectRatio="none">
-        <path d="M22 132 C82 72 118 118 158 62 C194 10 246 36 266 88 C284 132 316 106 328 42" fill="none" stroke="rgba(255,255,255,.86)" strokeWidth="18" strokeLinecap="round" />
-        <path d="M22 132 C82 72 118 118 158 62 C194 10 246 36 266 88 C284 132 316 106 328 42" fill="none" stroke="#2563EB" strokeWidth="6" strokeLinecap="round" />
-      </svg>
+      {imageSrc ? (
+        <img className="absolute inset-0 h-full w-full object-cover" src={imageSrc} alt="" />
+      ) : (
+        <>
+          <div className="absolute inset-0 opacity-80" style={{ backgroundImage: "linear-gradient(90deg, rgba(37,99,235,.12) 1px, transparent 1px), linear-gradient(0deg, rgba(37,99,235,.12) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+          <svg className="absolute inset-0 h-full w-full" viewBox="0 0 340 180" preserveAspectRatio="none">
+            <path d="M22 132 C82 72 118 118 158 62 C194 10 246 36 266 88 C284 132 316 106 328 42" fill="none" stroke="rgba(255,255,255,.86)" strokeWidth="18" strokeLinecap="round" />
+            <path d="M22 132 C82 72 118 118 158 62 C194 10 246 36 266 88 C284 132 316 106 328 42" fill="none" stroke="#2563EB" strokeWidth="6" strokeLinecap="round" />
+          </svg>
+        </>
+      )}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-white/45" />
       <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-semibold text-[var(--blue)]">{label}</div>
       <div className="absolute bottom-4 left-4 right-4 between rounded-2xl bg-white/90 p-3 backdrop-blur">
         <div>

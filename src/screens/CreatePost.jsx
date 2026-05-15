@@ -1,14 +1,8 @@
 import { useState } from "react";
-import ActivityCard from "../components/ActivityCard";
-import Button from "../components/Button";
 import Icon from "../components/Icon";
-import MediaPlaceholder from "../components/MediaPlaceholder";
-import Pill from "../components/Pill";
-import ScreenHeader from "../components/ScreenHeader";
-import { activities, shareTargets } from "../constants/data";
 
-export default function CreatePost({ onNavigate }) {
-  const [step, setStep] = useState(0);
+export default function CreatePost({ onNavigate, initialStep = 0 }) {
+  const [step, setStep] = useState(initialStep);
   const isCompose = step === 0;
 
   function goBack() {
@@ -20,55 +14,45 @@ export default function CreatePost({ onNavigate }) {
   }
 
   return (
-    <main className="screen screen-pad">
-      <ScreenHeader
-        action={{ text: isCompose ? "Next" : "Post", onClick: isCompose ? () => setStep(1) : () => onNavigate?.("feed") }}
-        mode="form"
-        onBack={goBack}
-        title="Create post"
-      />
+    <main className="screen flex h-full flex-col">
+      <header className="between border-b border-[var(--border)] bg-white px-5 py-4 shadow-[var(--shadow-header)]">
+        <button className="text-sm font-semibold" onClick={goBack}>Close</button>
+        <button className="text-sm font-semibold text-[var(--text-secondary)]" onClick={isCompose ? () => setStep(1) : () => onNavigate?.("feed")}>Publish</button>
+      </header>
 
-      <section className="stack">
-        <div className="between">
-          <p className="meta">Step {step + 1} of 2</p>
-          <div className="row gap-1">
-            <span className="h-1.5 w-8 rounded-full bg-[var(--blue)]" />
-            <span className={`h-1.5 w-8 rounded-full ${step === 1 ? "bg-[var(--blue)]" : "bg-[var(--divider)]"}`} />
-          </div>
-        </div>
-
+      <section className="flex-1 px-6 py-8">
         {isCompose ? (
-          <>
+          <div className="flex h-full flex-col">
             <textarea
-              className="min-h-[300px] w-full resize-none border-0 bg-transparent text-sm font-medium outline-none placeholder:text-[var(--text-tertiary)]"
+              className="min-h-[420px] flex-1 resize-none border-0 bg-transparent text-[20px] font-medium outline-none placeholder:text-[var(--text-tertiary)]"
               defaultValue="What’s going on?"
             />
-            <div className="between border-t border-[var(--border)] pt-3">
-              <button className="row text-xs font-medium text-[var(--text-secondary)]"><Icon name="media" size="sm" /> Add camera</button>
-              <div className="row text-[var(--text-secondary)]">
-                <Icon name="list" size="md" />
-                <Icon name="media" size="md" />
-              </div>
-            </div>
-            <Button className="w-full" icon="arrowRight" onClick={() => setStep(1)}>Continue</Button>
-          </>
+          </div>
         ) : (
-          <>
-            <div className="form-field">
-              <label>Add a title (optional)</label>
-              <input className="input" defaultValue="Morning product sprint" />
+          <div className="stack">
+            <input
+              className="w-full border-0 bg-transparent text-[22px] font-bold outline-none placeholder:text-[var(--text-secondary)]"
+              defaultValue="Add a Title (Optional)"
+            />
+            <textarea
+              className="min-h-[360px] w-full resize-none border-0 bg-transparent text-[18px] font-medium outline-none placeholder:text-[var(--text-tertiary)]"
+              defaultValue="What’s going on?"
+            />
+            <div className="rounded-2xl bg-[var(--surface-muted)] p-4">
+              <p className="meta">Audience</p>
+              <p className="mt-1 text-sm font-semibold">Followers, comments allowed</p>
             </div>
-            <div className="form-field">
-              <label>Caption</label>
-              <textarea className="textarea" defaultValue="What’s going on?" />
-            </div>
-            <MediaPlaceholder />
-            <div className="tab-row">{shareTargets.slice(0, 3).map((item, index) => <Pill key={item} active={index === 0}>{item}</Pill>)}</div>
-            <ActivityCard activity={activities[0]} onOpen={() => onNavigate?.("preview")} />
-            <Button className="w-full" icon="share" onClick={() => onNavigate?.("feed")}>Publish post</Button>
-          </>
+          </div>
         )}
       </section>
+
+      <footer className="between border-t border-[var(--border)] bg-white px-6 py-5 shadow-[var(--shadow-navbar)]">
+        <button className="row text-sm font-medium text-[var(--text-secondary)]"><Icon name="check" size="md" />Allow Comments</button>
+        <div className="row text-[var(--text)]">
+          <Icon name="list" size="lg" />
+          <Icon name="media" size="lg" />
+        </div>
+      </footer>
     </main>
   );
 }

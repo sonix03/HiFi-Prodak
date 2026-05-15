@@ -86,7 +86,9 @@ export const theme = {
     avatar: "999px",
   },
   shadows: {
-    card: "0 8px 24px rgba(10, 10, 10, 0.04)",
+    header: "0 2px 10px rgba(15, 23, 42, 0.04)",
+    navbar: "0 -4px 18px rgba(15, 23, 42, 0.08)",
+    card: "0 6px 18px rgba(15, 23, 42, 0.05)",
     floating: "0 12px 32px rgba(10, 10, 10, 0.10)",
     button: "0 6px 16px rgba(10, 10, 10, 0.12)",
   },

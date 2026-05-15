@@ -23,7 +23,9 @@
   --divider: #eeeeee;
   --heading: "Plus Jakarta Sans", Manrope, Inter, system-ui, sans-serif;
   --ui: "Plus Jakarta Sans", Inter, system-ui, sans-serif;
-  --shadow-card: 0 8px 24px rgba(10, 10, 10, 0.04);
+  --shadow-header: 0 2px 10px rgba(15, 23, 42, 0.04);
+  --shadow-navbar: 0 -4px 18px rgba(15, 23, 42, 0.08);
+  --shadow-card: 0 6px 18px rgba(15, 23, 42, 0.05);
   --shadow-floating: 0 12px 32px rgba(10, 10, 10, 0.1);
   --shadow-button: 0 6px 16px rgba(10, 10, 10, 0.12);
   color: var(--text);
