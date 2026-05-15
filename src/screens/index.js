@@ -1,7 +1,11 @@
+export { default as Activities } from "./Activities";
 export { default as ActivityDetail } from "./ActivityDetail";
 export { default as Club } from "./Club";
 export { default as Comments } from "./Comments";
+export { default as CreateClub } from "./CreateClub";
 export { default as CreateChallenge } from "./GroupClub";
+export { default as CreatePost } from "./CreatePost";
+export { default as EditActivity } from "./EditActivity";
 export { default as Feed } from "./Feed";
 export { default as Groups } from "./Groups";
 export { default as Login } from "./Login";
@@ -11,3 +15,6 @@ export { default as Profile } from "./Profile";
 export { default as Progress } from "./Progress";
 export { default as Record } from "./Record";
 export { default as SaveActivity } from "./SaveActivity";
+export { default as Share } from "./Share";
+export { default as ShareClub } from "./ShareClub";
+export { default as SearchFriend } from "./SearchFriend";

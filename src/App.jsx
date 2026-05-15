@@ -1,9 +1,13 @@
 import { C } from "./constants/theme";
 import {
+  Activities,
   ActivityDetail,
   Club,
   Comments,
+  CreateClub,
   CreateChallenge,
+  CreatePost,
+  EditActivity,
   Feed,
   Groups,
   Login,
@@ -13,12 +17,22 @@ import {
   Progress,
   Record,
   SaveActivity,
+  Share,
+  ShareClub,
+  SearchFriend,
 } from "./screens";
 
 const screens = [
   Preview,
   Login,
   Feed,
+  Share,
+  ShareClub,
+  SearchFriend,
+  CreateClub,
+  CreatePost,
+  EditActivity,
+  Activities,
   Profile,
   Progress,
   Club,
