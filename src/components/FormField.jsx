@@ -1,8 +1,14 @@
 import Icon from "./Icon";
 
-export default function FormField({ label, children, textarea = false, ...props }) {
+export default function FormField({
+  label,
+  children,
+  textarea = false,
+  className = "",
+  ...props
+}) {
   return (
-    <label className="form-field">
+    <label className={`form-field mt-2 ${className}`}>
       <span>{label}</span>
       {children ||
         (textarea ? (
@@ -14,9 +20,9 @@ export default function FormField({ label, children, textarea = false, ...props 
   );
 }
 
-export function SelectField({ label, value, icon, onOpen }) {
+export function SelectField({ label, value, icon, onOpen, className = "" }) {
   return (
-    <div className="form-field">
+    <div className={`form-field mt-2 ${className}`}>
       <label>{label}</label>
       <button
         className="input flex items-center justify-between"

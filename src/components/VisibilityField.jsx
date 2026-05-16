@@ -1,8 +1,13 @@
 import Icon from "./Icon";
 
-export default function VisibilityField({ options, selectedIndex, onSelect }) {
+export default function VisibilityField({
+  options,
+  selectedIndex,
+  onSelect,
+  className = "",
+}) {
   return (
-    <div className="form-field">
+    <div className={`form-field mt-2 ${className}`}>
       <label>Who can view</label>
       <div className="flex gap-2">
         {options.map((item, index) => (
