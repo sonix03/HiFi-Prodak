@@ -102,9 +102,7 @@ export default function Profile({ onNavigate }) {
             <span className="mt-1.5 block text-[11px] font-semibold leading-tight text-[var(--text-secondary)]">Avg score</span>
           </div>
         </div>
-        <div className="mt-3">
           <ProgressChart data={weeklyStats} flushX />
-        </div>
         <div className="h-[3px] rounded-full bg-[var(--divider)]" />
         <div className="list">
           {profileActions.map((item) => (
