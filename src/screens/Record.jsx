@@ -57,8 +57,11 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
               <ActionButton icon="finish" label="Finish" tone="dark" onClick={() => onNavigate?.("saveActivity")} />
             </div>
           ) : initialRunning ? (
-            <div className="flex justify-center pb-2">
-              <SmallAction icon="pause" label="Pause" tone="primary" />
+            <div className="pb-2">
+              <button className="row w-full justify-center rounded-full border-2 px-4 py-3 border-[var(--blue)] bg-[var(--blue)] text-white shadow-[0_8px_18px_rgba(37,99,235,0.24)]">
+                <ActionIcon icon="pause" size={24} strokeWidth={2} />
+                <span className="text-base font-extrabold">Pause</span>
+              </button>
             </div>
           ) : (
             <div className="grid grid-cols-3 items-center">
