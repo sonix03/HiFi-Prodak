@@ -4,7 +4,7 @@ import appleLogo from "../assets/apple-logo.png";
 import facebookLogo from "../assets/facebook-logo.png";
 import googleLogo from "../assets/google-logo.png";
 
-export default function Login({ onNavigate }) {
+export default function Registration({ onNavigate }) {
   return (
     <main className="screen screen-pad flex flex-col justify-center">
       <section className="stack">
@@ -13,10 +13,15 @@ export default function Login({ onNavigate }) {
             <span />
             <strong>Prodak</strong>
           </div>
-          <h1 className="title">Log in to Prodak</h1>
+          <h1 className="title">Create your account</h1>
         </div>
 
         <div className="form-field mt-4">
+          <label>Full Name</label>
+          <input className="input !rounded-xl !border !border-[var(--text)]" type="text" />
+        </div>
+
+        <div className="form-field">
           <label>Email</label>
           <input className="input !rounded-xl !border !border-[var(--text)]" type="email" />
         </div>
@@ -26,19 +31,14 @@ export default function Login({ onNavigate }) {
           <input className="input !rounded-xl !border !border-[var(--text)]" type="password" />
         </div>
 
-        <button
-          className="w-fit text-sm font-semibold text-[var(--text-secondary)] underline"
-          onClick={() => onNavigate?.("forgotPassword")}
-        >
-          Forgot Password?
-        </button>
-
-        <Button size="lg" className="w-full !rounded-xl bg-[var(--blue)] text-white" onClick={() => onNavigate?.("feed")}>Login</Button>
+        <Button size="lg" className="w-full !rounded-xl bg-[var(--blue)] text-white" onClick={() => onNavigate?.("feed")}>
+          Register
+        </Button>
 
         <p className="text-center text-sm font-medium text-[var(--text-secondary)]">
-          Don't have an account?{" "}
-          <button className="font-bold text-[var(--blue)]" onClick={() => onNavigate?.("registration")}>
-            Register
+          Already have an account?{" "}
+          <button className="font-bold text-[var(--blue)]" onClick={() => onNavigate?.("login")}>
+            Login
           </button>
         </p>
 

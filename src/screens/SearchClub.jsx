@@ -22,7 +22,7 @@ function SearchTabs({ active, onNavigate }) {
 export default function SearchClub({ onNavigate }) {
   return (
     <main className="screen screen-pad">
-      <ScreenHeader title="Search" onBack={() => onNavigate?.("groups")} action={{ icon: "settings", label: "Search settings" }} />
+      <ScreenHeader title="Search" onBack={() => onNavigate?.("groups")} />
       <SearchTabs active="clubs" onNavigate={onNavigate} />
       <div className="mt-4">
         <SearchBar placeholder="Search clubs to join" />

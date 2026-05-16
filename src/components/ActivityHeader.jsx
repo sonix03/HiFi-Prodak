@@ -5,7 +5,7 @@ export default function ActivityHeader({ title = "Activity", onBack }) {
     <Header
       mode="detail"
       onBack={onBack}
-      primaryAction={{ icon: "share", label: "Share activity" }}
+      right={null}
       secondaryAction={{ icon: "more", label: "More activity actions" }}
       title={title}
     />

@@ -29,7 +29,7 @@ export default function Feed({ onNavigate }) {
       media: [{ type: "photo", src: landscapeItb }],
     },
     {
-      activity: activities[2],
+      activity: { ...activities[2], kudos: 0, comments: 0 },
       place: "Personal study log",
       media: [{ type: "map", src: mapPic }],
     },

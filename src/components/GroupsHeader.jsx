@@ -13,9 +13,7 @@ export default function GroupsHeader({ active = "clubs", onNavigate }) {
           <Icon name="search" size={24} />
         </button>
         <h1 className="title">Groups</h1>
-        <button className="header-action" aria-label="Settings">
-          <Icon name="settings" size={24} />
-        </button>
+        <span className="h-9 w-9" aria-hidden="true" />
       </header>
 
       <div className="grid grid-cols-2 border-b border-[var(--divider)] text-center text-sm font-semibold">

@@ -24,7 +24,7 @@ export default function ActivityCard({ activity, onOpen }) {
         <div className="mt-3 grid-3">
           <Stat value={activity.duration} label="Duration" />
           <Stat value={activity.focusScore} label="Score" tone="orange" />
-          <Stat value={activity.output} label="Output" tone="blue" />
+          <Stat value={activity.output} label="Steps" tone="blue" />
         </div>
         <div className="mt-3">
           <ActivityMap height={160} proof={activity.proof} />

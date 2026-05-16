@@ -37,7 +37,7 @@ export default function ActivityDetail({ onNavigate }) {
         <MetricGrid columns={2} items={[
           { label: "Duration", value: activity.duration, sub: "Focused time" },
           { label: "Focus score", value: activity.focusScore, sub: "Top 8% today", tone: "blue" },
-          { label: "Output", value: activity.output, sub: "Equivalent distance", tone: "blue" },
+          { label: "Steps", value: activity.output, sub: "Total movement", tone: "blue" },
           { label: "Streak", value: activity.streak, sub: "Active identity", tone: "yellow" },
         ]} />
       </div>

@@ -62,7 +62,7 @@ export default function FeedPost({
           </p>
         </div>
         <div>
-          <p className="meta">Output</p>
+          <p className="meta">Steps</p>
           <p className="metric-sm mt-1">{activity.output}</p>
         </div>
       </div>
@@ -99,27 +99,33 @@ export default function FeedPost({
 
 function SocialSummary({ activity, onNavigate }) {
   const kudosUsers = users.filter((user) => user.id !== activity.user.id).slice(0, 3);
+  const hasKudos = activity.kudos > 0;
+  const hasComments = activity.comments > 0;
   const commentLabel = `${activity.comments} ${activity.comments === 1 ? "comment" : "comments"}`;
 
   return (
     <div className="row justify-between gap-3 pt-1">
       <div className="row min-w-0">
-        <div className="row -space-x-8">
-          {kudosUsers.map((user) => (
-            <Avatar key={user.id} user={user} size="sm" tone="neutral" />
-          ))}
-        </div>
+        {hasKudos ? (
+          <div className="row -space-x-8">
+            {kudosUsers.map((user) => (
+              <Avatar key={user.id} user={user} size="sm" tone="neutral" />
+            ))}
+          </div>
+        ) : null}
         <p className="truncate text-[11px] font-semibold leading-none text-[var(--text-secondary)]">
-          {activity.kudos} gave kudos
+          {hasKudos ? `${activity.kudos} gave kudos` : "Be the first to give kudos"}
         </p>
       </div>
-      <button
-        className="shrink-0 text-[var(--text-secondary)]"
-        onClick={() => onNavigate?.("comments")}
-        type="button"
-      >
-        <p className="text-[11px] font-semibold leading-none">{commentLabel}</p>
-      </button>
+      {hasComments ? (
+        <button
+          className="shrink-0 text-[var(--text-secondary)]"
+          onClick={() => onNavigate?.("comments")}
+          type="button"
+        >
+          <p className="text-[11px] font-semibold leading-none">{commentLabel}</p>
+        </button>
+      ) : null}
     </div>
   );
 }
