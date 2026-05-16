@@ -33,7 +33,6 @@ import {
   PencilEdit02Icon,
   PlayCircleIcon,
   PlusSignIcon,
-  Profile02Icon,
   RecordIcon,
   Route03Icon,
   Search01Icon,
@@ -45,6 +44,7 @@ import {
   ChampionIcon,
   UserAdd02Icon,
   UserCheck02Icon,
+  UserCircleIcon,
   UserGroup03Icon,
 } from "@hugeicons/core-free-icons";
 import { theme } from "../constants/theme";
@@ -80,7 +80,7 @@ const icons = {
   notification: Notification03Icon,
   play: PlayCircleIcon,
   plus: PlusSignIcon,
-  profile: Profile02Icon,
+  profile: UserCircleIcon,
   proof: FileVerifiedIcon,
   record: RecordIcon,
   route: Route03Icon,
