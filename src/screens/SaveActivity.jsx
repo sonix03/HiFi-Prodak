@@ -1,93 +1,189 @@
-import {
-  ArrowLeft,
-  ImagePlus,
-  Map,
-  Save,
-  Tag,
-} from "lucide-react";
-import Phone from "../components/Phone";
+import { useState } from "react";
+import ActivityMap from "../components/ActivityMap";
+import Button from "../components/Button";
+import ChangeMapType from "../components/ChangeMapType";
+import FeelingField from "../components/FeelingField";
+import FormField, { SelectField } from "../components/FormField";
+import OptionBottomSheet, {
+  FeelingBottomSheet,
+} from "../components/OptionBottomSheet";
+import ScreenHeader from "../components/ScreenHeader";
+import VisibilityField from "../components/VisibilityField";
+import mapPic from "../assets/map-pic.png";
+import landscapeItb from "../assets/landscape-itb.png";
+import { activities } from "../constants/data";
 
-const photos = ["Cover", "Detail", "Extra"];
+const activityTypes = [
+  { label: "Deep Work", icon: "target" },
+  { label: "Studying", icon: "book" },
+];
 
-export default function SaveActivity() {
+const activityTags = [
+  { label: "Design" },
+  { label: "Writing" },
+  { label: "Learning" },
+  { label: "Research" },
+  { label: "Meeting" },
+  { label: "Coding" },
+];
+
+const feelingLevels = ["Easy", "Moderate", "Max Effort"];
+
+const visibilityOptions = [
+  { label: "Public", icon: "globe" },
+  { label: "Followers", icon: "users" },
+  { label: "Private", icon: "lock" },
+];
+
+const hiddenDetailsOptions = [
+  "Show all details",
+  "Hide time",
+  "Hide output",
+  "Hide focus score",
+  "Hide all",
+];
+
+export default function SaveActivity({ onNavigate }) {
+  const [selectedActivityType, setSelectedActivityType] = useState(0);
+  const [selectedTag, setSelectedTag] = useState(0);
+  const [selectedVisibility, setSelectedVisibility] = useState(0);
+  const [selectedHiddenDetails, setSelectedHiddenDetails] = useState(0);
+  const [selectedFeeling, setSelectedFeeling] = useState(1);
+
+  const [showActivityTypeSheet, setShowActivityTypeSheet] = useState(false);
+  const [showTagSheet, setShowTagSheet] = useState(false);
+  const [showFeelingSheet, setShowFeelingSheet] = useState(false);
+  const [showHiddenDetailsSheet, setShowHiddenDetailsSheet] = useState(false);
+
+  const activity = activities[0];
+
   return (
-    <Phone title="Save Activity">
-      <div className="relative h-full overflow-hidden bg-[#F6FAFD] text-left">
-        <div className="pointer-events-none absolute -right-20 top-20 h-48 w-48 rounded-full bg-[#F7DD7D]/35 blur-3xl" />
-        <div className="pointer-events-none absolute -left-24 bottom-20 h-56 w-56 rounded-full bg-[#427AB5]/20 blur-3xl" />
+    <main className="screen screen-pad flex flex-col relative" style={{ paddingBottom: "20px" }}>
+      <ScreenHeader
+        mode="form"
+        onBack={() => onNavigate?.("record")}
+        title="Save activity"
+        right={null}
+      />
 
-        <div className="relative z-10 px-7 pt-8">
-          <div className="flex items-center justify-between">
-            <button className="grid h-10 w-10 place-items-center rounded-full border border-[#050505]/70 bg-white/70 text-[#050505] shadow-[0_10px_24px_rgba(23,50,77,0.08)] backdrop-blur-md">
-              <ArrowLeft size={18} strokeWidth={2.2} />
-            </button>
+      <div className="flex-1 overflow-y-auto pb-4 pt-2">
+        <div className="stack gap-4">
+          <FormField label="Title" defaultValue={activity.title} />
 
-            <h1 className="text-[15px] font-black text-[#050505]">
-              Save Activity
-            </h1>
+          <FormField label="Description" textarea defaultValue={activity.caption} />
 
-            <div className="w-10" />
+          <SelectField
+            icon={activityTypes[selectedActivityType].icon}
+            label="Jenis Kegiatan"
+            onOpen={() => setShowActivityTypeSheet(true)}
+            value={activityTypes[selectedActivityType].label}
+          />
+
+          <div className="flex gap-3">
+            <div className="flex-1 overflow-hidden rounded-xl border border-[var(--blue)]">
+              <ActivityMap height={120} imageSrc={mapPic} />
+            </div>
+            <div className="flex-1 overflow-hidden rounded-xl border border-[var(--border)]">
+              <img className="h-[120px] w-full object-cover" src={landscapeItb} alt="" />
+            </div>
           </div>
 
-          <section className="mt-7 space-y-4">
-            <div className="rounded-[14px] border border-[#427AB5]/25 bg-white/85 px-4 py-4 text-[11px] font-bold text-[#050505]/55 shadow-[0_12px_28px_rgba(64,106,175,0.08)] backdrop-blur-md">
-              Time to suffer!
-            </div>
+          <ChangeMapType />
 
-            <div className="min-h-[86px] rounded-[14px] border border-[#427AB5]/25 bg-white/85 px-4 py-4 text-[10px] font-semibold leading-5 text-[#050505]/45 shadow-[0_12px_28px_rgba(64,106,175,0.08)] backdrop-blur-md">
-              How’d it go? Share more about your activity and use # to tag
-              someone.
-            </div>
+          <div className="mt-2">
+            <p className="mb-2 font-semibold text-[var(--text)]">Details</p>
 
-            <div className="rounded-[14px] border border-[#427AB5]/25 bg-white/85 px-4 py-4 text-[11px] font-bold text-[#050505]/45 shadow-[0_12px_28px_rgba(64,106,175,0.08)] backdrop-blur-md">
-              Add location or note
-            </div>
-          </section>
+            <SelectField
+              label="Activity tag"
+              onOpen={() => setShowTagSheet(true)}
+              value={activityTags[selectedTag].label}
+            />
 
-          <section className="mt-6">
-            <div className="flex gap-3 overflow-hidden">
-              {photos.map((photo, index) => (
-                <div
-                  key={photo}
-                  className={`grid h-24 shrink-0 place-items-center rounded-[18px] border shadow-[0_16px_32px_rgba(64,106,175,0.12)] ${
-                    index === 0
-                      ? "w-[108px] border-[#427AB5]/30 bg-[#427AB5]/12"
-                      : "w-[76px] border-[#406AAF]/25 bg-[#D8E1EB]"
-                  }`}
-                >
-                  <div className="grid h-11 w-11 place-items-center rounded-[14px] border border-dashed border-[#427AB5]/60 bg-white/55">
-                    <ImagePlus size={20} className="text-[#427AB5]" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+            <FeelingField
+              value={feelingLevels[selectedFeeling]}
+              onOpen={() => setShowFeelingSheet(true)}
+            />
+          </div>
 
-          <button className="mt-6 flex h-8 w-full items-center justify-center gap-2 rounded-full border border-[#050505]/70 bg-[#D8E1EB] text-[11px] font-black text-[#050505] shadow-[0_10px_22px_rgba(23,50,77,0.08)]">
-            <Map size={13} />
-            Change Map Type
-          </button>
+          <div className="mt-2">
+            <p className="mb-2 font-semibold text-[var(--text)]">Visibility</p>
 
-          <section className="mt-7">
-            <h2 className="text-[12px] font-black text-[#050505]">
-              Details
-            </h2>
+            <VisibilityField
+              options={visibilityOptions}
+              selectedIndex={selectedVisibility}
+              onSelect={setSelectedVisibility}
+            />
 
-            <div className="mt-4 flex h-11 items-center gap-3 rounded-[14px] border border-[#427AB5]/25 bg-white/85 px-4 shadow-[0_12px_28px_rgba(64,106,175,0.08)] backdrop-blur-md">
-              <Tag size={14} className="text-[#427AB5]" />
+            <SelectField
+              label="Hidden details"
+              onOpen={() => setShowHiddenDetailsSheet(true)}
+              value={hiddenDetailsOptions[selectedHiddenDetails]}
+            />
+          </div>
 
-              <span className="text-[11px] font-semibold text-[#050505]/55">
-                Activity Tag
-              </span>
-            </div>
-          </section>
-
-          <button className="mt-6 flex h-10 w-full items-center justify-center gap-2 rounded-full bg-[#427AB5] text-[11px] font-black text-white shadow-[0_16px_32px_rgba(66,122,181,0.32)]">
-            <Save size={14} />
-            Save Activity
+          <button
+            className="mt-2 text-center text-sm font-semibold text-[var(--red)]"
+            onClick={() => onNavigate?.("record")}
+          >
+            Discard Activity
           </button>
         </div>
       </div>
-    </Phone>
+
+      <div className="border-t border-[var(--divider)] bg-white py-3">
+        <Button className="w-full" onClick={() => onNavigate?.("feed")}>
+          Save Activity
+        </Button>
+      </div>
+
+      {showActivityTypeSheet && (
+        <OptionBottomSheet
+          title="Jenis Kegiatan"
+          options={activityTypes}
+          selectedIndex={selectedActivityType}
+          onClose={() => setShowActivityTypeSheet(false)}
+          onSelect={(index) => {
+            setSelectedActivityType(index);
+            setShowActivityTypeSheet(false);
+          }}
+        />
+      )}
+
+      {showTagSheet && (
+        <OptionBottomSheet
+          title="Activity tag"
+          options={activityTags}
+          selectedIndex={selectedTag}
+          variant="pills"
+          onClose={() => setShowTagSheet(false)}
+          onSelect={(index) => {
+            setSelectedTag(index);
+            setShowTagSheet(false);
+          }}
+        />
+      )}
+
+      {showFeelingSheet && (
+        <FeelingBottomSheet
+          levels={feelingLevels}
+          selectedIndex={selectedFeeling}
+          onClose={() => setShowFeelingSheet(false)}
+          onSelect={setSelectedFeeling}
+        />
+      )}
+
+      {showHiddenDetailsSheet && (
+        <OptionBottomSheet
+          title="Hidden details"
+          options={hiddenDetailsOptions}
+          selectedIndex={selectedHiddenDetails}
+          onClose={() => setShowHiddenDetailsSheet(false)}
+          onSelect={(index) => {
+            setSelectedHiddenDetails(index);
+            setShowHiddenDetailsSheet(false);
+          }}
+        />
+      )}
+    </main>
   );
 }

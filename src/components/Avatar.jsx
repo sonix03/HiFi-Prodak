@@ -1,23 +1,19 @@
-const sizes = {
-  sm: "h-8 w-8 text-[10px]",
-  md: "h-10 w-10 text-xs",
-  lg: "h-16 w-16 text-lg",
-};
+import defaultAvatar from "../assets/avatar.png";
 
-const tones = {
-  blue: "bg-[#427AB5] text-white",
-  navy: "bg-[#406AAF] text-white",
-  cream: "bg-[#FFE8BE] text-[#406AAF]",
-  yellow: "bg-[#F7DD7D] text-[#17324D]",
-  orange: "bg-[#427AB5] text-white",
-};
+export default function Avatar({ user, initials, size = "md", tone = "orange" }) {
+  const sizes = {
+    sm: "w-8 h-8 text-[11px]",
+    md: "w-10 h-10 text-xs",
+    lg: "w-20 h-20 text-lg",
+    xl: "w-24 h-24 text-2xl",
+  };
+  const src = user?.avatar || defaultAvatar;
 
-export default function Avatar({ initials = "MF", size = "md", tone = "blue" }) {
   return (
-    <div
-      className={`grid shrink-0 place-items-center rounded-full font-black ${sizes[size]} ${tones[tone]}`}
-    >
-      {initials}
-    </div>
+    <img
+      alt={user?.name || initials || "Prodak user"}
+      className={`shrink-0 rounded-full border border-[var(--border)] object-cover ${sizes[size]} ${tone === "blue" ? "ring-2 ring-[var(--blue)] ring-offset-2" : ""}`}
+      src={src}
+    />
   );
 }

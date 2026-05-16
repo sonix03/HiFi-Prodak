@@ -1,127 +1,90 @@
-import {
-  ArrowLeft,
-  CalendarDays,
-  ChevronDown,
-  Download,
-  ImagePlus,
-} from "lucide-react";
-import Nav from "../components/Nav";
-import Phone from "../components/Phone";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Share03Icon } from "@hugeicons/core-free-icons";
+import AppHeader from "../components/AppHeader";
+import ListItem from "../components/ListItem";
+import MetricGrid from "../components/MetricGrid";
+import ProgressChart from "../components/ProgressChart";
+import SectionHeader from "../components/SectionHeader";
+import { challenges, monthlyProductivity, weeklyStats } from "../constants/data";
 
-const dates = Array.from({ length: 30 }, (_, index) => index + 1);
-const activeDates = [4, 12, 18, 20, 26];
+function HeatmapCell({ item }) {
+  const level =
+    item.hours >= 4 ? "bg-[var(--primary)] text-white" :
+    item.hours >= 2.5 ? "bg-[var(--blue)]/80 text-white" :
+    item.hours >= 1 ? "bg-[var(--primary-soft)] text-[var(--blue)]" :
+    item.hours > 0 ? "bg-[var(--surface-muted)] text-[var(--text-secondary)]" :
+    "bg-white text-[var(--text-tertiary)]";
+
+  return (
+    <div className={`grid aspect-square place-items-center rounded-xl border border-[var(--border)] ${level}`}>
+      <span className="text-[11px] font-semibold">{item.day}</span>
+    </div>
+  );
+}
+
+function MonthlyHeatmap({ data }) {
+  return (
+    <div>
+      <div className="between">
+        <p className="text-lg font-bold">May 2026</p>
+        <button className="flex items-center gap-1 rounded-[20px] border border-[var(--blue)] px-2 py-1 text-sm font-semibold text-[var(--blue)]">
+          <HugeiconsIcon icon={Share03Icon} size={14} />
+          Share
+        </button>
+      </div>
+
+      <div className="mt-3 grid grid-cols-2 gap-4">
+        <div>
+          <p className="text-xs text-[var(--text-secondary)]">Your Streak</p>
+          <p className="text-lg font-bold">18d</p>
+        </div>
+        <div>
+          <p className="text-xs text-[var(--text-secondary)]">Activities</p>
+          <p className="text-lg font-bold">10</p>
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-7 gap-2">
+        {["M", "T", "W", "T", "F", "S", "S"].map((day, index) => (
+          <span className="text-center text-[10px] font-semibold text-[var(--text-tertiary)]" key={`${day}-${index}`}>{day}</span>
+        ))}
+        {data.map((item) => <HeatmapCell item={item} key={item.day} />)}
+      </div>
+    </div>
+  );
+}
 
 export default function Progress() {
   return (
-    <Phone title="Progress">
-      <div className="relative h-full overflow-hidden bg-[#F6FAFD] pb-[96px] text-left">
-        <div className="px-8 pt-8">
-          <button className="grid h-10 w-10 place-items-center rounded-full border border-[#17324D]/20 text-[#17324D]">
-            <ArrowLeft size={18} strokeWidth={2.2} />
-          </button>
-
-          <section className="mt-8">
-            <div className="flex items-center gap-3">
-              <h3 className="text-[14px] font-black text-[#050505]">
-                This week
-              </h3>
-
-              <CalendarDays size={17} className="text-[#17324D]" />
-            </div>
-
-            <div className="mt-5 h-44 rounded-[24px] border border-[#427AB5]/20 bg-white px-4 py-4 shadow-[0_14px_30px_rgba(64,106,175,0.08)]">
-              <div className="mb-4 flex gap-4">
-                <div className="h-1.5 w-10 rounded-full bg-[#406AAF]/45" />
-                <div className="h-1.5 w-7 rounded-full bg-[#406AAF]/35" />
-                <div className="h-1.5 w-8 rounded-full bg-[#406AAF]/35" />
-              </div>
-
-              <svg viewBox="0 0 260 105" className="h-[105px] w-full">
-                <line x1="0" y1="18" x2="260" y2="18" stroke="#D4DEE8" />
-                <line x1="0" y1="52" x2="260" y2="52" stroke="#D4DEE8" />
-                <line x1="0" y1="86" x2="260" y2="86" stroke="#D4DEE8" />
-
-                <polyline
-                  points="15,72 58,55 101,78 144,38 187,60 230,20 255,56"
-                  fill="none"
-                  stroke="#406AAF"
-                  strokeWidth="2"
-                />
-
-                {[
-                  [15, 72],
-                  [58, 55],
-                  [101, 78],
-                  [144, 38],
-                  [187, 60],
-                  [230, 20],
-                  [255, 56],
-                ].map(([x, y], index) => (
-                  <circle
-                    key={index}
-                    cx={x}
-                    cy={y}
-                    r="4"
-                    fill="#F6FAFD"
-                    stroke="#050505"
-                    strokeWidth="1.5"
-                  />
-                ))}
-              </svg>
-
-              <div className="ml-auto mt-1 h-6 w-14 rounded-full border border-[#050505] bg-[#427AB5]/15" />
-            </div>
-          </section>
-
-          <section className="mt-8">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <h3 className="text-[14px] font-black text-[#050505]">
-                  March 2026
-                </h3>
-
-                <ChevronDown size={16} className="text-[#17324D]" />
-              </div>
-
-              <button className="grid h-8 w-8 place-items-center rounded-full text-[#17324D]">
-                <Download size={16} />
-              </button>
-            </div>
-
-            <div className="mt-5 mb-4 flex gap-4">
-              <div className="h-1.5 w-10 rounded-full bg-[#406AAF]/45" />
-              <div className="h-1.5 w-7 rounded-full bg-[#406AAF]/35" />
-              <div className="h-1.5 w-8 rounded-full bg-[#406AAF]/35" />
-            </div>
-
-            <div className="grid grid-cols-7 gap-2">
-              {dates.map((date) => (
-                <button
-                  key={date}
-                  className={`grid h-8 place-items-center rounded-[10px] border text-[10px] font-black ${
-                    activeDates.includes(date)
-                      ? "border-[#050505] bg-[#050505] text-white"
-                      : "border-[#050505] bg-white text-[#050505]"
-                  }`}
-                >
-                  {date}
-                </button>
-              ))}
-            </div>
-          </section>
-
-          <section className="mt-8">
-            <h3 className="text-[14px] font-black text-[#050505]">18 th</h3>
-
-            <div className="mt-5 space-y-3">
-              <div className="h-1.5 w-28 rounded-full bg-[#050505]/45" />
-              <div className="h-1.5 w-full rounded-full bg-[#406AAF]/30" />
-            </div>
-          </section>
-        </div>
-
-        <Nav active="progress" />
+    <main className="screen screen-pad">
+      <AppHeader right="settings" secondaryAction={{ icon: "plus", label: "Add" }} />
+      <section className="hero-panel">
+        <p className="text-sm font-semibold text-[var(--blue)]">Weekly focus time</p>
+        <p className="mt-2 text-[30px] font-bold">17h 12m</p>
+        <p className="mt-3 text-sm font-medium text-[var(--text-secondary)]">You are 4h 20m ahead of your four-week average.</p>
+      </section>
+      <div className="mt-4">
+        <MetricGrid columns={2} items={[
+          { label: "Streak", value: "18d", sub: "Personal best", icon: "fire", tone: "yellow" },
+          { label: "Avg score", value: "86", sub: "+5 this week", icon: "analytics", tone: "blue" },
+          { label: "Sessions", value: "24", sub: "May total", icon: "timer" },
+          { label: "Goal", value: "72%", sub: "50K challenge", icon: "target", tone: "blue" },
+        ]} />
       </div>
-    </Phone>
+      <section className="section">
+        <SectionHeader title="Focus volume" meta="Hours recorded by day." />
+        <ProgressChart data={weeklyStats} />
+      </section>
+      <section className="section">
+        
+        <MonthlyHeatmap data={monthlyProductivity} />
+      </section>
+      <section className="section">
+        <SectionHeader title="Insights" />
+        <div className="list mt-2">
+          {challenges.map((challenge) => <ListItem key={challenge.title} icon={challenge.icon} accent="yellow" title={challenge.title} meta={challenge.reward} value={`${challenge.progress}%`} />)}
+        </div>
+      </section>
+    </main>
   );
 }

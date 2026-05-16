@@ -1,85 +1,181 @@
-import { Building2, MapPin, Sparkles, Users2 } from "lucide-react";
-import Phone from "../components/Phone";
+import { useState } from "react";
+import Button from "../components/Button";
+import Icon from "../components/Icon";
+import ScreenHeader from "../components/ScreenHeader";
 
-const fields = ["Club Name", "Category", "Location", "Short Description"];
+const steps = [
+  {
+    title: "Choose your club’s productivity",
+    helper: "Pick the activity identity people will rally around.",
+    options: [
+      ["All Focus", "list"],
+      ["Deep Work", "target"],
+      ["Study Group", "activity"],
+      ["Creator", "edit"],
+      ["Startup", "analytics"],
+      ["Design Sprint", "route"],
+    ],
+  },
+  {
+    title: "Which best describes your club?",
+    helper: "This helps Prodak recommend your club to the right people.",
+    options: [
+      ["Just for fun", "fire"],
+      ["Team", "users"],
+      ["Employee Group", "group"],
+      ["Mentor", "award"],
+      ["Creator", "profile"],
+    ],
+  },
+  {
+    title: "Customize your club",
+    helper: "Add a clear name and one compact description.",
+    form: true,
+  },
+  {
+    title: "Private or Public?",
+    helper: "Public clubs can be discovered. Private clubs require invite approval.",
+    options: [
+      ["Public", "globe"],
+      ["Private", "lock"],
+    ],
+  },
+  {
+    title: "Where is your club located?",
+    helper: "Choose global if location does not matter.",
+    options: [
+      ["Global", "globe"],
+      ["Choose a location", "search"],
+    ],
+    final: true,
+  },
+];
 
-export default function CreateClub() {
+function StepIndicator({ currentStep }) {
   return (
-    <Phone title="Create a Club">
-      <div className="relative h-full overflow-hidden bg-[#F6FAFD] px-6 pb-8 pt-8 text-left">
-        <div className="rounded-[30px] border border-[#427AB5]/18 bg-white p-6 shadow-[0_20px_44px_rgba(64,106,175,0.1)]">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#427AB5]">
-                Club Setup
-              </p>
-              <h2 className="mt-1 text-[18px] font-black text-[#17324D]">
-                Create a club
-              </h2>
-            </div>
-
-            <div className="grid h-14 w-14 place-items-center rounded-[18px] bg-[#427AB5] text-white shadow-[0_14px_30px_rgba(64,106,175,0.24)]">
-              <Building2 size={26} strokeWidth={2.1} />
-            </div>
-          </div>
-
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            <div className="rounded-[22px] border border-[#427AB5]/14 bg-[#FFF8E8] p-4">
-              <Users2 size={18} className="text-[#17324D]" />
-              <p className="mt-4 text-[11px] font-black text-[#17324D]">
-                Member Target
-              </p>
-              <p className="mt-1 text-[10px] font-medium text-[#5D6F8B]">
-                20 - 150 members
-              </p>
-            </div>
-
-            <div className="rounded-[22px] border border-[#427AB5]/14 bg-[#D8E1EB]/55 p-4">
-              <MapPin size={18} className="text-[#17324D]" />
-              <p className="mt-4 text-[11px] font-black text-[#17324D]">
-                Coverage
-              </p>
-              <p className="mt-1 text-[10px] font-medium text-[#5D6F8B]">
-                Hybrid local community
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-5 space-y-3">
-            {fields.map((field) => (
-              <div
-                key={field}
-                className="rounded-[18px] border border-[#427AB5]/14 bg-[#F6FAFD] px-4 py-4"
-              >
-                <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#5D6F8B]">
-                  {field}
-                </p>
-                <div className="mt-3 h-4 w-28 rounded-full bg-[#427AB5]/12" />
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-5 rounded-[22px] border border-dashed border-[#427AB5]/24 bg-white p-5">
-            <div className="flex items-center gap-3">
-              <div className="grid h-11 w-11 place-items-center rounded-[14px] bg-[#F7DD7D]/45 text-[#17324D]">
-                <Sparkles size={18} strokeWidth={2.1} />
-              </div>
-              <div>
-                <p className="text-[11px] font-black text-[#17324D]">
-                  Cover and identity
-                </p>
-                <p className="mt-1 text-[10px] font-medium text-[#5D6F8B]">
-                  Upload logo, hero image, and club color
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <button className="mt-6 h-12 w-full rounded-full bg-[#17324D] text-[12px] font-black text-white shadow-[0_16px_28px_rgba(23,50,77,0.24)]">
-            Publish Club
-          </button>
-        </div>
+    <div>
+      <div className="between">
+        <p className="meta">Step {currentStep + 1} of {steps.length}</p>
+        <p className="meta">{Math.round(((currentStep + 1) / steps.length) * 100)}%</p>
       </div>
-    </Phone>
+      <div className="mt-2 grid grid-cols-5 gap-1">
+        {steps.map((step, index) => (
+          <span
+            className={`h-1 rounded-full ${index <= currentStep ? "bg-[var(--blue)]" : "bg-[var(--divider)]"}`}
+            key={step.title}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function OptionList({ options, selected, setSelected }) {
+  return (
+    <div className="stack">
+      {options.map(([label, icon]) => (
+        <button
+          className={`between rounded-xl border bg-white px-4 py-3 text-left transition active:scale-[0.99] ${
+            selected === label ? "border-[var(--blue)] bg-[var(--blue-soft)]" : "border-[var(--border)]"
+          }`}
+          key={label}
+          onClick={() => setSelected(label)}
+        >
+          <span className="row">
+            <Icon name={icon} size="md" className={selected === label ? "text-[var(--blue)]" : "text-[var(--text)]"} />
+            <span className="text-sm font-medium">{label}</span>
+          </span>
+          <span className={`grid h-5 w-5 place-items-center rounded-full border ${selected === label ? "border-[var(--blue)] bg-[var(--blue)]" : "border-[var(--text-tertiary)]"}`}>
+            {selected === label ? <Icon name="check" size={12} className="text-white" /> : null}
+          </span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function CustomizeStep() {
+  return (
+    <div className="stack">
+      <div className="mx-auto grid h-20 w-20 place-items-center rounded-3xl bg-[var(--surface-muted)] text-[var(--blue)]">
+        <Icon name="users" size="xl" />
+      </div>
+      <div className="form-field">
+        <label>Club name</label>
+        <input className="input" defaultValue="Deep Work Jakarta" />
+      </div>
+      <div className="form-field">
+        <label>Description</label>
+        <textarea className="textarea" defaultValue="A club for verified focus sessions and weekly output challenges." />
+      </div>
+      </div>
+  );
+}
+
+export default function CreateClub({ onNavigate, initialStep = 0 }) {
+  const [currentStep, setCurrentStep] = useState(initialStep);
+  const [selected, setSelected] = useState({
+    0: "All Productivity",
+    1: "Team",
+    3: "Public",
+    4: "Global",
+  });
+  const step = steps[currentStep];
+  const isFirst = currentStep === 0;
+  const isFinal = currentStep === steps.length - 1;
+
+  function previousStep() {
+    if (isFirst) {
+      onNavigate?.("groups");
+      return;
+    }
+    setCurrentStep((stepIndex) => stepIndex - 1);
+  }
+
+  function nextStep() {
+    if (isFinal) {
+      onNavigate?.("club");
+      return;
+    }
+    setCurrentStep((stepIndex) => stepIndex + 1);
+  }
+
+  return (
+    <main className="screen screen-pad">
+      <ScreenHeader
+        action={{ text: isFinal ? "Create" : "Next", onClick: nextStep }}
+        mode="form"
+        onBack={previousStep}
+        secondaryAction={{ icon: "cancel", label: "Cancel", onClick: () => onNavigate?.("groups") }}
+        title="Create club"
+      />
+
+      <section className="stack">
+        <StepIndicator currentStep={currentStep} />
+
+        <div>
+          <h1 className="section-title">{step.title}</h1>
+          <p className="body mt-2">{step.helper}</p>
+        </div>
+
+        {step.form ? (
+          <CustomizeStep />
+        ) : (
+          <OptionList
+            options={step.options}
+            selected={selected[currentStep]}
+            setSelected={(value) => setSelected((state) => ({ ...state, [currentStep]: value }))}
+          />
+        )}
+
+        <p className="text-center text-[11px] font-medium text-[var(--text-tertiary)]">
+          You can change these choices later in club settings.
+        </p>
+
+        <Button className="w-full" icon={isFinal ? "check" : "arrowRight"} onClick={nextStep}>
+          {isFinal ? "Create Club" : "Next"}
+        </Button>
+      </section>
+    </main>
   );
 }

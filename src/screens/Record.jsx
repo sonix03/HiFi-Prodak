@@ -1,115 +1,148 @@
-import {
-  ArrowLeft,
-  Expand,
-  Flag,
-  ImagePlus,
-  Layers,
-  Play,
-  Target,
-} from "lucide-react";
-import Nav from "../components/Nav";
-import Phone from "../components/Phone";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { PlayIcon, RacingFlagIcon } from "@hugeicons/core-free-icons";
+import Icon from "../components/Icon";
+import mapPic from "../assets/map-pic.png";
 
-export default function Record() {
+export default function Record({ onNavigate, initialPlaying = false }) {
+  const time = initialPlaying ? "00:13" : "00:00";
+
   return (
-    <Phone title="Record">
-      <div className="relative h-full overflow-hidden bg-[#F6FAFD] pb-[96px] text-left">
-        <div className="absolute inset-0 grid place-items-center bg-[#D8E1EB]">
-          <div className="grid h-28 w-28 place-items-center rounded-[30px] border-2 border-dashed border-white/90 bg-white/20 shadow-[0_18px_38px_rgba(23,50,77,0.16)] backdrop-blur-md">
-            <ImagePlus size={38} className="text-white" />
-          </div>
+    <main className="screen relative overflow-hidden">
+      <img
+        className="absolute inset-0 h-full w-full scale-125 object-cover"
+        src={mapPic}
+        alt=""
+        style={{ filter: "saturate(1.35) contrast(1.18) brightness(0.82)" }}
+      />
+      <div className="absolute inset-0 bg-black/10" />
 
-          <span className="absolute bottom-[260px] rounded-full bg-white/85 px-4 py-1.5 text-[10px] font-bold text-[#427AB5]">
-            Map image placeholder
-          </span>
+      <button
+        className="absolute left-6 top-10 z-20 grid h-12 w-12 place-items-center rounded-full border-2 border-black bg-white/35 text-black backdrop-blur-sm"
+        onClick={() => onNavigate?.("feed")}
+        aria-label="Back"
+      >
+        <Icon name="arrowLeft" size={26} stroke="strong" />
+      </button>
+
+      <div className="absolute inset-x-0 bottom-0 z-20">
+        <div className="mb-4 mr-6 grid justify-end gap-4">
+          <MapControl icon="list" label="Layers" />
+          <button className="grid h-12 w-12 place-items-center rounded-full border-2 border-black bg-white text-base font-bold text-black shadow-[var(--shadow-card)]">
+            3D
+          </button>
+          <MapControl icon="target" label="Locate" />
         </div>
 
-        <div className="relative z-10 flex items-center justify-between px-8 pt-8">
-          <button className="grid h-11 w-11 place-items-center rounded-full border border-[#050505]/70 bg-[#F6FAFD]/65 text-[#050505] backdrop-blur-md">
-            <ArrowLeft size={20} strokeWidth={2.2} />
-          </button>
-        </div>
-
-        <div className="absolute right-7 top-[240px] z-10 flex flex-col gap-3">
-          <button className="grid h-10 w-10 place-items-center rounded-full border border-[#050505]/60 bg-[#F6FAFD]/85 text-[#050505] shadow-[0_10px_24px_rgba(64,106,175,0.14)] backdrop-blur-md">
-            <Layers size={17} />
-          </button>
-
-          <button className="grid h-10 w-10 place-items-center rounded-full border border-[#050505]/60 bg-[#F6FAFD]/85 text-[#050505] shadow-[0_10px_24px_rgba(64,106,175,0.14)] backdrop-blur-md">
-            <span className="text-[11px] font-black">3D</span>
-          </button>
-
-          <button className="grid h-10 w-10 place-items-center rounded-full border border-[#050505]/60 bg-[#F6FAFD]/85 text-[#050505] shadow-[0_10px_24px_rgba(64,106,175,0.14)] backdrop-blur-md">
-            <Target size={17} />
-          </button>
-        </div>
-
-        <div className="absolute bottom-[166px] left-5 right-5 z-20 overflow-hidden rounded-[24px] border border-[#427AB5]/20 bg-[#F6FAFD] shadow-[0_18px_38px_rgba(23,50,77,0.18)]">
-          <div className="relative border-b border-[#17324D]/10 px-5 py-4 text-center">
-            <p className="text-[12px] font-black text-[#050505]">
-              Stopped
+        <section className="mx-5 mb-4 overflow-hidden rounded-[20px] border border-white/80 bg-white/92 text-center shadow-[var(--shadow-floating)] backdrop-blur">
+          <div className={`relative border-b border-[var(--border)] px-5 py-4 text-center ${initialPlaying ? "bg-[var(--yellow)]" : ""}`}>
+            <p className={`text-base font-extrabold ${initialPlaying ? "text-black" : "text-[var(--text-secondary)]"}`}>
+              {initialPlaying ? "Stopped" : "Work"}
             </p>
-
-            <Expand
-              size={15}
-              className="absolute right-5 top-4 text-[#050505]"
-              strokeWidth={2.2}
-            />
+            {initialPlaying ? (
+              <Icon name="arrowRight" size={22} stroke="strong" className="absolute right-5 top-4 -rotate-45 text-black" />
+            ) : null}
           </div>
-
-          <div className="grid grid-cols-3 px-5 py-5">
-            <div className="text-center">
-              <p className="text-[20px] font-black tracking-[-0.03em] text-[#050505]">
-                00:13
-              </p>
-
-              <p className="mt-1 text-[10px] font-medium text-[#050505]/75">
-                Time
-              </p>
-            </div>
-
-            <div className="text-center">
-              <p className="text-[20px] font-black tracking-[-0.03em] text-[#050505]">
-                -:--
-              </p>
-
-              <p className="mt-1 text-[10px] font-medium text-[#050505]/75">
-                Focus Score
-              </p>
-            </div>
-
-            <div className="text-center">
-              <p className="text-[20px] font-black tracking-[-0.03em] text-[#050505]">
-                0.00
-              </p>
-
-              <p className="mt-1 text-[10px] font-medium text-[#050505]/75">
-                Working Time
-              </p>
-            </div>
+          <div className="grid grid-cols-3 px-5 pb-6 pt-7">
+            <Metric value={time} label="Time" />
+            <Metric value="-:--" label="Focus Score" />
+            <Metric value="0,00" label="Working Time" />
           </div>
-        </div>
+        </section>
 
-        <div className="absolute bottom-[104px] left-5 right-5 z-20 rounded-[24px] border border-[#427AB5]/20 bg-[#F6FAFD]/95 px-6 py-5 shadow-[0_18px_38px_rgba(23,50,77,0.16)] backdrop-blur-md">
-          <div className="flex items-center justify-center gap-7">
-            <button className="flex h-10 min-w-[116px] items-center justify-center gap-2 rounded-full border border-[#050505] bg-[#D8E1EB] px-5 text-[12px] font-black text-[#050505]">
-              <Play size={15} fill="#050505" />
-              Resume
-            </button>
-
-            <button className="flex h-10 min-w-[116px] items-center justify-center gap-2 rounded-full border border-[#050505] bg-[#D8E1EB] px-5 text-[12px] font-black text-[#050505]">
-              <Flag size={15} />
-              Finish
-            </button>
-          </div>
-        </div>
-
-        <button className="absolute bottom-[142px] right-[-6px] z-20 grid h-12 w-12 place-items-center rounded-full border border-[#050505] bg-[#F6FAFD] text-[#050505] shadow-[0_12px_26px_rgba(23,50,77,0.18)]">
-          <Play size={18} fill="#050505" />
-        </button>
-
-        <Nav active="record" />
+        <section className="rounded-t-[22px] border-t border-white/80 bg-white/95 px-7 pb-4 pt-4 shadow-[var(--shadow-floating)] backdrop-blur">
+          <div className="mx-auto mb-7 h-1.5 w-16 rounded-full bg-black/20" />
+          {initialPlaying ? (
+            <div className="grid grid-cols-2 gap-5 pb-2">
+              <ActionButton icon="play" label="Resume" tone="primary" />
+              <ActionButton icon="finish" label="Finish" tone="dark" onClick={() => onNavigate?.("saveActivity")} />
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 items-center">
+              <SmallAction icon="laptop" label="Work" tone="soft" />
+              <SmallAction icon="play" label="Start" tone="primary" onClick={() => onNavigate?.("saveActivity")} />
+              <span aria-hidden="true" />
+            </div>
+          )}
+        </section>
       </div>
-    </Phone>
+    </main>
   );
+}
+
+function MapControl({ icon, label }) {
+  return (
+    <button className="grid h-12 w-12 place-items-center rounded-full border-2 border-black bg-white text-black shadow-[var(--shadow-card)]" aria-label={label}>
+      <Icon name={icon} size={24} stroke="strong" />
+    </button>
+  );
+}
+
+function Metric({ value, label }) {
+  return (
+    <div>
+      <p className="text-[30px] font-black leading-none text-black">{value}</p>
+      <p className="mt-2 text-sm font-semibold text-black">{label}</p>
+    </div>
+  );
+}
+
+function SmallAction({ icon, label, onClick, tone = "default" }) {
+  const isPrimary = tone === "primary";
+  const isSoft = tone === "soft";
+
+  return (
+    <button className="grid justify-items-center gap-2 text-black" onClick={onClick}>
+      <span
+        className={`grid place-items-center rounded-full border shadow-[0_4px_12px_rgba(15,23,42,0.12)] ${
+          isPrimary
+            ? "h-20 w-20 border-[var(--blue)] bg-[var(--blue)] text-white shadow-[0_10px_22px_rgba(37,99,235,0.28)]"
+            : isSoft
+              ? "h-14 w-14 border-[var(--primary-soft)] bg-[var(--primary-soft)] text-[var(--blue)]"
+              : "h-14 w-14 border-black bg-white text-black"
+        }`}
+      >
+        <ActionIcon icon={icon} size={isPrimary ? 38 : 28} strokeWidth={2} />
+      </span>
+      <span className={`${isPrimary ? "text-[17px]" : "text-sm"} font-semibold`}>{label}</span>
+    </button>
+  );
+}
+
+function ActionButton({ icon, label, onClick, tone = "primary" }) {
+  const toneClass = tone === "dark"
+    ? "border-black bg-black text-white shadow-[0_8px_18px_rgba(15,23,42,0.22)]"
+    : "border-[var(--blue)] bg-[var(--blue)] text-white shadow-[0_8px_18px_rgba(37,99,235,0.24)]";
+
+  return (
+    <button className={`row justify-center rounded-full border-2 px-4 py-3 ${toneClass}`} onClick={onClick}>
+      <ActionIcon icon={icon} size={24} strokeWidth={2} />
+      <span className="text-base font-extrabold">{label}</span>
+    </button>
+  );
+}
+
+function ActionIcon({ icon, size, strokeWidth }) {
+  if (icon === "play") {
+    return (
+      <HugeiconsIcon
+        icon={PlayIcon}
+        size={size}
+        color="currentColor"
+        strokeWidth={strokeWidth}
+      />
+    );
+  }
+
+  if (icon === "finish") {
+    return (
+      <HugeiconsIcon
+        icon={RacingFlagIcon}
+        size={size}
+        color="currentColor"
+        strokeWidth={strokeWidth}
+      />
+    );
+  }
+
+  return <Icon name={icon} size={size} stroke={strokeWidth} />;
 }

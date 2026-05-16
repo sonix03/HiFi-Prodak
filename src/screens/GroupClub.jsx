@@ -1,140 +1,46 @@
-import {
-  Building2,
-  CalendarDays,
-  MapPin,
-  Search,
-  Settings,
-  Users,
-} from "lucide-react";
-import Nav from "../components/Nav";
-import Phone from "../components/Phone";
+import Button from "../components/Button";
+import GroupsHeader from "../components/GroupsHeader";
+import Icon from "../components/Icon";
+import Pill from "../components/Pill";
+import SectionHeader from "../components/SectionHeader";
+import { challenges } from "../constants/data";
 
-export default function Clubs() {
+export default function GroupClub({ onNavigate }) {
   return (
-    <Phone title="Clubs">
-      <div className="relative h-full overflow-hidden bg-[#F6FAFD] pb-[96px] text-left">
-        <div className="px-7 pt-8">
-          <div className="flex items-center justify-between">
-            <button className="grid h-10 w-10 place-items-center rounded-full text-[#050505]">
-              <Search size={19} strokeWidth={2.2} />
-            </button>
+    <main className="screen screen-pad">
+      <GroupsHeader active="challenges" onNavigate={onNavigate} />
 
-            <h2 className="text-[17px] font-black text-[#050505]">
-              Groups
-            </h2>
-
-            <button className="grid h-10 w-10 place-items-center rounded-full text-[#050505]">
-              <Settings size={18} strokeWidth={2.2} />
-            </button>
-          </div>
-        </div>
-
-        <div className="mt-8 border-b border-[#17324D]/15">
-          <div className="grid grid-cols-2 px-7">
-            <button className="pb-3 text-center text-[11px] font-black text-[#050505]/75">
-              Challenges
-            </button>
-
-            <button className="border-b-2 border-[#050505] pb-3 text-center text-[11px] font-black text-[#050505]">
-              Clubs
-            </button>
-          </div>
-        </div>
-
-        <div className="h-[calc(100%-150px)] overflow-y-auto px-6 pt-4">
-          <section className="space-y-3">
-            <div className="flex items-center justify-between rounded-[12px] border border-[#050505]/70 bg-white px-4 py-3">
-              <p className="text-[10px] font-medium text-[#050505]">
-                Create your own Prodak group
-              </p>
-
-              <button className="h-7 rounded-full border border-[#050505] bg-[#D8E1EB] px-3 text-[9px] font-black text-[#050505]">
-                Create a Group
-              </button>
-            </div>
-
-            <div className="flex items-center justify-between rounded-[12px] border border-[#050505]/70 bg-white px-4 py-3">
-              <p className="text-[10px] font-medium text-[#050505]">
-                Find events near you
-              </p>
-
-              <button className="h-7 rounded-full border border-[#050505] bg-[#D8E1EB] px-3 text-[9px] font-black text-[#050505]">
-                Browse Events
-              </button>
-            </div>
-          </section>
-
-          <section className="mt-4 rounded-[12px] border border-[#050505]/70 bg-white px-5 py-6 shadow-[0_14px_30px_rgba(64,106,175,0.08)]">
-            <div className="flex items-center gap-5">
-              <div className="grid h-16 w-16 shrink-0 place-items-center text-[#050505]">
-                <Building2 size={46} strokeWidth={1.7} />
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <h3 className="text-[15px] font-black text-[#050505]">
-                  Pejuang SCBD
-                </h3>
-
-                <div className="mt-3 flex items-center gap-1.5 text-[#050505]">
-                  <Users size={13} strokeWidth={2.1} />
-
-                  <p className="text-[10px] font-semibold">
-                    12,096 Members
-                  </p>
-                </div>
-
-                <div className="mt-2 flex items-center gap-1.5 text-[#050505]/70">
-                  <MapPin size={12} strokeWidth={2.1} />
-
-                  <p className="text-[9px] font-semibold">
-                    Jakarta, Indonesia
-                  </p>
-
-                  <span className="text-[9px] font-semibold">•</span>
-
-                  <p className="text-[9px] font-semibold">81 Posts</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="mt-4 rounded-[12px] border border-[#427AB5]/25 bg-[#427AB5]/10 px-5 py-6 shadow-[0_14px_30px_rgba(64,106,175,0.08)]">
-            <div className="flex items-center gap-5">
-              <div className="grid h-16 w-16 shrink-0 place-items-center rounded-[18px] border border-[#427AB5]/25 bg-white text-[#427AB5]">
-                <CalendarDays size={34} strokeWidth={1.8} />
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <h3 className="text-[14px] font-black text-[#050505]">
-                  Weekend Run Club
-                </h3>
-
-                <div className="mt-3 flex items-center gap-1.5 text-[#050505]">
-                  <Users size={13} strokeWidth={2.1} />
-
-                  <p className="text-[10px] font-semibold">
-                    4,821 Members
-                  </p>
-                </div>
-
-                <div className="mt-2 flex items-center gap-1.5 text-[#050505]/70">
-                  <MapPin size={12} strokeWidth={2.1} />
-
-                  <p className="text-[9px] font-semibold">
-                    Bandung, Indonesia
-                  </p>
-
-                  <span className="text-[9px] font-semibold">•</span>
-
-                  <p className="text-[9px] font-semibold">36 Posts</p>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <Nav active="groups" />
+      <div className="mt-4 tab-row">
+        {["Work", "Research", "Arts", "Laboratory"].map((item, index) => <Pill key={item} active={index === 0}>{item}</Pill>)}
       </div>
-    </Phone>
+
+      <section className="section">
+        <SectionHeader title="Active Challenge" />
+        <div className="row mt-3">
+          <span className="grid h-14 w-14 place-items-center rounded-full bg-[var(--primary-soft)] text-[var(--blue)]">
+            <Icon name="timer" size="lg" />
+          </span>
+          <div>
+            <p className="font-semibold">Overtime Challenge</p>
+            <p className="meta">Complete 5 hours before Apr 30</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <SectionHeader title="Recommended For You" />
+        <div className="grid-2 mt-3">
+          {challenges.concat(challenges).slice(0, 4).map((challenge, index) => (
+            <article className="card card-pad min-h-[190px]" key={`${challenge.title}-${index}`}>
+              <Icon name={challenge.icon} size="lg" className="text-[var(--blue)]" />
+              <h2 className="mt-4 card-title">{challenge.title}</h2>
+              <p className="body mt-2">{challenge.reward}</p>
+              <p className="meta mt-2">Apr 17 to Apr 30, 2026</p>
+              <Button className="mt-4 w-full" size="sm" variant="outline">Join</Button>
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }

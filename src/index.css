@@ -1,24 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 :root {
-  --primary: #427ab5;
-  --secondary: #406aaf;
-  --sun: #f7dd7d;
-  --cream: #ffe8be;
-  --text: #17324d;
-  --muted: #5d6f8b;
-  --bg: #fff5dc;
-  --border: rgba(66, 122, 181, 0.2);
-  --accent: #427ab5;
-  --accent-soft: #ffe8be;
-  --sans: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 16px/1.5 var(--sans);
-  letter-spacing: 0;
-  color-scheme: light;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-soft: #eff6ff;
+  --black: #0a0a0a;
+  --blue: #2563eb;
+  --blue-soft: #eff6ff;
+  --yellow: #facc15;
+  --yellow-soft: #fef9c3;
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #dc2626;
+  --red: #dc2626;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-muted: #f5f5f5;
+  --text: #0a0a0a;
+  --text-secondary: #525252;
+  --text-tertiary: #8a8a8a;
+  --border: #e5e5e5;
+  --divider: #eeeeee;
+  --heading: "Plus Jakarta Sans", Manrope, Inter, system-ui, sans-serif;
+  --ui: "Plus Jakarta Sans", Inter, system-ui, sans-serif;
+  --shadow-header: 0 2px 10px rgba(15, 23, 42, 0.04);
+  --shadow-navbar: 0 -4px 18px rgba(15, 23, 42, 0.08);
+  --shadow-card: 0 6px 18px rgba(15, 23, 42, 0.05);
+  --shadow-floating: 0 12px 32px rgba(10, 10, 10, 0.1);
+  --shadow-button: 0 6px 16px rgba(10, 10, 10, 0.12);
   color: var(--text);
-  background: var(--bg);
+  background: #e9e9e4;
+  font-family: var(--ui);
+  font-size: 15px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -36,24 +50,8 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at top left, rgba(66, 122, 181, 0.18), transparent 24rem),
-    radial-gradient(circle at top right, rgba(247, 221, 125, 0.35), transparent 22rem),
-    linear-gradient(135deg, #ffe8be 0%, #fff8e8 48%, #dfeafd 100%);
-}
-
-#root {
-  width: 100%;
-  max-width: 100%;
   min-height: 100svh;
-  text-align: left;
-}
-
-h1,
-h2,
-h3,
-p {
-  margin: 0;
+  background: #ffffff;
 }
 
 button,
@@ -66,19 +64,17 @@ button {
   cursor: pointer;
 }
 
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+#root {
+  min-height: 100svh;
+}
+
 ::selection {
-  background: rgba(247, 221, 125, 0.45);
-}
-
-code {
-  font-family: var(--mono);
-  font-size: 15px;
-}
-
-.phone-screen {
-  scrollbar-width: none;
-}
-
-.phone-screen::-webkit-scrollbar {
-  display: none;
+  background: rgba(37, 99, 235, 0.18);
 }
