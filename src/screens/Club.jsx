@@ -1,11 +1,11 @@
-import ActivityMap from "../components/ActivityMap";
-import Avatar from "../components/Avatar";
 import Button from "../components/Button";
+import FeedPost from "../components/FeedPost";
 import Pill from "../components/Pill";
 import ScreenHeader from "../components/ScreenHeader";
 import SectionHeader from "../components/SectionHeader";
 import indomieLogo from "../assets/indomie-logo.png";
 import landscapeItb from "../assets/landscape-itb.png";
+import mapPic from "../assets/map-pic.png";
 import { activities, clubs } from "../constants/data";
 
 export default function Club({ onNavigate }) {
@@ -39,30 +39,26 @@ export default function Club({ onNavigate }) {
       </section>
 
       <section className="section">
-        <SectionHeader title="Recent Post" />
-        <article className="mt-3 stack rounded-2xl bg-white p-4 shadow-[var(--shadow-card)]">
-          <div className="row">
-            <Avatar user={activities[1].user} />
-            <div className="min-w-0 flex-1">
-              <p className="truncate font-semibold">{activities[1].user.name}</p>
-              <p className="meta">May 16, 2026 • Posted a note in {club.name}</p>
-            </div>
-          </div>
-          <p className="body">
-            Besok pagi kita coba 90-minute focus sprint. Drop progress di thread ini setelah selesai.
-          </p>
-        </article>
-
-        <article className="mt-4 stack rounded-2xl bg-white p-4 shadow-[var(--shadow-card)]">
-          <div className="row">
-            <Avatar user={activities[0].user} />
-            <div className="min-w-0 flex-1">
-              <p className="truncate font-semibold">{activities[0].user.name}</p>
-              <p className="meta">{activities[0].time} • Posted from {club.name}</p>
-            </div>
-          </div>
-          <ActivityMap height={220} label="Club proof" proof={activities[0].proof} />
-        </article>
+        <SectionHeader title="Recent Posts" />
+        <div className="stack mt-3">
+          <FeedPost
+            activity={activities[1]}
+            body="Besok pagi kita coba 90-minute focus sprint. Drop progress di thread ini setelah selesai."
+            headline="Morning sprint check-in"
+            media={[{ type: "photo", src: landscapeItb }]}
+            onNavigate={onNavigate}
+            onShare={() => onNavigate?.("shareClub")}
+            place={club.name}
+          />
+          <FeedPost
+            activity={activities[0]}
+            headline="Proof from today's focus block"
+            media={[{ type: "map", src: mapPic }]}
+            onNavigate={onNavigate}
+            onShare={() => onNavigate?.("shareClub")}
+            place={club.name}
+          />
+        </div>
       </section>
     </main>
   );
