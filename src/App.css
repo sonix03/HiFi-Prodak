@@ -364,6 +364,25 @@
   font-weight: 500;
 }
 
+.header-center-title {
+  position: absolute;
+  left: 50%;
+  max-width: 44%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  text-align: center;
+}
+
+.header-center-title h1 {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .header-actions {
   display: flex;
   flex-shrink: 0;
@@ -387,6 +406,28 @@
 
 .header-action:active {
   transform: scale(0.96);
+  background: var(--surface-muted);
+}
+
+.header-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  transition:
+    background 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.header-back:active {
+  transform: scale(0.98);
   background: var(--surface-muted);
 }
 

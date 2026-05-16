@@ -15,6 +15,8 @@ export default function Header({
   eyebrow,
   mode = "main",
   onBack,
+  backLabel,
+  centeredTitle = false,
   primaryAction,
   secondaryAction,
   right = "notification",
@@ -25,13 +27,15 @@ export default function Header({
   const isDetail = mode === "detail" || mode === "form" || Boolean(onBack);
   const isFocused = mode === "record";
   const hasTitleContent = Boolean(title || eyebrow || status);
+  const showInlineTitle = hasTitleContent && !centeredTitle;
 
   return (
     <header className={`app-header app-header-${mode}`}>
       <div className="header-main">
         {isDetail ? (
-          <button className="header-action" onClick={onBack} aria-label="Back">
+          <button className="header-back" onClick={onBack} aria-label={backLabel ? `Back to ${backLabel}` : "Back"}>
             <Icon name="arrowLeft" size={22} />
+            {backLabel ? <p>{backLabel}</p> : null}
           </button>
         ) : isFocused ? null : (
           <div className="prodak-mark" aria-label="Prodak">
@@ -40,7 +44,7 @@ export default function Header({
           </div>
         )}
 
-        {hasTitleContent ? (
+        {showInlineTitle ? (
           <div className="header-title-block">
             {eyebrow ? <p>{eyebrow}</p> : null}
             {title ? <h1>{title}</h1> : null}
@@ -48,6 +52,12 @@ export default function Header({
           </div>
         ) : null}
       </div>
+
+      {centeredTitle && title ? (
+        <div className="header-center-title">
+          <h1>{title}</h1>
+        </div>
+      ) : null}
 
       <div className="header-actions">
         {secondaryAction ? <HeaderAction {...secondaryAction} /> : null}

@@ -1,9 +1,9 @@
-import AppHeader from "../components/AppHeader";
 import Avatar from "../components/Avatar";
 import FeedPost from "../components/FeedPost";
 import MetricGrid from "../components/MetricGrid";
 import Pill from "../components/Pill";
 import SectionHeader from "../components/SectionHeader";
+import ScreenHeader from "../components/ScreenHeader";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
 import { mikaActivities, users } from "../constants/data";
@@ -19,7 +19,13 @@ export default function Activities({ onNavigate }) {
 
   return (
     <main className="screen screen-pad">
-      <AppHeader right="filter" secondaryAction={{ icon: "search", label: "Search activities" }} />
+      <ScreenHeader
+        backLabel="Profile"
+        centeredTitle
+        onBack={() => onNavigate?.("profile")}
+        right={null}
+        title="Activities"
+      />
       <section className="hero-panel">
         <div className="row">
           <Avatar user={user} size="lg" />

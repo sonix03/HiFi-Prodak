@@ -13,7 +13,7 @@ export default function Club({ onNavigate }) {
 
   return (
     <main className="screen screen-pad">
-      <ScreenHeader title="Club detail" onBack={() => onNavigate?.("groups")} action={{ icon: "more", label: "Club actions" }} secondaryAction={{ icon: "share", label: "Share club" }} />
+      <ScreenHeader title="Club detail" onBack={() => onNavigate?.("groups")} action={{ icon: "more", label: "Club actions" }} />
       <section className="hero-panel">
         <div className="relative -mx-2 pb-1">
           <div className="h-44 overflow-hidden rounded-b-[28px] bg-[var(--surface-muted)]">
@@ -32,7 +32,10 @@ export default function Club({ onNavigate }) {
           <Pill icon="users">{club.members} Members</Pill>
           <Pill icon="globe">Public</Pill>
         </div>
-        <Button className="mt-5" size="sm" icon="userCheck">Join</Button>
+        <div className="mt-5 grid grid-cols-2 gap-3">
+          <Button size="sm" icon="userCheck">Join</Button>
+          <Button size="sm" variant="outline" icon="share" onClick={() => onNavigate?.("shareClub")}>Share</Button>
+        </div>
       </section>
 
       <section className="section">

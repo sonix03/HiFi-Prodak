@@ -1,6 +1,7 @@
 import ActivityMap from "./ActivityMap";
 import Avatar from "./Avatar";
 import Icon from "./Icon";
+import { users } from "../constants/data";
 
 export default function FeedPost({
   activity,
@@ -67,25 +68,58 @@ export default function FeedPost({
 
       <MediaRow media={media} />
 
-      <div className="grid-3 border-b border-[var(--divider)] pb-3 pt-1 text-left">
-        <button className="row justify-start gap-1.5 text-[12px] font-semibold text-[var(--text-secondary)]">
-          <Icon name="heart" size="sm" /> {activity.kudos}
-        </button>
+      <SocialSummary activity={activity} onNavigate={onNavigate} />
+
+      <div className="grid-3 border-b border-[var(--divider)] pb-3 pt-1 text-center">
         <button
-          className="row justify-start gap-1.5 text-[12px] font-semibold text-[var(--text-secondary)]"
-          onClick={() => onNavigate?.("comments")}
+          className="row justify-center gap-1.5 text-[12px] font-semibold text-[var(--text-secondary)]"
+          aria-label="Like"
         >
-          <Icon name="comment" size="sm" /> {activity.comments}
+          <Icon name="heart" size="md" />
         </button>
         <button
-          className="row justify-start gap-1.5 text-[12px] font-semibold text-[var(--text-secondary)]"
+          className="row justify-center gap-1.5 text-[12px] font-semibold text-[var(--text-secondary)]"
+          onClick={() => onNavigate?.("comments")}
+          aria-label="Comments"
+        >
+          <Icon name="comment" size="md" />
+        </button>
+        <button
+          className="row justify-center gap-1.5 text-[12px] font-semibold text-[var(--text-secondary)]"
           onClick={onShare}
           aria-label="Share"
         >
-          <Icon name="share" size="sm" stroke={2} />
+          <Icon name="share" size="md" stroke={2} />
         </button>
       </div>
     </article>
+  );
+}
+
+function SocialSummary({ activity, onNavigate }) {
+  const kudosUsers = users.filter((user) => user.id !== activity.user.id).slice(0, 3);
+  const commentLabel = `${activity.comments} ${activity.comments === 1 ? "comment" : "comments"}`;
+
+  return (
+    <div className="row justify-between gap-3 pt-1">
+      <div className="row min-w-0">
+        <div className="row -space-x-8">
+          {kudosUsers.map((user) => (
+            <Avatar key={user.id} user={user} size="sm" tone="neutral" />
+          ))}
+        </div>
+        <p className="truncate text-[11px] font-semibold leading-none text-[var(--text-secondary)]">
+          {activity.kudos} gave kudos
+        </p>
+      </div>
+      <button
+        className="shrink-0 text-[var(--text-secondary)]"
+        onClick={() => onNavigate?.("comments")}
+        type="button"
+      >
+        <p className="text-[11px] font-semibold leading-none">{commentLabel}</p>
+      </button>
+    </div>
   );
 }
 
