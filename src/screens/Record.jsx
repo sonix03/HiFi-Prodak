@@ -1,13 +1,13 @@
 import { HugeiconsIcon } from "@hugeicons/react";
-import { PlayIcon, RacingFlagIcon } from "@hugeicons/core-free-icons";
+import { PlayIcon, PauseIcon, RacingFlagIcon } from "@hugeicons/core-free-icons";
 import Icon from "../components/Icon";
 import mapPic from "../assets/map-pic.png";
 
-export default function Record({ onNavigate, initialPlaying = false }) {
-  const time = initialPlaying ? "00:13" : "00:00";
+export default function Record({ onNavigate, initialPlaying = false, initialRunning = false }) {
+  const time = initialPlaying || initialRunning ? "00:13" : "00:00";
 
   return (
-    <main className="screen relative overflow-hidden">
+    <main className="screen relative" style={{ overflow: "hidden" }}>
       <img
         className="absolute inset-0 h-full w-full scale-125 object-cover"
         src={mapPic}
@@ -34,9 +34,9 @@ export default function Record({ onNavigate, initialPlaying = false }) {
 
       <div className="absolute inset-x-0 bottom-0 z-20">
         <section className="mx-5 mb-4 overflow-hidden rounded-[20px] border border-white/80 bg-white/92 text-center shadow-[var(--shadow-floating)] backdrop-blur">
-          <div className={`relative border-b border-[var(--border)] px-5 py-4 text-center ${initialPlaying ? "bg-[var(--yellow)]" : ""}`}>
-            <p className={`text-base font-extrabold ${initialPlaying ? "text-black" : "text-[var(--text-secondary)]"}`}>
-              {initialPlaying ? "Stopped" : "Work"}
+          <div className={`relative border-b border-[var(--border)] px-5 py-4 text-center ${initialPlaying ? "bg-[var(--yellow)]" : initialRunning ? "bg-[var(--blue)]" : ""}`}>
+            <p className={`text-base font-extrabold ${initialPlaying ? "text-black" : initialRunning ? "text-white" : "text-[var(--text-secondary)]"}`}>
+              {initialPlaying ? "Stopped" : initialRunning ? "Running" : "Work"}
             </p>
             {initialPlaying ? (
               <Icon name="arrowRight" size={22} stroke="strong" className="absolute right-5 top-4 -rotate-45 text-black" />
@@ -54,6 +54,11 @@ export default function Record({ onNavigate, initialPlaying = false }) {
           {initialPlaying ? (
             <div className="grid grid-cols-2 gap-5 pb-2">
               <ActionButton icon="play" label="Resume" tone="primary" />
+              <ActionButton icon="finish" label="Finish" tone="dark" onClick={() => onNavigate?.("saveActivity")} />
+            </div>
+          ) : initialRunning ? (
+            <div className="grid grid-cols-2 gap-5 pb-2">
+              <ActionButton icon="pause" label="Pause" tone="primary" />
               <ActionButton icon="finish" label="Finish" tone="dark" onClick={() => onNavigate?.("saveActivity")} />
             </div>
           ) : (
@@ -126,6 +131,17 @@ function ActionIcon({ icon, size, strokeWidth }) {
     return (
       <HugeiconsIcon
         icon={PlayIcon}
+        size={size}
+        color="currentColor"
+        strokeWidth={strokeWidth}
+      />
+    );
+  }
+
+  if (icon === "pause") {
+    return (
+      <HugeiconsIcon
+        icon={PauseIcon}
         size={size}
         color="currentColor"
         strokeWidth={strokeWidth}
