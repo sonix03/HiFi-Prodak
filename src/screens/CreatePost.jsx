@@ -3,6 +3,7 @@ import Icon from "../components/Icon";
 
 export default function CreatePost({ onNavigate, initialStep = 0 }) {
   const [step, setStep] = useState(initialStep);
+  const [allowComments, setAllowComments] = useState(true);
   const isCompose = step === 0;
 
   function goBack() {
@@ -38,19 +39,39 @@ export default function CreatePost({ onNavigate, initialStep = 0 }) {
               className="min-h-[360px] w-full resize-none border-0 bg-transparent text-[18px] font-medium outline-none placeholder:text-[var(--text-tertiary)]"
               defaultValue="What’s going on?"
             />
-            <div className="rounded-2xl bg-[var(--surface-muted)] p-4">
-              <p className="meta">Audience</p>
-              <p className="mt-1 text-sm font-semibold">Followers, comments allowed</p>
-            </div>
           </div>
         )}
       </section>
 
       <footer className="between border-t border-[var(--border)] bg-white px-6 py-5 shadow-[var(--shadow-navbar)]">
-        <button className="row text-sm font-medium text-[var(--text-secondary)]"><Icon name="check" size="md" />Allow Comments</button>
+        <button
+          className={`row text-sm font-semibold ${allowComments ? "text-[var(--text)]" : "text-[var(--text-secondary)]"}`}
+          onClick={() => setAllowComments((current) => !current)}
+          type="button"
+        >
+          <span
+            className={`grid h-5 w-5 place-items-center rounded-md border ${
+              allowComments
+                ? "border-[var(--text)] bg-[var(--text)] text-white"
+                : "border-[var(--border)] bg-white text-transparent"
+            }`}
+          >
+            <Icon name="check" size="xs" stroke={2} />
+          </span>
+          Allow Comments
+        </button>
         <div className="row text-[var(--text)]">
-          <Icon name="list" size="lg" />
-          <Icon name="media" size="lg" />
+          <button
+            className="grid h-8 w-8 place-items-center"
+            onClick={() => setStep(1)}
+            type="button"
+            aria-label="Open post details"
+          >
+            <Icon name="list" size="lg" />
+          </button>
+          <button className="grid h-8 w-8 place-items-center" type="button" aria-label="Add media">
+            <Icon name="media" size="lg" />
+          </button>
         </div>
       </footer>
     </main>
