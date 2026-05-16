@@ -9,6 +9,7 @@ export { default as Feed } from "./Feed";
 export { default as GroupClub } from "./GroupClub";
 export { default as Groups } from "./Groups";
 export { default as Login } from "./Login";
+export { default as LoginIntro } from "./LoginIntro";
 export { default as Notifications } from "./Notifications";
 export { default as Preview } from "./Preview";
 export { default as Profile } from "./Profile";

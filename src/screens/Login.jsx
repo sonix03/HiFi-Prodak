@@ -28,17 +28,17 @@ export default function Login({ onNavigate }) {
 
         <div className="form-field mt-4">
           <label>Email</label>
-          <input className="input" type="email" />
+          <input className="input !rounded-xl !border !border-[var(--text)]" type="email" />
         </div>
 
         <div className="form-field">
           <label>Password</label>
-          <input className="input" type="password" />
+          <input className="input !rounded-xl !border !border-[var(--text)]" type="password" />
         </div>
 
         <button className="w-fit text-sm font-semibold text-[var(--text-secondary)] underline">Forgot Password?</button>
 
-        <Button size="lg" className="w-full bg-black text-white" onClick={() => onNavigate?.("feed")}>Login</Button>
+        <Button size="lg" className="w-full !rounded-xl bg-[var(--blue)] text-white" onClick={() => onNavigate?.("feed")}>Login</Button>
 
         <div className="row my-3 text-[var(--text-tertiary)]">
           <span className="h-px flex-1 bg-[var(--divider)]" />

@@ -13,6 +13,7 @@ import {
   GroupClub,
   Groups,
   Login,
+  LoginIntro,
   Notifications,
   Preview,
   Profile,
@@ -25,6 +26,7 @@ import {
 } from "./screens";
 
 const artboards = [
+  { title: "Login Intro", Screen: LoginIntro },
   { title: "Login", Screen: Login },
   { title: "Feed", Screen: Feed, nav: "feed" },
   { title: "Activities", Screen: Activities },
