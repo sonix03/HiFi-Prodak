@@ -1,8 +1,10 @@
+import { useState } from "react";
 import Icon from "../components/Icon";
 import ListItem from "../components/ListItem";
 import ProgressChart from "../components/ProgressChart";
 import ProfileHeader from "../components/ProfileHeader";
 import ProfileIdentity from "../components/ProfileIdentity";
+import QRCodeSheet from "../components/QRCodeSheet";
 import SectionHeader from "../components/SectionHeader";
 import landscapeItb from "../assets/landscape-itb.png";
 import loginVideo from "../assets/login_page_video.mp4";
@@ -30,6 +32,7 @@ const profileActions = [
 
 export default function Profile({ onNavigate }) {
   const user = users[0];
+  const [showQRCode, setShowQRCode] = useState(false);
 
   return (
     <main className="screen screen-pad">
@@ -38,7 +41,7 @@ export default function Profile({ onNavigate }) {
         onSearch={() => onNavigate?.("searchFriend")}
         onShare={() => onNavigate?.("share")}
       />
-      <section className="hero-panel">
+      <section className="hero-panel !border-b-0 !pb-0">
         <ProfileIdentity user={user} />
         <div className="profile-stats mt-5">
           {profileStats.map((stat) => (
@@ -49,11 +52,11 @@ export default function Profile({ onNavigate }) {
           ))}
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
-          <button className="profile-pill" onClick={() => onNavigate?.("share")}>
+          <button className="profile-pill" onClick={() => setShowQRCode(true)}>
             <Icon name="qr" size="sm" />
             Share my QR Code
           </button>
-          <button className="profile-pill">
+          <button className="profile-pill" onClick={() => onNavigate?.("editProfile")}>
             <Icon name="edit" size="sm" />
             Edit
           </button>
@@ -130,6 +133,9 @@ export default function Profile({ onNavigate }) {
           {activities.slice(0, 2).map((activity) => <ListItem key={activity.id} icon="activity" title={activity.title} meta={`${activity.duration} • Score ${activity.focusScore}`} />)}
         </div>
       </section>
+      {showQRCode ? (
+        <QRCodeSheet user={user} onDone={() => setShowQRCode(false)} />
+      ) : null}
     </main>
   );
 }
