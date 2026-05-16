@@ -4,7 +4,7 @@ const items = [
   ["home", Home, "Feed"],
   ["record", Radio, "Record"],
   ["groups", Users, "Clubs"],
-  ["progress", BarChart3, "Stats"],
+  ["progress", BarChart3, "Progress"],
 ];
 
 export default function Nav({ active = "home" }) {

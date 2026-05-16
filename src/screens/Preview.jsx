@@ -1,5 +1,5 @@
-import { ImagePlus } from "lucide-react";
 import Phone from "../components/Phone";
+import Logo from "../components/Logo";
 
 export default function Preview() {
   return (
@@ -10,11 +10,8 @@ export default function Preview() {
         <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-xl" />
 
         <div className="relative z-10 flex flex-col items-center text-center">
-          <div className="grid h-28 w-28 place-items-center rounded-[30px] border-2 border-dashed border-white/85 bg-white/15 shadow-[0_18px_45px_rgba(23,50,77,0.28)] backdrop-blur-md">
-            <ImagePlus size={38} className="text-white/90" />
-          </div>
-
-          <h1 className="mt-10 text-[3rem] font-black leading-none tracking-[-0.05em]">
+          <Logo className="h-28 w-28" />
+          <h1 className="mt-10 pt-5 text-[3rem] font-black leading-none tracking-[-0.05em]">
             PRODAK
           </h1>
 

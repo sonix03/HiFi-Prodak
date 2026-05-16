@@ -7,7 +7,7 @@ import {
   Share2,
 } from "lucide-react";
 import Phone from "../components/Phone";
-
+import Map from "../components/Map";
 const stats = [
   { value: "00:26", label: "Time" },
   { value: "2.4 km", label: "Distance" },
@@ -20,16 +20,7 @@ export default function ActivityDetail() {
     <Phone title="Activity Detail">
       <div className="relative h-full overflow-hidden bg-[#F6FAFD] text-left">
         <div className="relative h-[42%] overflow-hidden border-b border-[#17324D]/15 bg-[#D8E1EB]">
-          <div className="absolute inset-0 grid place-items-center">
-            <div className="grid h-24 w-24 place-items-center rounded-[28px] border-2 border-dashed border-white/90 bg-white/20 shadow-[0_18px_38px_rgba(23,50,77,0.16)] backdrop-blur-md">
-              <ImagePlus size={34} className="text-white" />
-            </div>
-
-            <span className="absolute bottom-8 rounded-full bg-white/85 px-4 py-1.5 text-[10px] font-bold text-[#427AB5]">
-              Map image placeholder
-            </span>
-          </div>
-
+          <Map className="h-full w-full" />
           <div className="absolute left-6 right-6 top-8 z-10 flex items-center justify-between">
             <button className="grid h-11 w-11 place-items-center rounded-full border border-[#050505]/70 bg-[#F6FAFD]/70 text-[#050505] backdrop-blur-md">
               <ArrowLeft size={20} strokeWidth={2.2} />

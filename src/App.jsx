@@ -19,7 +19,7 @@ import {
   SaveActivity,
   Share,
   ShareClub,
-  SearchFriend,
+  SearchFriendClub,
 } from "./screens";
 
 const screens = [
@@ -28,7 +28,7 @@ const screens = [
   Feed,
   Share,
   ShareClub,
-  SearchFriend,
+  SearchFriendClub,
   CreateClub,
   CreatePost,
   EditActivity,

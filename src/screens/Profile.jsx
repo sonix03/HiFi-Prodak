@@ -3,6 +3,7 @@ import {
   ChevronRight,
   ImagePlus,
   Medal,
+  MoreHorizontal,
   Trophy,
   WalletCards,
 } from "lucide-react";
@@ -26,9 +27,15 @@ export default function Profile() {
     <Phone title="Profile">
       <div className="relative h-full overflow-hidden bg-[#F6FAFD] pb-[96px] text-left">
         <div className="px-8 pt-8">
-          <button className="grid h-10 w-10 place-items-center rounded-full border border-[#17324D]/20 text-[#17324D]">
-            <ArrowLeft size={18} strokeWidth={2.2} />
-          </button>
+          <div className="flex items-center justify-between">
+            <button className="grid h-10 w-10 place-items-center rounded-full border border-[#17324D]/20 text-[#17324D]">
+              <ArrowLeft size={18} strokeWidth={2.2} />
+            </button>
+
+            <button className="grid h-10 w-10 place-items-center rounded-full border border-[#17324D]/20 text-[#17324D]">
+              <MoreHorizontal size={18} strokeWidth={2.2} />
+            </button>
+          </div>
 
           <section className="mt-8">
             <div className="flex items-center gap-5">

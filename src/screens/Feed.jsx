@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Nav from "../components/Nav";
 import Phone from "../components/Phone";
+import Map from "../components/Map";
 
 const feeds = [
   {
@@ -95,21 +96,7 @@ export default function Feed() {
 
                 <div className="mt-6 overflow-hidden rounded-[28px] border border-[#427AB5]/20 bg-[#427AB5]/10 shadow-[0_18px_36px_rgba(64,106,175,0.12)]">
                   <div className="relative grid h-48 place-items-center bg-[#427AB5]/15">
-                    <div className="absolute inset-0 opacity-70">
-                      <div className="absolute left-5 top-8 h-[1px] w-64 rotate-[18deg] bg-white/55" />
-                      <div className="absolute left-0 top-24 h-[1px] w-72 -rotate-[22deg] bg-white/45" />
-                      <div className="absolute left-14 top-2 h-64 w-[1px] rotate-[28deg] bg-white/40" />
-                      <div className="absolute right-14 top-0 h-64 w-[1px] -rotate-[16deg] bg-white/40" />
-                      <div className="absolute bottom-10 left-2 h-[1px] w-72 rotate-[4deg] bg-white/35" />
-                    </div>
-
-                    <div className="relative z-10 grid h-20 w-20 place-items-center rounded-[24px] border-2 border-dashed border-white/90 bg-white/20 backdrop-blur-md">
-                      <ImagePlus size={30} className="text-white" />
-                    </div>
-
-                    <span className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-white/85 px-4 py-1.5 text-[10px] font-bold text-[#427AB5]">
-                      Map image placeholder
-                    </span>
+                    <Map className="h-full w-full" />
                   </div>
                 </div>
 

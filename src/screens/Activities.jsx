@@ -1,5 +1,6 @@
 import { CalendarRange, Clock3, Filter, Route, SlidersHorizontal } from "lucide-react";
 import Phone from "../components/Phone";
+import Nav from "../components/Nav";
 
 const activities = [
   { title: "Morning Ride", meta: "Cycling • 24 Apr 2026", stat: "18.2 km", icon: Route },
@@ -79,6 +80,7 @@ export default function Activities() {
           })}
         </div>
       </div>
+      <Nav />
     </Phone>
   );
 }

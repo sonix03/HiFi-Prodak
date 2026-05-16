@@ -1,5 +1,6 @@
 import { Eye, ImagePlus, Lock, Mail } from "lucide-react";
 import Phone from "../components/Phone";
+import Logo from "../components/Logo";
 
 const providers = [
   { name: "Google", icon: "G" },
@@ -16,10 +17,7 @@ export default function Login() {
         <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-xl" />
 
         <div className="relative z-10 flex h-full flex-col">
-          <div className="grid h-16 w-16 place-items-center rounded-[22px] border border-white/35 bg-white/15 shadow-[0_18px_40px_rgba(23,50,77,0.24)] backdrop-blur-md">
-            <ImagePlus size={24} className="text-white/90" />
-          </div>
-
+          <Logo className="h-16 w-16" />
           <h2 className="mt-8 text-[1.55rem] font-black leading-tight tracking-[-0.03em]">
             Log in to Prodak
           </h2>
