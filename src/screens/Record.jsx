@@ -57,9 +57,8 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
               <ActionButton icon="finish" label="Finish" tone="dark" onClick={() => onNavigate?.("saveActivity")} />
             </div>
           ) : initialRunning ? (
-            <div className="grid grid-cols-2 gap-5 pb-2">
-              <ActionButton icon="pause" label="Pause" tone="primary" />
-              <ActionButton icon="finish" label="Finish" tone="dark" onClick={() => onNavigate?.("saveActivity")} />
+            <div className="flex justify-center pb-2">
+              <SmallAction icon="pause" label="Pause" tone="primary" />
             </div>
           ) : (
             <div className="grid grid-cols-3 items-center">
