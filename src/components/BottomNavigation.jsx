@@ -17,15 +17,15 @@ export default function BottomNavigation({ active, onNavigate }) {
           return (
             <button
               key={item.key}
-              className={`grid justify-items-center text-[11px] font-black ${isActive ? "text-[var(--blue)]" : "text-[var(--text-tertiary)]"}`}
+              className={`grid justify-items-center text-[10px] leading-none ${isActive ? "text-[var(--blue)]" : "text-[var(--text-secondary)]"}`}
               onClick={() => onNavigate?.(item.key)}
             >
               <span
-                className={`grid h-9 w-9 place-items-center rounded-full ${isActive ? "bg-[var(--primary-soft)] text-[var(--blue)]" : "text-[var(--text-tertiary)]"}`}
+                className={`grid h-9 w-9 place-items-center ${isActive ? "text-[var(--blue)]" : "text-[var(--text-secondary)]"}`}
               >
                 <Icon name={item.icon} size="lg" stroke={isActive ? "strong" : "regular"} />
               </span>
-              <span className="font-black">{item.label}</span>
+              <p className="font-bold">{item.label}</p>
             </button>
           );
         })}

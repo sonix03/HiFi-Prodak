@@ -6,6 +6,7 @@ import ProfileHeader from "../components/ProfileHeader";
 import ProfileIdentity from "../components/ProfileIdentity";
 import QRCodeSheet from "../components/QRCodeSheet";
 import SectionHeader from "../components/SectionHeader";
+import EditProfile from "./EditProfile";
 import landscapeItb from "../assets/landscape-itb.png";
 import loginVideo from "../assets/login_page_video.mp4";
 import mapPic from "../assets/map-pic.png";
@@ -33,6 +34,22 @@ const profileActions = [
 export default function Profile({ onNavigate }) {
   const user = users[0];
   const [showQRCode, setShowQRCode] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false);
+
+  if (showEditProfile) {
+    return (
+      <EditProfile
+        onNavigate={(screen) => {
+          if (screen === "profile") {
+            setShowEditProfile(false);
+            return;
+          }
+
+          onNavigate?.(screen);
+        }}
+      />
+    );
+  }
 
   return (
     <main className="screen screen-pad">
@@ -52,11 +69,11 @@ export default function Profile({ onNavigate }) {
           ))}
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
-          <button className="profile-pill" onClick={() => setShowQRCode(true)}>
+          <button className="profile-pill !border-[var(--blue)] !text-[var(--blue)]" onClick={() => setShowQRCode(true)}>
             <Icon name="qr" size="sm" />
             Share my QR Code
           </button>
-          <button className="profile-pill" onClick={() => onNavigate?.("editProfile")}>
+          <button className="profile-pill !border-[var(--blue)] !text-[var(--blue)]" onClick={() => setShowEditProfile(true)}>
             <Icon name="edit" size="sm" />
             Edit
           </button>
