@@ -24,15 +24,15 @@ export default function Record({ onNavigate, initialPlaying = false }) {
         <Icon name="arrowLeft" size={26} stroke="strong" />
       </button>
 
-      <div className="absolute right-6 top-[330px] z-20 grid gap-4">
-        <MapControl icon="list" label="Layers" />
-        <button className="grid h-12 w-12 place-items-center rounded-full border-2 border-black bg-white text-base font-bold text-black shadow-[var(--shadow-card)]">
-          3D
-        </button>
-        <MapControl icon="target" label="Locate" />
-      </div>
-
       <div className="absolute inset-x-0 bottom-0 z-20">
+        <div className="mb-4 mr-6 grid justify-end gap-4">
+          <MapControl icon="list" label="Layers" />
+          <button className="grid h-12 w-12 place-items-center rounded-full border-2 border-black bg-white text-base font-bold text-black shadow-[var(--shadow-card)]">
+            3D
+          </button>
+          <MapControl icon="target" label="Locate" />
+        </div>
+
         <section className="mx-5 mb-4 overflow-hidden rounded-[20px] border border-white/80 bg-white/92 text-center shadow-[var(--shadow-floating)] backdrop-blur">
           <div className={`relative border-b border-[var(--border)] px-5 py-4 text-center ${initialPlaying ? "bg-[var(--yellow)]" : ""}`}>
             <p className={`text-base font-extrabold ${initialPlaying ? "text-black" : "text-[var(--text-secondary)]"}`}>
