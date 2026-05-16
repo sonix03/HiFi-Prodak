@@ -1,19 +1,17 @@
-import Avatar from "./Avatar";
 import { HeaderAction } from "./Header";
+import Icon from "./Icon";
 
-export default function ProfileHeader({ user, title = "Profile", onSettings }) {
+export default function ProfileHeader({ onBack, onShare, onSearch }) {
   return (
     <header className="app-header app-header-profile">
       <div className="header-main">
-        <Avatar user={user} size="sm" tone="neutral" />
-        <div className="header-title-block">
-          <p>{user?.handle || "Prodak athlete"}</p>
-          <h1>{title}</h1>
-        </div>
+        <button className="header-action" onClick={onBack} aria-label="Back">
+          <Icon name="arrowLeft" size={22} />
+        </button>
       </div>
       <div className="header-actions">
-        <HeaderAction icon="edit" label="Edit profile" />
-        <HeaderAction icon="settings" label="Settings" onClick={onSettings} />
+        <HeaderAction icon="share" label="Share profile" onClick={onShare} />
+        <HeaderAction icon="search" label="Search" onClick={onSearch} />
       </div>
     </header>
   );
