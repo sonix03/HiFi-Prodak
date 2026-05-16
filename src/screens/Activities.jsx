@@ -1,5 +1,4 @@
 import FeedPost from "../components/FeedPost";
-import MetricGrid from "../components/MetricGrid";
 import Pill from "../components/Pill";
 import SectionHeader from "../components/SectionHeader";
 import ScreenHeader from "../components/ScreenHeader";
@@ -24,11 +23,7 @@ export default function Activities({ onNavigate }) {
         right={null}
         title="Activities"
       />
-      <MetricGrid columns={2} items={[
-        { label: "Activities", value: mikaActivities.length, sub: "Mika's logged sessions", icon: "activity", tone: "blue" },
-        { label: "May focus", value: "42h", sub: "+14% vs Apr", icon: "calendar", tone: "neutral" },
-      ]} />
-      <div className="mt-5 tab-row">
+      <div className="tab-row">
         {["All", "Deep Work", "Study", "Club", "Proof"].map((tab, index) => <Pill key={tab} active={index === 0}>{tab}</Pill>)}
       </div>
       <section className="section">

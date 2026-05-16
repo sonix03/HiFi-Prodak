@@ -1,6 +1,7 @@
 import ActivityMap from "./ActivityMap";
 import Avatar from "./Avatar";
 import Icon from "./Icon";
+import indomieLogo from "../assets/indomie-logo.png";
 import { users } from "../constants/data";
 
 export default function FeedPost({
@@ -32,8 +33,8 @@ export default function FeedPost({
           className="row rounded-2xl bg-[var(--surface-muted)] p-3 text-left"
           onClick={() => onNavigate?.("club")}
         >
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-white text-[var(--blue)]">
-            <Icon name="users" size="md" />
+          <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-full bg-white">
+            <img className="h-full w-full object-contain p-1.5" src={indomieLogo} alt={`${club.name} logo`} />
           </span>
           <div className="min-w-0">
             <p className="truncate text-xs font-semibold text-[var(--blue)]">
