@@ -57,7 +57,7 @@ export default function ShareSheet({ onClose, onShare, media }) {
                   <Icon name={item.icon} size="md" />
                 )}
               </span>
-              <span>{item.label}</span>
+              <span className="font-bold">{item.label}</span>
             </button>
           ))}
         </div>

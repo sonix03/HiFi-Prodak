@@ -17,7 +17,7 @@ export default function BottomNavigation({ active, onNavigate }) {
           return (
             <button
               key={item.key}
-              className={`grid justify-items-center gap-1 text-[11px] font-black ${isActive ? "text-[var(--blue)]" : "text-[var(--text-tertiary)]"}`}
+              className={`grid justify-items-center text-[11px] font-black ${isActive ? "text-[var(--blue)]" : "text-[var(--text-tertiary)]"}`}
               onClick={() => onNavigate?.(item.key)}
             >
               <span
@@ -25,7 +25,7 @@ export default function BottomNavigation({ active, onNavigate }) {
               >
                 <Icon name={item.icon} size="lg" stroke={isActive ? "strong" : "regular"} />
               </span>
-              <span>{item.label}</span>
+              <span className="font-black">{item.label}</span>
             </button>
           );
         })}
