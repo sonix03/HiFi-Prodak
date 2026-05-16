@@ -36,7 +36,7 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
         <section className="mx-5 mb-4 overflow-hidden rounded-[20px] border border-white/80 bg-white/92 text-center shadow-[var(--shadow-floating)] backdrop-blur">
           <div className={`relative border-b border-[var(--border)] px-5 py-4 text-center ${initialPlaying ? "bg-[var(--yellow)]" : initialRunning ? "bg-[var(--blue)]" : ""}`}>
             <p className={`text-base font-extrabold ${initialPlaying ? "text-black" : initialRunning ? "text-white" : "text-[var(--text-secondary)]"}`}>
-              {initialPlaying ? "Stopped" : initialRunning ? "Running" : "Work"}
+              {initialPlaying ? "Stopped" : initialRunning ? "Working" : "Work"}
             </p>
             {initialPlaying ? (
               <Icon name="arrowRight" size={22} stroke="strong" className="absolute right-5 top-4 -rotate-45 text-black" />
