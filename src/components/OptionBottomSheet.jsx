@@ -9,6 +9,7 @@ export default function OptionBottomSheet({
   onSelect,
   onClose,
   variant = "list",
+  closeLabel,
 }) {
   return (
     <div className="absolute inset-0 z-50">
@@ -17,8 +18,8 @@ export default function OptionBottomSheet({
         <div className="w-full rounded-t-3xl bg-white p-6">
           <div className="mb-6 flex items-center justify-between">
             <h3 className="text-lg font-semibold">{title}</h3>
-            <button onClick={onClose}>
-              <Icon name="cancel" size={24} stroke={2} />
+            <button className={closeLabel ? "text-sm font-semibold text-[var(--blue)]" : ""} onClick={onClose}>
+              {closeLabel || <Icon name="cancel" size={24} stroke={2} />}
             </button>
           </div>
 

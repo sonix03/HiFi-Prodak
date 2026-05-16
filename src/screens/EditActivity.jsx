@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import ChangeMapType from "../components/ChangeMapType";
 import FeelingField from "../components/FeelingField";
 import FormField, { SelectField } from "../components/FormField";
+import HiddenDetailsField, { HiddenDetailsBottomSheet } from "../components/HiddenDetailsField";
 import OptionBottomSheet, {
   FeelingBottomSheet,
 } from "../components/OptionBottomSheet";
@@ -35,20 +36,16 @@ const visibilityOptions = [
   { label: "Private", icon: "lock" },
 ];
 
-const hiddenDetailsOptions = [
-  "Show all details",
-  "Hide time",
-  "Hide steps",
-  "Hide focus score",
-  "Hide all",
-];
-
 export default class EditActivity extends Component {
   state = {
     selectedActivityType: 0,
     selectedTag: 0,
     selectedVisibility: 0,
-    selectedHiddenDetails: 0,
+    hiddenDetails: {
+      time: false,
+      steps: false,
+      focusScore: false,
+    },
     selectedFeeling: 1,
     showActivityTypeSheet: false,
     showTagSheet: false,
@@ -77,7 +74,7 @@ function EditActivityView({ onNavigate, state, setSheet, setSelected }) {
     selectedActivityType,
     selectedTag,
     selectedVisibility,
-    selectedHiddenDetails,
+    hiddenDetails,
     selectedFeeling,
     showActivityTypeSheet,
     showTagSheet,
@@ -85,6 +82,9 @@ function EditActivityView({ onNavigate, state, setSheet, setSelected }) {
     showHiddenDetailsSheet,
   } = state;
   const activity = activities[0];
+  const toggleHiddenDetail = (key) => {
+    setSelected("hiddenDetails", { ...hiddenDetails, [key]: !hiddenDetails[key] });
+  };
 
   return (
     <main
@@ -150,10 +150,9 @@ function EditActivityView({ onNavigate, state, setSheet, setSelected }) {
               onSelect={(index) => setSelected("selectedVisibility", index)}
             />
 
-            <SelectField
-              label="Hidden details"
+            <HiddenDetailsField
+              value={hiddenDetails}
               onOpen={() => setSheet("showHiddenDetailsSheet", true)}
-              value={hiddenDetailsOptions[selectedHiddenDetails]}
             />
           </div>
 
@@ -209,17 +208,13 @@ function EditActivityView({ onNavigate, state, setSheet, setSelected }) {
       )}
 
       {showHiddenDetailsSheet && (
-        <OptionBottomSheet
-          title="Hidden details"
-          options={hiddenDetailsOptions}
-          selectedIndex={selectedHiddenDetails}
+        <HiddenDetailsBottomSheet
+          value={hiddenDetails}
           onClose={() => setSheet("showHiddenDetailsSheet", false)}
-          onSelect={(index) => {
-            setSelected("selectedHiddenDetails", index);
-            setSheet("showHiddenDetailsSheet", false);
-          }}
+          onToggle={toggleHiddenDetail}
         />
       )}
+
     </main>
   );
 }

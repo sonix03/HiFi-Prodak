@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import ChangeMapType from "../components/ChangeMapType";
 import FeelingField from "../components/FeelingField";
 import FormField, { SelectField } from "../components/FormField";
+import HiddenDetailsField, { HiddenDetailsBottomSheet } from "../components/HiddenDetailsField";
 import OptionBottomSheet, {
   FeelingBottomSheet,
 } from "../components/OptionBottomSheet";
@@ -35,19 +36,15 @@ const visibilityOptions = [
   { label: "Private", icon: "lock" },
 ];
 
-const hiddenDetailsOptions = [
-  "Show all details",
-  "Hide time",
-  "Hide steps",
-  "Hide focus score",
-  "Hide all",
-];
-
 export default function SaveActivity({ onNavigate }) {
   const [selectedActivityType, setSelectedActivityType] = useState(0);
   const [selectedTag, setSelectedTag] = useState(0);
   const [selectedVisibility, setSelectedVisibility] = useState(0);
-  const [selectedHiddenDetails, setSelectedHiddenDetails] = useState(0);
+  const [hiddenDetails, setHiddenDetails] = useState({
+    time: false,
+    steps: false,
+    focusScore: false,
+  });
   const [selectedFeeling, setSelectedFeeling] = useState(1);
 
   const [showActivityTypeSheet, setShowActivityTypeSheet] = useState(false);
@@ -56,6 +53,9 @@ export default function SaveActivity({ onNavigate }) {
   const [showHiddenDetailsSheet, setShowHiddenDetailsSheet] = useState(false);
 
   const activity = activities[0];
+  const toggleHiddenDetail = (key) => {
+    setHiddenDetails((current) => ({ ...current, [key]: !current[key] }));
+  };
 
   return (
     <main className="screen screen-pad flex flex-col relative" style={{ paddingBottom: "20px" }}>
@@ -114,10 +114,9 @@ export default function SaveActivity({ onNavigate }) {
               onSelect={setSelectedVisibility}
             />
 
-            <SelectField
-              label="Hidden details"
+            <HiddenDetailsField
+              value={hiddenDetails}
               onOpen={() => setShowHiddenDetailsSheet(true)}
-              value={hiddenDetailsOptions[selectedHiddenDetails]}
             />
           </div>
 
@@ -173,17 +172,13 @@ export default function SaveActivity({ onNavigate }) {
       )}
 
       {showHiddenDetailsSheet && (
-        <OptionBottomSheet
-          title="Hidden details"
-          options={hiddenDetailsOptions}
-          selectedIndex={selectedHiddenDetails}
+        <HiddenDetailsBottomSheet
+          value={hiddenDetails}
           onClose={() => setShowHiddenDetailsSheet(false)}
-          onSelect={(index) => {
-            setSelectedHiddenDetails(index);
-            setShowHiddenDetailsSheet(false);
-          }}
+          onToggle={toggleHiddenDetail}
         />
       )}
+
     </main>
   );
 }
