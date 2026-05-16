@@ -14,7 +14,7 @@ export const activities = [
     time: "May 16, 2026, 07:42",
     duration: "2h 18m",
     focusScore: 91,
-    output: "6.4 km eq",
+    output: "8,420",
     streak: "18d",
     category: "Design",
     caption: "One clean block, phone on airplane mode, proof attached from Figma history.",
@@ -33,7 +33,7 @@ export const activities = [
     time: "May 15, 2026, 21:10",
     duration: "1h 46m",
     focusScore: 84,
-    output: "14 slides",
+    output: "6,180",
     streak: "31d",
     category: "Writing",
     caption: "Tightened the narrative and cut four weak slides.",
@@ -52,7 +52,7 @@ export const activities = [
     time: "May 11, 2026, 06:30",
     duration: "52m",
     focusScore: 76,
-    output: "22 queries",
+    output: "4,950",
     streak: "12d",
     category: "Learning",
     caption: "Short session before commute. Accuracy finally clicked.",
@@ -75,7 +75,7 @@ export const mikaActivities = [
     time: "May 15, 2026, 09:18",
     duration: "1h 54m",
     focusScore: 88,
-    output: "12 screens",
+    output: "7,360",
     streak: "18d",
     category: "Design",
     caption: "Tightened profile, achievements, and activity history into one coherent path.",
@@ -94,7 +94,7 @@ export const mikaActivities = [
     time: "May 14, 2026, 14:05",
     duration: "1h 12m",
     focusScore: 82,
-    output: "9 notes",
+    output: "5,280",
     streak: "17d",
     category: "Research",
     caption: "Pulled examples from fitness and productivity feeds for interaction references.",
@@ -113,7 +113,7 @@ export const mikaActivities = [
     time: "May 13, 2026, 20:32",
     duration: "48m",
     focusScore: 79,
-    output: "4 components",
+    output: "3,940",
     streak: "16d",
     category: "Code",
     caption: "Separated navigation state from screen composition and checked reusable component boundaries.",
@@ -136,7 +136,7 @@ export const sessions = [
 export const comments = [
   { id: "c1", user: users[1], text: "The proof trail is clean. Huge focus score.", time: "6m", likes: 24 },
   { id: "c2", user: users[2], text: "This is the kind of morning block I need tomorrow.", time: "18m", likes: 11 },
-  { id: "c3", user: users[3], text: "Nice pace. The output metric makes the sprint easy to understand.", time: "41m", likes: 8 },
+  { id: "c3", user: users[3], text: "Nice pace. The steps metric makes the sprint easy to understand.", time: "41m", likes: 8 },
 ];
 
 export const clubs = [
@@ -224,5 +224,5 @@ export const leaderboard = [
 export const deviceProofs = [
   { label: "Laptop activity", value: "2h 18m", icon: "laptop" },
   { label: "Distraction blocks", value: "17", icon: "lock" },
-  { label: "Output events", value: "42", icon: "proof" },
+  { label: "Steps events", value: "42", icon: "proof" },
 ];

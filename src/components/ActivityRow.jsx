@@ -23,7 +23,7 @@ export default function ActivityRow({ activity, expanded = false, onOpen }) {
             items={[
               { label: "Duration", value: activity.duration },
               { label: "Score", value: activity.focusScore, tone: "blue" },
-              { label: "Output", value: activity.output, tone: "blue" },
+              { label: "Steps", value: activity.output, tone: "blue" },
             ]}
           />
         </div>

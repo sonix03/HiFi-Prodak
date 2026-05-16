@@ -38,7 +38,7 @@ const visibilityOptions = [
 const hiddenDetailsOptions = [
   "Show all details",
   "Hide time",
-  "Hide output",
+  "Hide steps",
   "Hide focus score",
   "Hide all",
 ];
