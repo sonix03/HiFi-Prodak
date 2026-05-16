@@ -17,7 +17,7 @@ export default function Record({ onNavigate, initialPlaying = false }) {
       <div className="absolute inset-0 bg-black/10" />
 
       <button
-        className="absolute left-6 top-10 z-20 grid h-12 w-12 place-items-center rounded-full border-2 border-black bg-white/35 text-black backdrop-blur-sm"
+        className="absolute left-6 top-10 z-20 grid h-12 w-12 place-items-center rounded-full bg-white text-black shadow-[0_10px_24px_rgba(15,23,42,0.18)]"
         onClick={() => onNavigate?.("feed")}
         aria-label="Back"
       >
@@ -27,14 +27,14 @@ export default function Record({ onNavigate, initialPlaying = false }) {
       <div className="absolute inset-x-0 bottom-0 z-20">
         <div className="mb-4 mr-6 grid justify-end gap-4">
           <MapControl icon="list" label="Layers" />
-          <button className="grid h-12 w-12 place-items-center rounded-full border-2 border-black bg-white text-base font-bold text-black shadow-[var(--shadow-card)]">
+          <button className="grid h-12 w-12 place-items-center rounded-full bg-white text-base font-bold text-black shadow-[0_10px_24px_rgba(15,23,42,0.16)]">
             3D
           </button>
           <MapControl icon="target" label="Locate" />
         </div>
 
-        <section className="mx-5 mb-4 overflow-hidden rounded-[20px] border border-white/80 bg-white/92 text-center shadow-[var(--shadow-floating)] backdrop-blur">
-          <div className={`relative border-b border-[var(--border)] px-5 py-4 text-center ${initialPlaying ? "bg-[var(--yellow)]" : ""}`}>
+        <section className="mx-5 mb-4 overflow-hidden rounded-[20px] bg-white text-center shadow-[0_18px_42px_rgba(15,23,42,0.18)]">
+          <div className={`relative px-5 py-4 text-center shadow-[0_1px_0_rgba(15,23,42,0.05)] ${initialPlaying ? "bg-[var(--yellow)]" : "bg-white"}`}>
             <p className={`text-base font-extrabold ${initialPlaying ? "text-black" : "text-[var(--text-secondary)]"}`}>
               {initialPlaying ? "Stopped" : "Work"}
             </p>
@@ -49,7 +49,7 @@ export default function Record({ onNavigate, initialPlaying = false }) {
           </div>
         </section>
 
-        <section className="rounded-t-[22px] border-t border-white/80 bg-white/95 px-7 pb-4 pt-4 shadow-[var(--shadow-floating)] backdrop-blur">
+        <section className="rounded-t-[22px] bg-white px-7 pb-4 pt-4 shadow-[0_-18px_42px_rgba(15,23,42,0.16)]">
           <div className="mx-auto mb-7 h-1.5 w-16 rounded-full bg-black/20" />
           {initialPlaying ? (
             <div className="grid grid-cols-2 gap-5 pb-2">
@@ -71,7 +71,7 @@ export default function Record({ onNavigate, initialPlaying = false }) {
 
 function MapControl({ icon, label }) {
   return (
-    <button className="grid h-12 w-12 place-items-center rounded-full border-2 border-black bg-white text-black shadow-[var(--shadow-card)]" aria-label={label}>
+    <button className="grid h-12 w-12 place-items-center rounded-full bg-white text-black shadow-[0_10px_24px_rgba(15,23,42,0.16)]" aria-label={label}>
       <Icon name={icon} size={24} stroke="strong" />
     </button>
   );
@@ -93,12 +93,12 @@ function SmallAction({ icon, label, onClick, tone = "default" }) {
   return (
     <button className="grid justify-items-center gap-2 text-black" onClick={onClick}>
       <span
-        className={`grid place-items-center rounded-full border shadow-[0_4px_12px_rgba(15,23,42,0.12)] ${
+        className={`grid place-items-center rounded-full ${
           isPrimary
-            ? "h-20 w-20 border-[var(--blue)] bg-[var(--blue)] text-white shadow-[0_10px_22px_rgba(37,99,235,0.28)]"
+            ? "h-20 w-20 bg-[var(--blue)] text-white shadow-[0_14px_28px_rgba(37,99,235,0.32)]"
             : isSoft
-              ? "h-14 w-14 border-[var(--primary-soft)] bg-[var(--primary-soft)] text-[var(--blue)]"
-              : "h-14 w-14 border-black bg-white text-black"
+              ? "h-14 w-14 bg-white text-[var(--blue)] shadow-[0_10px_22px_rgba(15,23,42,0.14)]"
+              : "h-14 w-14 bg-white text-black shadow-[0_10px_22px_rgba(15,23,42,0.14)]"
         }`}
       >
         <ActionIcon icon={icon} size={isPrimary ? 38 : 28} strokeWidth={2} />
@@ -110,11 +110,11 @@ function SmallAction({ icon, label, onClick, tone = "default" }) {
 
 function ActionButton({ icon, label, onClick, tone = "primary" }) {
   const toneClass = tone === "dark"
-    ? "border-black bg-black text-white shadow-[0_8px_18px_rgba(15,23,42,0.22)]"
-    : "border-[var(--blue)] bg-[var(--blue)] text-white shadow-[0_8px_18px_rgba(37,99,235,0.24)]";
+    ? "bg-black text-white shadow-[0_12px_24px_rgba(15,23,42,0.26)]"
+    : "bg-[var(--blue)] text-white shadow-[0_12px_24px_rgba(37,99,235,0.3)]";
 
   return (
-    <button className={`row justify-center rounded-full border-2 px-4 py-3 ${toneClass}`} onClick={onClick}>
+    <button className={`row justify-center rounded-full px-4 py-3 ${toneClass}`} onClick={onClick}>
       <ActionIcon icon={icon} size={24} strokeWidth={2} />
       <span className="text-base font-extrabold">{label}</span>
     </button>
