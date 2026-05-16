@@ -1,6 +1,6 @@
 import Icon from "./Icon";
 
-export default function ActivityMap({ label = "Focus route", height = 180, imageSrc }) {
+export default function ActivityMap({ height = 180, imageSrc }) {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--blue-soft)]" style={{ height }}>
       {imageSrc ? (

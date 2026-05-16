@@ -1,5 +1,4 @@
 import Button from "../components/Button";
-import Icon from "../components/Icon";
 import ScreenHeader from "../components/ScreenHeader";
 import SearchBar from "../components/SearchBar";
 import bk from "../assets/bk.png";

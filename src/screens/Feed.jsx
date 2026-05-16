@@ -3,7 +3,6 @@ import ActivityMap from "../components/ActivityMap";
 import AppHeader from "../components/AppHeader";
 import Avatar from "../components/Avatar";
 import Icon from "../components/Icon";
-import Pill from "../components/Pill";
 import ShareSheet from "../components/ShareSheet";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
@@ -96,15 +95,15 @@ function FeedPost({ activity, club, label, place, headline, body, media = [], on
 
       <MediaRow media={media} proof={activity.proof} />
 
-      <div className="grid-3 border-y border-[var(--divider)] py-3 text-center">
-        <button className="grid justify-items-center gap-1 text-[12px] font-semibold text-[var(--text-secondary)]">
+      <div className="grid-3 border-b border-[var(--divider)] pb-3 pt-1 text-left">
+        <button className="row justify-start gap-1.5 text-[12px] font-semibold text-[var(--text-secondary)]">
           <Icon name="heart" size="sm" /> {activity.kudos}
         </button>
-        <button className="grid justify-items-center gap-1 text-[12px] font-semibold text-[var(--text-secondary)]" onClick={() => onNavigate?.("comments")}>
+        <button className="row justify-start gap-1.5 text-[12px] font-semibold text-[var(--text-secondary)]" onClick={() => onNavigate?.("comments")}>
           <Icon name="comment" size="sm" /> {activity.comments}
         </button>
-        <button className="grid justify-items-center gap-1 text-[12px] font-semibold text-[var(--text-secondary)]" onClick={onShare}>
-          <Icon name="share" size="sm" /> Share
+        <button className="row justify-start gap-1.5 text-[12px] font-semibold text-[var(--text-secondary)]" onClick={onShare} aria-label="Share">
+          <Icon name="share" size="sm" stroke={2} />
         </button>
       </div>
 
@@ -112,7 +111,7 @@ function FeedPost({ activity, club, label, place, headline, body, media = [], on
   );
 }
 
-function MediaRow({ media, proof }) {
+function MediaRow({ media }) {
   if (!media.length) return null;
 
   return (

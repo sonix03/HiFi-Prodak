@@ -182,7 +182,7 @@ export default function SaveActivity({ onNavigate }) {
             <div className="mb-6 flex items-center justify-between">
               <h3 className="text-lg font-semibold">Jenis Kegiatan</h3>
               <button onClick={() => setShowActivityTypeSheet(false)}>
-                <Icon name="x" size="md" />
+                <Icon name="cancel" size={24} stroke={2} />
               </button>
             </div>
             <div className="stack gap-2">
@@ -217,7 +217,7 @@ export default function SaveActivity({ onNavigate }) {
             <div className="mb-6 flex items-center justify-between">
               <h3 className="text-lg font-semibold">Activity tag</h3>
               <button onClick={() => setShowTagSheet(false)}>
-                <Icon name="x" size="md" />
+                <Icon name="cancel" size={24} stroke={2} />
               </button>
             </div>
             <div className="stack gap-2">
@@ -249,7 +249,7 @@ export default function SaveActivity({ onNavigate }) {
             <div className="mb-6 flex items-center justify-between">
               <h3 className="text-lg font-semibold">How did that activity feel</h3>
               <button onClick={() => setShowFeelingSheet(false)}>
-                <Icon name="x" size="md" />
+                <Icon name="cancel" size={24} stroke={2} />
               </button>
             </div>
             <div className="mb-6 flex justify-between gap-2">
@@ -291,7 +291,7 @@ export default function SaveActivity({ onNavigate }) {
             <div className="mb-6 flex items-center justify-between">
               <h3 className="text-lg font-semibold">Hidden details</h3>
               <button onClick={() => setShowHiddenDetailsSheet(false)}>
-                <Icon name="x" size="md" />
+                <Icon name="cancel" size={24} stroke={2} />
               </button>
             </div>
             <div className="stack gap-2">

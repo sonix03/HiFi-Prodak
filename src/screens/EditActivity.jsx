@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Component } from "react";
 import ActivityMap from "../components/ActivityMap";
 import Button from "../components/Button";
 import ChangeMapType from "../components/ChangeMapType";
@@ -38,18 +38,47 @@ const hiddenDetailsOptions = [
   "Hide all",
 ];
 
-export default function EditActivity({ onNavigate }) {
-  const [selectedActivityType, setSelectedActivityType] = useState(0);
-  const [selectedTag, setSelectedTag] = useState(0);
-  const [selectedVisibility, setSelectedVisibility] = useState(0);
-  const [selectedHiddenDetails, setSelectedHiddenDetails] = useState(0);
-  const [selectedFeeling, setSelectedFeeling] = useState(1);
+export default class EditActivity extends Component {
+  state = {
+    selectedActivityType: 0,
+    selectedTag: 0,
+    selectedVisibility: 0,
+    selectedHiddenDetails: 0,
+    selectedFeeling: 1,
+    showActivityTypeSheet: false,
+    showTagSheet: false,
+    showFeelingSheet: false,
+    showHiddenDetailsSheet: false,
+  };
 
-  const [showActivityTypeSheet, setShowActivityTypeSheet] = useState(false);
-  const [showTagSheet, setShowTagSheet] = useState(false);
-  const [showFeelingSheet, setShowFeelingSheet] = useState(false);
-  const [showHiddenDetailsSheet, setShowHiddenDetailsSheet] = useState(false);
+  setSheet = (sheet, value) => {
+    this.setState({ [sheet]: value });
+  };
 
+  render() {
+    return (
+      <EditActivityView
+        onNavigate={this.props.onNavigate}
+        setSheet={this.setSheet}
+        setSelected={(key, value) => this.setState({ [key]: value })}
+        state={this.state}
+      />
+    );
+  }
+}
+
+function EditActivityView({ onNavigate, state, setSheet, setSelected }) {
+  const {
+    selectedActivityType,
+    selectedTag,
+    selectedVisibility,
+    selectedHiddenDetails,
+    selectedFeeling,
+    showActivityTypeSheet,
+    showTagSheet,
+    showFeelingSheet,
+    showHiddenDetailsSheet,
+  } = state;
   const activity = activities[0];
 
   return (
@@ -80,7 +109,7 @@ export default function EditActivity({ onNavigate }) {
             <label>Jenis Kegiatan</label>
             <button
               className="input flex items-center justify-between"
-              onClick={() => setShowActivityTypeSheet(true)}
+              onClick={() => setSheet("showActivityTypeSheet", true)}
             >
               <span className="flex items-center gap-2">
                 <Icon
@@ -120,7 +149,7 @@ export default function EditActivity({ onNavigate }) {
               <label>Activity tag</label>
               <button
                 className="input flex items-center justify-between"
-                onClick={() => setShowTagSheet(true)}
+                onClick={() => setSheet("showTagSheet", true)}
               >
                 <span>{activityTags[selectedTag].label}</span>
                 <Icon
@@ -135,7 +164,7 @@ export default function EditActivity({ onNavigate }) {
               <label>How did that activity feel</label>
               <button
                 className="input flex items-center justify-between"
-                onClick={() => setShowFeelingSheet(true)}
+                onClick={() => setSheet("showFeelingSheet", true)}
               >
                 <span>{feelingLevels[selectedFeeling]}</span>
                 <Icon
@@ -161,7 +190,7 @@ export default function EditActivity({ onNavigate }) {
                         ? "border-[var(--blue)] bg-[var(--blue-soft)] text-[var(--blue)]"
                         : "border-[var(--border)] text-[var(--text-secondary)]"
                     }`}
-                    onClick={() => setSelectedVisibility(index)}
+                    onClick={() => setSelected("selectedVisibility", index)}
                   >
                     <Icon name={item.icon} size="sm" />
                     {item.label}
@@ -174,7 +203,7 @@ export default function EditActivity({ onNavigate }) {
               <label>Hidden details</label>
               <button
                 className="input flex items-center justify-between"
-                onClick={() => setShowHiddenDetailsSheet(true)}
+                onClick={() => setSheet("showHiddenDetailsSheet", true)}
               >
                 <span>{hiddenDetailsOptions[selectedHiddenDetails]}</span>
                 <Icon
@@ -208,8 +237,8 @@ export default function EditActivity({ onNavigate }) {
             <div className="w-full rounded-t-3xl bg-white p-6">
               <div className="mb-6 flex items-center justify-between">
                 <h3 className="text-lg font-semibold">Jenis Kegiatan</h3>
-                <button onClick={() => setShowActivityTypeSheet(false)}>
-                  <Icon name="x" size="md" />
+                <button onClick={() => setSheet("showActivityTypeSheet", false)}>
+                  <Icon name="cancel" size={24} stroke={2} />
                 </button>
               </div>
 
@@ -223,8 +252,8 @@ export default function EditActivity({ onNavigate }) {
                         : "border-[var(--border)] text-[var(--text)]"
                     }`}
                     onClick={() => {
-                      setSelectedActivityType(index);
-                      setShowActivityTypeSheet(false);
+                      setSelected("selectedActivityType", index);
+                      setSheet("showActivityTypeSheet", false);
                     }}
                   >
                     <Icon name={item.icon} size="md" />
@@ -244,20 +273,22 @@ export default function EditActivity({ onNavigate }) {
           <div className="w-full rounded-t-3xl bg-white p-6">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="text-lg font-semibold">Activity tag</h3>
-              <button onClick={() => setShowTagSheet(false)}>
-                <Icon name="x" size="md" />
+              <button onClick={() => setSheet("showTagSheet", false)}>
+                <Icon name="cancel" size={24} stroke={2} />
               </button>
             </div>
-            <div className="stack gap-2">
+            <div className="flex flex-wrap gap-2">
               {activityTags.map((item, index) => (
                 <button
                   key={item.label}
-                  className={`w-full rounded-xl border border-[var(--border)] px-4 py-3 text-left text-sm font-medium ${
-                    selectedTag === index ? "bg-[var(--blue-soft)] text-[var(--blue)]" : "text-[var(--text)]"
+                  className={`rounded-full border px-4 py-2 text-sm font-semibold ${
+                    selectedTag === index
+                      ? "border-[var(--blue)] bg-[var(--blue-soft)] text-[var(--blue)]"
+                      : "border-[var(--border)] bg-white text-[var(--text-secondary)]"
                   }`}
                   onClick={() => {
-                    setSelectedTag(index);
-                    setShowTagSheet(false);
+                    setSelected("selectedTag", index);
+                    setSheet("showTagSheet", false);
                   }}
                 >
                   {item.label}
@@ -276,8 +307,8 @@ export default function EditActivity({ onNavigate }) {
           <div className="w-full rounded-t-3xl bg-white p-6">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="text-lg font-semibold">How did that activity feel</h3>
-              <button onClick={() => setShowFeelingSheet(false)}>
-                <Icon name="x" size="md" />
+              <button onClick={() => setSheet("showFeelingSheet", false)}>
+                <Icon name="cancel" size={24} stroke={2} />
               </button>
             </div>
             <div className="mb-6 flex justify-between gap-2">
@@ -289,7 +320,7 @@ export default function EditActivity({ onNavigate }) {
                       ? "bg-[var(--blue)] text-white"
                       : "bg-[var(--surface-muted)] text-[var(--text-secondary)]"
                   }`}
-                  onClick={() => setSelectedFeeling(index)}
+                  onClick={() => setSelected("selectedFeeling", index)}
                 >
                   {item}
                 </button>
@@ -301,11 +332,11 @@ export default function EditActivity({ onNavigate }) {
                 min="0"
                 max="2"
                 value={selectedFeeling}
-                onChange={(e) => setSelectedFeeling(parseInt(e.target.value))}
+                onChange={(e) => setSelected("selectedFeeling", parseInt(e.target.value))}
                 className="h-2 w-full appearance-none rounded-full bg-[var(--divider)] accent-[var(--blue)]"
               />
             </div>
-            <Button className="w-full" onClick={() => setShowFeelingSheet(false)}>Confirm</Button>
+            <Button className="w-full" onClick={() => setSheet("showFeelingSheet", false)}>Confirm</Button>
           </div>
           </div>
         </div>
@@ -318,8 +349,8 @@ export default function EditActivity({ onNavigate }) {
           <div className="w-full rounded-t-3xl bg-white p-6">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="text-lg font-semibold">Hidden details</h3>
-              <button onClick={() => setShowHiddenDetailsSheet(false)}>
-                <Icon name="x" size="md" />
+              <button onClick={() => setSheet("showHiddenDetailsSheet", false)}>
+                <Icon name="cancel" size={24} stroke={2} />
               </button>
             </div>
             <div className="stack gap-2">
@@ -332,8 +363,8 @@ export default function EditActivity({ onNavigate }) {
                       : "border-[var(--border)] text-[var(--text)]"
                   }`}
                   onClick={() => {
-                    setSelectedHiddenDetails(index);
-                    setShowHiddenDetailsSheet(false);
+                    setSelected("selectedHiddenDetails", index);
+                    setSheet("showHiddenDetailsSheet", false);
                   }}
                 >
                   {option}

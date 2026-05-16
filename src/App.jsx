@@ -21,7 +21,6 @@ import {
   SaveActivity,
   SearchClub,
   SearchFriend,
-  Share,
   ShareClub,
 } from "./screens";
 
@@ -30,8 +29,8 @@ const artboards = [
   { title: "Feed", Screen: Feed, nav: "feed" },
   { title: "Activities", Screen: Activities },
   { title: "Activity Detail", Screen: ActivityDetail },
-  { title: "Record", Screen: Record, nav: "record" },
-  { title: "Record Playing", Screen: Record, props: { initialPlaying: true }, nav: "record" },
+  { title: "Record", Screen: Record },
+  { title: "Record Playing", Screen: Record, props: { initialPlaying: true } },
   { title: "Save Activity", Screen: SaveActivity },
   { title: "Edit Activity 1", Screen: EditActivity, props: { initialStep: 0 } },
   // { title: "Edit Activity 2", Screen: EditActivity, props: { initialStep: 1 } },

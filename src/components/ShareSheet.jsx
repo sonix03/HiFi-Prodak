@@ -21,7 +21,7 @@ export default function ShareSheet({ onClose, onShare, media }) {
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold">Share Activity</h3>
           <button onClick={onClose}>
-            <Icon name="cancel" size="md" />
+            <Icon name="cancel" size={24} stroke={2} />
           </button>
         </div>
 

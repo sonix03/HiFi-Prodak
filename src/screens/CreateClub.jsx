@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Button from "../components/Button";
 import Icon from "../components/Icon";
-import Pill from "../components/Pill";
 import ScreenHeader from "../components/ScreenHeader";
 
 const steps = [

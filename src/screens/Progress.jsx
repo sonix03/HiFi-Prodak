@@ -23,9 +23,6 @@ function HeatmapCell({ item }) {
 }
 
 function MonthlyHeatmap({ data }) {
-  const productiveDays = data.filter((item) => item.hours >= 1).length;
-  const bestDay = data.reduce((best, item) => item.hours > best.hours ? item : best, data[0]);
-
   return (
     <div>
       <div className="between">
