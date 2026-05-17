@@ -1,17 +1,20 @@
 import { useState } from "react";
 import Icon from "../components/Icon";
+import MessageRecipientSheet from "../components/MessageRecipientSheet";
 import PostComposer from "../components/PostComposer";
 import ShareTargets from "../components/ShareTargets";
+import MessageDetail from "./MessageDetail";
 import avatar from "../assets/avatar.png";
 import indomieLogo from "../assets/indomie-logo.png";
 import instagramLogo from "../assets/instagram-logo.png";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
 import whatsappLogo from "../assets/whatsapp-logo.png";
-import { activities } from "../constants/data";
+import { activities, messageThreads } from "../constants/data";
 
 const prodakShareTargets = [
   { label: "Prodak Post", icon: "feed" },
+  { label: "Prodak Message", icon: "messageShare" },
   { label: "Instagram Story", image: instagramLogo },
   { label: "WhatsApp", image: whatsappLogo },
   { label: "Copy Link", icon: "copy" },
@@ -21,10 +24,10 @@ const prodakShareTargets = [
 
 const postDestinations = [
   { id: "followers", name: "Your Followers", icon: "users" },
-  { id: "hmif", name: "HMIF ITB Running Club", image: indomieLogo },
+  { id: "hmif", name: "HMIF ITB Work Club", image: indomieLogo },
   { id: "gajah", name: "Gajah Lulumpatan", image: avatar },
-  { id: "freerun", name: "FREERUNNERS BANDUNG", image: landscapeItb },
-  { id: "code", name: "Code Runners : IATB", icon: "club" },
+  { id: "freerun", name: "Deep Work Bandung", image: landscapeItb },
+  { id: "code", name: "Code Workers : IATB", icon: "club" },
 ];
 
 function CustomShareCard({ activity }) {
@@ -118,10 +121,23 @@ function PostToSheet({ onClose, onSelect }) {
   );
 }
 
-export default function Share({ onNavigate }) {
+export default function Share({ onNavigate, initialMessageSheet = false, initialMessageDetail = false }) {
   const activity = activities[0];
   const [showPostSheet, setShowPostSheet] = useState(false);
+  const [showMessageSheet, setShowMessageSheet] = useState(initialMessageSheet);
   const [postDestination, setPostDestination] = useState(null);
+  const [messageRecipient, setMessageRecipient] = useState(initialMessageDetail ? { id: "jane", name: "Jane Doe" } : null);
+
+  if (messageRecipient) {
+    return (
+      <MessageDetail
+        backLabel="Back"
+        composeAttachment
+        thread={{ ...messageThreads[0], name: messageRecipient.name }}
+        onBack={() => setMessageRecipient(null)}
+      />
+    );
+  }
 
   if (postDestination) {
     return (
@@ -139,7 +155,7 @@ export default function Share({ onNavigate }) {
         attachment={{
           image: mapPic,
           alt: "Activity route preview",
-          title: "Evening Run",
+          title: "Focus Work",
           source: "PRODAK.APP",
         }}
         onClose={() => setPostDestination(null)}
@@ -175,6 +191,8 @@ export default function Share({ onNavigate }) {
           onSelect={(target) => {
             if (target.label === "Prodak Post") {
               setShowPostSheet(true);
+            } else if (target.label === "Prodak Message") {
+              setShowMessageSheet(true);
             }
           }}
         />
@@ -186,6 +204,17 @@ export default function Share({ onNavigate }) {
           onSelect={(destination) => {
             setShowPostSheet(false);
             setPostDestination(destination);
+          }}
+        />
+      ) : null}
+
+      {showMessageSheet ? (
+        <MessageRecipientSheet
+          onClose={() => setShowMessageSheet(false)}
+          onSelect={(recipient) => {
+            if (recipient.id === "new") return;
+            setShowMessageSheet(false);
+            setMessageRecipient(recipient);
           }}
         />
       ) : null}

@@ -42,7 +42,11 @@ export default function Feed({ onNavigate }) {
 
   return (
     <main className="screen screen-pad relative">
-      <AppHeader right="notification" rightSecondary="profile" secondaryAction={{ icon: "search", label: "Search" }} />
+      <AppHeader
+        right="notification"
+        rightSecondary="profile"
+        secondaryAction={{ icon: "messageShare", label: "Messages", onClick: () => onNavigate?.("messages") }}
+      />
       <section className="stack">
         {posts.map((post) => (
           <FeedPost key={post.activity.id} onNavigate={onNavigate} {...post} onShare={() => handleShare(post.media)} />

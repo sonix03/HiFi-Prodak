@@ -1,8 +1,8 @@
 export const users = [
-  { id: "u1", name: "Mika Ananda", handle: "@mika", initials: "MA", role: "Product designer", streak: 18 },
-  { id: "u2", name: "Rafi Wirawan", handle: "@rafi", initials: "RW", role: "Founder", streak: 31 },
-  { id: "u3", name: "Naya Putri", handle: "@naya", initials: "NP", role: "Data analyst", streak: 12 },
-  { id: "u4", name: "Dimas Hartono", handle: "@dimas", initials: "DH", role: "Frontend engineer", streak: 9 },
+  { id: "u1", name: "Jane Doe", handle: "@jane", initials: "JD", role: "Product designer", streak: 18 },
+  { id: "u2", name: "Alex Chen", handle: "@alex", initials: "AC", role: "Founder", streak: 31 },
+  { id: "u3", name: "Sam Taylor", handle: "@sam", initials: "ST", role: "Data analyst", streak: 12 },
+  { id: "u4", name: "Jordan Lee", handle: "@jordan", initials: "JL", role: "Frontend engineer", streak: 9 },
 ];
 
 export const activities = [
@@ -152,8 +152,8 @@ export const challenges = [
 ];
 
 export const notifications = [
-  { id: "n1", type: "kudos", icon: "fire", title: "Rafi gave kudos", body: "On Shipped the onboarding prototype", time: "3m" },
-  { id: "n2", type: "comment", icon: "comment", title: "Naya commented", body: "This is the kind of morning block I need.", time: "18m" },
+  { id: "n1", type: "kudos", icon: "fire", title: "Alex gave kudos", body: "On Shipped the onboarding prototype", time: "3m" },
+  { id: "n2", type: "comment", icon: "comment", title: "Sam commented", body: "This is the kind of morning block I need.", time: "18m" },
   { id: "n3", type: "club", icon: "users", title: "Deep Work Jakarta moved up", body: "Your club is now #2 in the city leaderboard.", time: "1h" },
   { id: "n4", type: "achievement", icon: "trophy", title: "18-day streak", body: "You kept your productivity identity alive.", time: "Today" },
 ];
@@ -215,10 +215,37 @@ export const people = users.map((user, index) => ({
   metric: `${user.streak} day streak`,
 }));
 
+export const messageThreads = [
+  {
+    id: "m1",
+    name: "Jane Doe",
+    preview: "You: Focus Work",
+    time: "14.22",
+    unread: 1,
+    avatar: "default",
+  },
+  {
+    id: "m2",
+    name: "Alex Chen",
+    preview: "Nice focus score today.",
+    time: "13.48",
+    unread: 0,
+    avatar: "default",
+  },
+  {
+    id: "m3",
+    name: "Sam Taylor",
+    preview: "Can you share the activity recap?",
+    time: "Yesterday",
+    unread: 0,
+    avatar: "default",
+  },
+];
+
 export const leaderboard = [
-  { name: "Mika", metric: "12h 40m", rank: 1 },
-  { name: "Rafi", metric: "11h 05m", rank: 2 },
-  { name: "Naya", metric: "9h 25m", rank: 3 },
+  { name: "Jane", metric: "12h 40m", rank: 1 },
+  { name: "Alex", metric: "11h 05m", rank: 2 },
+  { name: "Sam", metric: "9h 25m", rank: 3 },
 ];
 
 export const deviceProofs = [

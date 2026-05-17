@@ -14,6 +14,8 @@ export { default as GroupClub } from "./GroupClub";
 export { default as Groups } from "./Groups";
 export { default as Login } from "./Login";
 export { default as LoginIntro } from "./LoginIntro";
+export { default as MessageDetail } from "./MessageDetail";
+export { default as Messages } from "./Messages";
 export { default as Notifications } from "./Notifications";
 export { default as Profile } from "./Profile";
 export { default as Progress } from "./Progress";

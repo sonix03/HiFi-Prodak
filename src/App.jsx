@@ -18,6 +18,8 @@ import {
   Groups,
   Login,
   LoginIntro,
+  MessageDetail,
+  Messages,
   Notifications,
   Profile,
   Progress,
@@ -37,6 +39,8 @@ const artboards = [
   { title: "Registration", Screen: Registration },
   { title: "Forgot Password", Screen: ForgotPassword },
   { title: "Feed", Screen: Feed, nav: "feed" },
+  { title: "Messages", Screen: Messages, nav: "feed" },
+  { title: "Message Detail", Screen: MessageDetail },
   { title: "Activities", Screen: Activities },
   { title: "Activity Detail", Screen: ActivityDetail },
   { title: "Record", Screen: Record },
@@ -66,6 +70,8 @@ const artboards = [
   { title: "Profile", Screen: Profile, nav: "progress" },
   { title: "QR Code", Screen: QRCode },
   { title: "Share Activity", Screen: Share },
+  { title: "Share Activity - Send to", Screen: Share, props: { initialMessageSheet: true } },
+  { title: "Prodak Message Detail", Screen: Share, props: { initialMessageDetail: true } },
   { title: "Share Club", Screen: ShareClub },
 ];
 
