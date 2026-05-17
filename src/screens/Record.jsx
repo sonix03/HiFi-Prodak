@@ -38,9 +38,9 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
             <p className={`text-base font-extrabold ${initialPlaying ? "text-black" : initialRunning ? "text-white" : "text-[var(--text-secondary)]"}`}>
               {initialPlaying ? "Stopped" : initialRunning ? "Working" : "Work"}
             </p>
-            {initialPlaying ? (
+            {/* {initialPlaying ? (
               <Icon name="arrowRight" size={22} stroke="strong" className="absolute right-5 top-4 -rotate-45 text-black" />
-            ) : null}
+            ) : null} */}
           </div>
           <div className="grid grid-cols-3 px-5 pb-6 pt-7">
             <Metric value={time} label="Time" />
