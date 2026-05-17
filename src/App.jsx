@@ -87,9 +87,38 @@ const artboards = [
 
 export default function App() {
   const navigate = () => {};
+  const screenCount = artboards.length;
 
   return (
     <main className="app">
+      <section className="design-system-panel" aria-label="Design system overview">
+        <div>
+          <p className="canvas-eyebrow">Prodak design system</p>
+          <h2>Mobile prototype system</h2>
+          <p>
+            Plus Jakarta Sans, blue primary actions, soft layered surfaces, rounded controls, Hugeicons, reusable cards, headers, bottom navigation, and bottom sheets.
+          </p>
+        </div>
+        <div className="design-system-stats" aria-label="Prototype summary">
+          <div>
+            <span>{screenCount}</span>
+            <p>Screens rendered</p>
+          </div>
+          <div>
+            <span>#2563EB</span>
+            <p>Primary color</p>
+          </div>
+          <div>
+            <span>200-800</span>
+            <p>Font weights</p>
+          </div>
+          <div>
+            <span>4</span>
+            <p>Main navigation</p>
+          </div>
+        </div>
+      </section>
+
       <header className="canvas-header">
         <p className="canvas-eyebrow">Prodak screens</p>
         <h1>Separated screen artboards</h1>

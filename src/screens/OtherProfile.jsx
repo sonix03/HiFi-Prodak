@@ -52,7 +52,6 @@ export default function OtherProfile({ initialFollowed = false, onNavigate }) {
         onBack={() => onNavigate?.("feed")}
         onShare={() => onNavigate?.("share")}
         showSearch={false}
-        showMore
       />
       <section className="hero-panel !border-b-0 !pb-0">
         <ProfileIdentity user={user} />
