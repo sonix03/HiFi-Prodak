@@ -31,7 +31,7 @@ Tools dan teknologi yang digunakan:
 | Kategori | Implementasi |
 |---|---|
 | Framework | React 19 dan Vite 6 |
-| Styling | Tailwind CSS 4, CSS variables di `src/index.css`, dan style global di `src/App.css` |
+| Styling | Tailwind CSS 4, CSS variables di `src/index.css`, dan aturan styling bersama di `src/App.css` |
 | Icon | `@hugeicons/react` dan `@hugeicons/core-free-icons` melalui komponen `Icon` |
 | Komponen UI | Komponen reusable di `src/components`, seperti `Button`, `Pill`, `AppHeader`, `ScreenHeader`, `BottomNavigation`, `FeedPost`, `ShareBottomSheet`, dan form field |
 | Asset | `map-pic.png`, `landscape-itb.png`, `avatar.png`, `indomie-logo.png`, logo Google/Apple/Facebook/Instagram/WhatsApp, serta video login |
@@ -45,14 +45,37 @@ High-fidelity prototype menggunakan pendekatan visual yang konsisten dengan prin
 
 ### Tipografi
 
-Prototype menggunakan dua keluarga font yang didefinisikan pada `src/index.css` dan `src/constants/theme.js`, yaitu `Plus Jakarta Sans` dan `Manrope`.
+Prototype menggunakan satu keluarga font utama, yaitu `Plus Jakarta Sans`. Font diimpor sebagai variable font dengan rentang weight 200 sampai 800 melalui `src/index.css`. Token `--ui` dan `--heading` sama-sama menempatkan `Plus Jakarta Sans` sebagai font utama, dengan fallback `Inter`, `system-ui`, dan `sans-serif`.
 
-| Font | Use case | Alasan penggunaan |
+| Weight Plus Jakarta Sans | Use case | Alasan penggunaan |
 |---|---|---|
-| `Plus Jakarta Sans` | Font utama untuk hampir seluruh antarmuka: body text, label, tombol, input, tab, bottom navigation, metadata, judul layar, section title, dan card title | Bentuk huruf modern, bersih, dan mudah dibaca pada ukuran mobile. Font ini menjaga konsistensi UI karena mayoritas teks aplikasi bersifat fungsional dan perlu cepat dipindai |
-| `Manrope` | Fallback/pendukung untuk heading melalui token `--heading`, khususnya ketika tampilan membutuhkan karakter heading yang tetap tegas dan geometris | Memberi dukungan visual untuk heading tanpa mengubah identitas utama aplikasi. Pada implementasi saat ini, `Plus Jakarta Sans` tetap menjadi font pertama pada stack heading, sedangkan `Manrope` dipakai sebagai fallback sebelum `Inter` dan `system-ui` |
+| 200 / Extra Light | Tidak digunakan sebagai gaya utama UI | Terlalu tipis untuk keterbacaan mobile; hanya tersedia bila dibutuhkan untuk dekorasi sangat ringan |
+| 300 / Light | Tidak dominan digunakan | Dihindari untuk teks fungsional karena prototype membutuhkan kontras dan keterbacaan tinggi |
+| 400 / Regular | Body text dan teks deskriptif ringan | Cocok untuk paragraf pendek atau konten yang tidak perlu menjadi fokus utama |
+| 500 / Medium | Metadata, subtitle, timestamp, lokasi, dan placeholder | Memberi keterbacaan cukup tanpa mengalahkan judul atau aksi utama |
+| 600 / SemiBold | Label, tab, pill, nama user, tombol sekunder, dan list item | Membantu elemen interaktif terlihat jelas tanpa terlalu berat |
+| 700 / Bold | Judul card, judul section, metric, dan teks tombol penting | Membentuk hierarki visual yang mudah dipindai |
+| 800 / ExtraBold | Heading utama, CTA utama, angka besar, dan elemen hero | Dipakai untuk titik fokus layar agar informasi utama langsung tertangkap |
 
 Ukuran tipografi dibedakan untuk judul layar, section title, card title, body, metadata, dan metric. Judul memakai bobot tebal untuk membangun hierarki visual, sedangkan metadata memakai ukuran lebih kecil dan warna sekunder agar informasi tambahan tidak mengganggu fokus utama.
+
+Skala tipografi yang digunakan pada implementasi adalah sebagai berikut.
+
+| Scale category | Characteristics | Size | Weight |
+|---|---|---:|---:|
+| Display / Hero title | Teks paling dominan pada layar khusus, seperti hero onboarding, angka challenge, dan metric besar pada Record | `30px-34px` | `800` atau `font-black` |
+| Page title / Screen title | Judul utama layar, header, dan title pada bottom sheet | `18px-24px` | `700-800` atau `font-black` |
+| Section title | Judul bagian seperti `Share to`, `About`, `Recommended For You`, dan heading section list | `16px-22px` | `650-800` |
+| Card title | Judul post, activity card, event card, club card, dan attachment preview | `15px-18px` | `650-800` |
+| Body text | Deskripsi, caption, about text, isi pesan, dan paragraf pendek | `13px-16px` | `400-500` |
+| Label / Control text | Label tombol, pill, tab, filter, form label, dan teks interaktif kecil | `12px-15px` | `600-700` |
+| Metadata | Timestamp, lokasi, subtitle, helper text, detail tambahan, dan keterangan sekunder | `11px-13px` | `500` |
+| Metric | Angka performa seperti durasi, skor, progress, dan statistik utama | `18px-28px` | `650-700` |
+| Bottom navigation label | Label navigasi utama di bawah layar | `10px` | `700` |
+
+Secara konkret, penerapan tipografi pada prototype dapat dijelaskan melalui beberapa kategori utama: judul utama menggunakan sekitar `20px/700`, judul section menggunakan sekitar `16px/650`, judul card menggunakan sekitar `15px/650`, body text menggunakan sekitar `13px/450`, metadata menggunakan sekitar `11px/500`, metric utama menggunakan sekitar `28px/700`, dan metric kecil menggunakan sekitar `18px/650`. Pada layar khusus seperti Challenge Detail, Event Detail, Share Sheet, dan Message Detail, ukuran serta weight dapat dinaikkan untuk memperkuat fokus visual pada konten utama.
+
+Pemilihan ukuran dan weight tidak dibuat sepenuhnya kaku karena prototype ini dirancang untuk konteks mobile yang memiliki ruang layar terbatas dan jenis konten yang bervariasi. Pada beberapa layar, teks perlu lebih ringkas agar tidak menabrak elemen lain, sedangkan pada layar lain angka, judul, atau call-to-action perlu dibuat lebih kuat agar pengguna cepat memahami prioritas informasi. Dengan demikian, skala tipografi digunakan sebagai panduan utama, sementara penyesuaian kecil dilakukan sesuai kepadatan konten, fungsi layar, dan kebutuhan hierarki visual.
 
 ### Warna
 

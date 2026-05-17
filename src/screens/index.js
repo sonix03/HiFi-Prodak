@@ -17,6 +17,7 @@ export { default as LoginIntro } from "./LoginIntro";
 export { default as MessageDetail } from "./MessageDetail";
 export { default as Messages } from "./Messages";
 export { default as Notifications } from "./Notifications";
+export { default as OtherProfile } from "./OtherProfile";
 export { default as Profile } from "./Profile";
 export { default as Progress } from "./Progress";
 export { default as QRCode } from "./QRCode";

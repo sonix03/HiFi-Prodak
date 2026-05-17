@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -22,7 +22,7 @@
   --text-tertiary: #8a8a8a;
   --border: #e5e5e5;
   --divider: #eeeeee;
-  --heading: "Plus Jakarta Sans", Manrope, Inter, system-ui, sans-serif;
+  --heading: "Plus Jakarta Sans", Inter, system-ui, sans-serif;
   --ui: "Plus Jakarta Sans", Inter, system-ui, sans-serif;
   --shadow-header: 0 2px 10px rgba(15, 23, 42, 0.04);
   --shadow-navbar: 0 -4px 18px rgba(15, 23, 42, 0.08);

@@ -5,9 +5,11 @@ import FeedShareSheet from "../components/FeedShareSheet";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
 import { activities, clubs } from "../constants/data";
+import OtherProfile from "./OtherProfile";
 
 export default function Feed({ onNavigate, initialShareSheet = false }) {
   const [showShare, setShowShare] = useState(initialShareSheet);
+  const [showOtherProfile, setShowOtherProfile] = useState(false);
 
   const posts = [
     {
@@ -38,6 +40,10 @@ export default function Feed({ onNavigate, initialShareSheet = false }) {
     setShowShare(true);
   };
 
+  if (showOtherProfile) {
+    return <OtherProfile onNavigate={(screen) => (screen === "feed" ? setShowOtherProfile(false) : onNavigate?.(screen))} />;
+  }
+
   return (
     <main className="screen screen-pad relative">
       <AppHeader
@@ -48,7 +54,7 @@ export default function Feed({ onNavigate, initialShareSheet = false }) {
       />
       <section className="stack">
         {posts.map((post) => (
-          <FeedPost key={post.activity.id} onNavigate={onNavigate} {...post} onShare={handleShare} />
+          <FeedPost key={post.activity.id} onNavigate={onNavigate} {...post} onOpenProfile={() => setShowOtherProfile(true)} onShare={handleShare} />
         ))}
       </section>
 

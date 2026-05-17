@@ -13,11 +13,12 @@ export default function FeedPost({
   body,
   media = [],
   onNavigate,
+  onOpenProfile,
   onShare,
 }) {
   return (
     <article className="stack gap-2">
-      <div className="row">
+      <button className="row w-full text-left" onClick={onOpenProfile || (() => onNavigate?.("otherProfile"))} type="button">
         <Avatar user={activity.user} />
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold">{activity.user.name}</p>
@@ -26,7 +27,7 @@ export default function FeedPost({
           </p>
         </div>
         <Icon name="more" size="md" className="text-[var(--text-tertiary)]" />
-      </div>
+      </button>
 
       {club ? (
         <button

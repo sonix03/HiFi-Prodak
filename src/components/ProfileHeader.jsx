@@ -1,7 +1,7 @@
 import { HeaderAction } from "./Header";
 import Icon from "./Icon";
 
-export default function ProfileHeader({ onBack, onShare, onSearch }) {
+export default function ProfileHeader({ onBack, onShare, onSearch, showSearch = true, showMore = false, onMore }) {
   return (
     <header className="app-header app-header-profile">
       <div className="header-main">
@@ -11,7 +11,8 @@ export default function ProfileHeader({ onBack, onShare, onSearch }) {
       </div>
       <div className="header-actions">
         <HeaderAction icon="share" label="Share profile" onClick={onShare} />
-        <HeaderAction icon="search" label="Search" onClick={onSearch} />
+        {showSearch ? <HeaderAction icon="search" label="Search" onClick={onSearch} /> : null}
+        {showMore ? <HeaderAction icon="more" label="More profile options" onClick={onMore} /> : null}
       </div>
     </header>
   );
