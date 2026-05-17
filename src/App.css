@@ -462,6 +462,14 @@
   background: rgba(255, 255, 255, 0.96);
 }
 
+.groups-page-header {
+  min-height: 64px;
+  margin-bottom: 0;
+  border-bottom: 0;
+  padding-top: 12px;
+  padding-bottom: 8px;
+}
+
 .bottom-navigation {
   position: absolute;
   right: 0;

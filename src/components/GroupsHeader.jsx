@@ -8,7 +8,7 @@ export default function GroupsHeader({ active = "clubs", onNavigate }) {
 
   return (
     <>
-      <header className="between pb-3">
+      <header className="app-header app-header-main groups-page-header">
         <button className="header-action" aria-label="Search" onClick={() => onNavigate?.("searchClub")}>
           <Icon name="search" size={24} />
         </button>
