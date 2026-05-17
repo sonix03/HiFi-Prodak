@@ -46,6 +46,7 @@ export default function Feed({ onNavigate }) {
         right="notification"
         rightSecondary="profile"
         secondaryAction={{ icon: "messageShare", label: "Messages", onClick: () => onNavigate?.("messages") }}
+        tertiaryAction={{ icon: "search", label: "Search", onClick: () => onNavigate?.("searchFriend") }}
       />
       <section className="stack">
         {posts.map((post) => (

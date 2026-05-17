@@ -19,6 +19,7 @@ export default function Header({
   centeredTitle = false,
   primaryAction,
   secondaryAction,
+  tertiaryAction,
   right = "notification",
   rightSecondary,
   status,
@@ -61,6 +62,7 @@ export default function Header({
 
       <div className="header-actions">
         {secondaryAction ? <HeaderAction {...secondaryAction} /> : null}
+        {tertiaryAction ? <HeaderAction {...tertiaryAction} /> : null}
         {rightSecondary ? <HeaderAction icon={rightSecondary} label={rightSecondary} /> : null}
         {primaryAction ? (
           typeof primaryAction === "string" ? (
