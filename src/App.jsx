@@ -17,7 +17,6 @@ import {
   Login,
   LoginIntro,
   Notifications,
-  Preview,
   Profile,
   Progress,
   QRCode,
@@ -26,7 +25,7 @@ import {
   SaveActivity,
   SearchClub,
   SearchFriend,
-  ShareClub,
+  Share,
 } from "./screens";
 
 const artboards = [
@@ -61,8 +60,7 @@ const artboards = [
   { title: "Notifications", Screen: Notifications },
   { title: "Profile", Screen: Profile, nav: "progress" },
   { title: "QR Code", Screen: QRCode },
-  { title: "Preview", Screen: Preview },
-  { title: "Share Club", Screen: ShareClub },
+  { title: "Share Activity", Screen: Share },
 ];
 
 export default function App() {

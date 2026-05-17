@@ -1,46 +1,107 @@
-import Button from "../components/Button";
 import Icon from "../components/Icon";
-import ScreenHeader from "../components/ScreenHeader";
+import instagramLogo from "../assets/instagram-logo.png";
+import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
+import whatsappLogo from "../assets/whatsapp-logo.png";
+import { activities } from "../constants/data";
 
 const destinations = [
-  ["Instagram Story", "media"],
-  ["Instagram Message", "messageShare"],
-  ["WhatsApp", "share"],
-  ["Message", "comment"],
-  ["Prodak Message", "users"],
-  ["Prodak Post", "feed"],
-  ["Copy Link", "copy"],
-  ["More", "plus"],
+  { label: "Instagram Story", image: instagramLogo },
+  { label: "WhatsApp", image: whatsappLogo },
+  { label: "Copy to Clipboard", icon: "copy" },
+  { label: "Save", icon: "download" },
+  { label: "Copy Link", icon: "copy" },
+  { label: "More", icon: "share" },
 ];
 
-export default function Share({ onNavigate }) {
+function CustomShareCard({ activity }) {
   return (
-    <main className="screen screen-pad">
-      <ScreenHeader title="Share Activity" onBack={() => onNavigate?.("activityDetail")} action={{ icon: "share", label: "Share" }} />
-      <section className="stack">
-        <div className="mx-auto h-[280px] w-[160px] overflow-hidden rounded-[28px] bg-[var(--surface-muted)] shadow-[var(--shadow-card)]">
-          <img className="h-full w-full object-cover" src={mapPic} alt="Map share preview" />
+    <div className="relative h-[280px] w-[168px] shrink-0 overflow-hidden rounded-[28px] bg-[var(--text)] text-white shadow-[var(--shadow-card)]">
+      <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(45deg,rgba(255,255,255,.18)_25%,transparent_25%),linear-gradient(-45deg,rgba(255,255,255,.18)_25%,transparent_25%),linear-gradient(45deg,transparent_75%,rgba(255,255,255,.18)_75%),linear-gradient(-45deg,transparent_75%,rgba(255,255,255,.18)_75%)] [background-position:0_0,0_12px,12px_-12px,-12px_0] [background-size:24px_24px]" />
+      <div className="relative flex h-full flex-col items-center px-5 py-5 text-center">
+        <span className="self-start rounded-md border border-white/70 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white/90">
+          Prodak
+        </span>
+
+        <div className="mt-4">
+          <p className="text-[10px] font-bold text-white/80">Duration</p>
+          <p className="text-[23px] font-black leading-tight">{activity.duration}</p>
+        </div>
+        <div className="mt-2.5">
+          <p className="text-[10px] font-bold text-white/80">Score</p>
+          <p className="text-[23px] font-black leading-tight">{activity.focusScore}</p>
+        </div>
+        <div className="mt-2.5">
+          <p className="text-[10px] font-bold text-white/80">Steps</p>
+          <p className="text-[23px] font-black leading-tight">{activity.output}</p>
+        </div>
+
+        <svg className="mt-3 h-[72px] w-14 text-[var(--yellow)]" viewBox="0 0 64 96" fill="none" aria-hidden="true">
+          <path
+            d="M23 4C27 11 39 10 37 21C35 30 22 28 24 39C26 51 45 47 44 61C43 72 29 72 31 84C33 92 47 88 57 91"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="6"
+          />
+        </svg>
+
+        <div className="prodak-mark mt-auto text-white" aria-label="Prodak">
+          <span className="!h-6 !w-6 !border-white !border-r-[var(--blue)]" />
+          <strong className="!text-[15px] !font-extrabold text-white">Prodak</strong>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ImageShareCard({ src, alt }) {
+  return (
+    <div className="h-[280px] w-[168px] shrink-0 overflow-hidden rounded-[28px] bg-[var(--surface-muted)] shadow-[var(--shadow-card)]">
+      <img className="h-full w-full object-cover" src={src} alt={alt} />
+    </div>
+  );
+}
+
+export default function Share({ onNavigate }) {
+  const activity = activities[0];
+
+  return (
+    <main className="screen flex h-full flex-col bg-white">
+      <header className="relative border-b border-[var(--divider)] bg-white px-6 py-5 shadow-[var(--shadow-header)]">
+        <button className="absolute left-6 top-1/2 -translate-y-1/2 text-sm font-medium" onClick={() => onNavigate?.("activityDetail")}>
+          Close
+        </button>
+        <h1 className="text-center text-[20px] font-black tracking-normal">Share Activity</h1>
+      </header>
+
+      <section className="flex-1 overflow-y-auto px-6 py-6">
+        <div className="-mx-6 flex snap-x gap-5 overflow-x-auto px-[calc(50%-84px)] pb-3">
+          <CustomShareCard activity={activity} />
+          <ImageShareCard src={mapPic} alt="Map share preview" />
+          <ImageShareCard src={landscapeItb} alt="Photo share preview" />
         </div>
         <div className="row justify-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--text-tertiary)]" />
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--text)]" />
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--divider)]" />
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--divider)]" />
         </div>
 
-        <h2 className="section-title mt-2">Share to</h2>
+        <h2 className="section-title mt-8">Share to</h2>
         <div className="grid grid-cols-4 gap-x-3 gap-y-5">
-          {destinations.map(([label, icon]) => (
-            <button className="grid justify-items-center gap-2 text-center text-[6px] font-medium text-[var(--text-secondary)]" key={label}>
-              <span className="grid h-12 w-12 place-items-center rounded-full border border-[var(--border)] bg-white text-[var(--text)]">
-                <Icon name={icon} size="md" />
+          {destinations.map((item) => (
+            <button className="grid justify-items-center gap-2 text-center text-[9px] font-semibold leading-[1.15] text-[var(--text)]" key={item.label}>
+              <span className="grid h-14 w-14 place-items-center rounded-full bg-[var(--surface-muted)] text-[var(--text)]">
+                {item.image ? (
+                  <img className="h-11 w-11 object-contain" src={item.image} alt={item.label} />
+                ) : (
+                  <Icon name={item.icon} size="lg" />
+                )}
               </span>
-              <span>{label}</span>
+              <span>{item.label}</span>
             </button>
           ))}
         </div>
-
-        <Button className="mt-2 w-full" size="lg" icon="share" onClick={() => onNavigate?.("feed")}>Share now</Button>
       </section>
     </main>
   );
