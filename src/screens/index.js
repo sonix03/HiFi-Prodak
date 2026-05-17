@@ -1,11 +1,13 @@
 export { default as Activities } from "./Activities";
 export { default as ActivityDetail } from "./ActivityDetail";
+export { default as BrowseEvents } from "./BrowseEvents";
 export { default as Club } from "./Club";
 export { default as Comments } from "./Comments";
 export { default as CreateClub } from "./CreateClub";
 export { default as CreatePost } from "./CreatePost";
 export { default as EditActivity } from "./EditActivity";
 export { default as EditProfile } from "./EditProfile";
+export { default as EventFilter } from "./EventFilter";
 export { default as Feed } from "./Feed";
 export { default as ForgotPassword } from "./ForgotPassword";
 export { default as GroupClub } from "./GroupClub";

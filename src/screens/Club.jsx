@@ -1,20 +1,24 @@
+import { useState } from "react";
 import Button from "../components/Button";
+import Avatar from "../components/Avatar";
 import FeedPost from "../components/FeedPost";
+import Icon from "../components/Icon";
 import Pill from "../components/Pill";
 import ScreenHeader from "../components/ScreenHeader";
 import SectionHeader from "../components/SectionHeader";
 import indomieLogo from "../assets/indomie-logo.png";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
-import { activities, clubs } from "../constants/data";
+import { activities, clubs, users } from "../constants/data";
 
 export default function Club({ onNavigate }) {
   const club = clubs[0];
+  const [joined, setJoined] = useState(false);
 
   return (
     <main className="screen screen-pad">
       <ScreenHeader title="Club detail" onBack={() => onNavigate?.("groups")} action={{ icon: "more", label: "Club actions" }} />
-      <section className="hero-panel">
+      <section className="hero-panel !border-b-0 !pb-0">
         <div className="relative -mx-2 pb-1">
           <div className="h-44 overflow-hidden rounded-b-[28px] bg-[var(--surface-muted)]">
             <img className="h-full w-full object-cover" src={landscapeItb} alt={`${club.name} campus building`} />
@@ -33,14 +37,36 @@ export default function Club({ onNavigate }) {
           <Pill icon="globe">Public</Pill>
         </div>
         <div className="mt-5 grid grid-cols-2 gap-3">
-          <Button size="sm" icon="userCheck">Join</Button>
+          <Button
+            size="sm"
+            icon="userCheck"
+            variant={joined ? "outline" : "primary"}
+            onClick={() => setJoined((current) => !current)}
+          >
+            {joined ? "Joined" : "Join"}
+          </Button>
           <Button size="sm" variant="outline" icon="share" onClick={() => onNavigate?.("shareClub")}>Share</Button>
         </div>
       </section>
 
       <section className="section">
-        <SectionHeader title="Recent Posts" />
-        <div className="stack mt-3">
+        <div className="border-y border-[var(--divider)]">
+          <button
+            className="flex w-full items-center gap-3 bg-white py-3 text-left"
+            onClick={() => onNavigate?.("createPost")}
+            type="button"
+          >
+            <Avatar user={users[0]} size="md" />
+            <span className="min-w-0 flex-1 truncate text-[15px] font-medium text-[var(--text-secondary)]">
+              Post something...
+            </span>
+            <Icon name="media" size="lg" className="text-[var(--text-secondary)]" />
+          </button>
+        </div>
+        <div className="mt-4">
+          <SectionHeader title="Recent Posts" />
+        </div>
+        <div className="stack mt-4">
           <FeedPost
             activity={activities[1]}
             body="Besok pagi kita coba 90-minute focus sprint. Drop progress di thread ini setelah selesai."

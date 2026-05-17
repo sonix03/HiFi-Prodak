@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "../components/Button";
 import ScreenHeader from "../components/ScreenHeader";
 import SearchBar from "../components/SearchBar";
@@ -20,6 +21,21 @@ function SearchTabs({ active, onNavigate }) {
 }
 
 export default function SearchClub({ onNavigate }) {
+  const [joinedClubs, setJoinedClubs] = useState(() => new Set(clubs.filter((club) => club.joined).map((club) => club.id)));
+  const toggleJoined = (id) => {
+    setJoinedClubs((current) => {
+      const next = new Set(current);
+
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+
+      return next;
+    });
+  };
+
   return (
     <main className="screen screen-pad">
       <ScreenHeader title="Search" onBack={() => onNavigate?.("groups")} />
@@ -30,21 +46,30 @@ export default function SearchClub({ onNavigate }) {
 
       <section className="mt-5 stack overflow-hidden">
         <p className="meta">Recommended clubs</p>
-        {clubs.map((club) => (
-          <article className="between overflow-hidden rounded-2xl border border-[var(--border)] bg-white p-3 shadow-[var(--shadow-card)]" key={club.id}>
-            <div className="row min-w-0">
-              <img className="h-12 w-12 shrink-0 rounded-full object-cover" src={bk} alt="" />
-              <div className="min-w-0">
-                <p className="truncate text-sm font-semibold">{club.name}</p>
-                <p className="meta truncate">{club.members} members • {club.goal}</p>
-                <p className="meta truncate">Active May 16, 2026</p>
+        {clubs.map((club) => {
+          const isJoined = joinedClubs.has(club.id);
+
+          return (
+            <article className="between overflow-hidden rounded-2xl border border-[var(--border)] bg-white p-3 shadow-[var(--shadow-card)]" key={club.id}>
+              <div className="row min-w-0">
+                <img className="h-12 w-12 shrink-0 rounded-full object-cover" src={bk} alt="" />
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold">{club.name}</p>
+                  <p className="meta truncate">{club.members} members • {club.goal}</p>
+                  <p className="meta truncate">Active May 16, 2026</p>
+                </div>
               </div>
-            </div>
-            <Button className="w-[74px] shrink-0 px-2" size="sm" variant={club.joined ? "outline" : "primary"} onClick={() => onNavigate?.("club")}>
-              {club.joined ? "View" : "Join"}
-            </Button>
-          </article>
-        ))}
+              <Button
+                className="w-[78px] shrink-0 px-2"
+                size="sm"
+                variant={isJoined ? "outline" : "primary"}
+                onClick={() => toggleJoined(club.id)}
+              >
+                {isJoined ? "Joined" : "Join"}
+              </Button>
+            </article>
+          );
+        })}
       </section>
     </main>
   );

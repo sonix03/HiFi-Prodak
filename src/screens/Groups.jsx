@@ -17,7 +17,7 @@ export default function Groups({ onNavigate }) {
         </div>
         <div className="between rounded-xl border border-[var(--border)] bg-white px-3 py-2">
           <span className="text-xs font-medium text-[var(--text-secondary)]">Find events near you</span>
-          <Button size="sm" variant="outline" onClick={() => onNavigate?.("searchFriend")}>Browse Events</Button>
+          <Button size="sm" variant="outline" onClick={() => onNavigate?.("browseEvents")}>Browse Events</Button>
         </div>
       </section>
 

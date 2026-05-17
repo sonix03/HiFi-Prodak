@@ -4,12 +4,14 @@ import Phone from "./components/Phone";
 import {
   Activities,
   ActivityDetail,
+  BrowseEvents,
   Club,
   Comments,
   CreateClub,
   CreatePost,
   EditActivity,
   EditProfile,
+  EventFilter,
   Feed,
   ForgotPassword,
   GroupClub,
@@ -26,6 +28,7 @@ import {
   SearchClub,
   SearchFriend,
   Share,
+  ShareClub,
 } from "./screens";
 
 const artboards = [
@@ -45,6 +48,8 @@ const artboards = [
   // { title: "Edit Activity 2", Screen: EditActivity, props: { initialStep: 1 } },
   { title: "Progress", Screen: Progress, nav: "progress" },
   { title: "Groups - Clubs", Screen: Groups, nav: "groups" },
+  { title: "Browse Events", Screen: BrowseEvents, nav: "groups" },
+  { title: "Event Filter", Screen: EventFilter },
   { title: "Groups - Challenges", Screen: GroupClub, nav: "groups" },
   { title: "Club Detail", Screen: Club, nav: "groups" },
   { title: "Create Club 1", Screen: CreateClub, props: { initialStep: 0 } },
@@ -61,6 +66,7 @@ const artboards = [
   { title: "Profile", Screen: Profile, nav: "progress" },
   { title: "QR Code", Screen: QRCode },
   { title: "Share Activity", Screen: Share },
+  { title: "Share Club", Screen: ShareClub },
 ];
 
 export default function App() {
