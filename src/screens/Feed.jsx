@@ -1,14 +1,13 @@
 import { useState } from "react";
 import AppHeader from "../components/AppHeader";
 import FeedPost from "../components/FeedPost";
-import ShareSheet from "../components/ShareSheet";
+import FeedShareSheet from "../components/FeedShareSheet";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
 import { activities, clubs } from "../constants/data";
 
-export default function Feed({ onNavigate }) {
-  const [showShare, setShowShare] = useState(false);
-  const [shareMedia, setShareMedia] = useState([]);
+export default function Feed({ onNavigate, initialShareSheet = false }) {
+  const [showShare, setShowShare] = useState(initialShareSheet);
 
   const posts = [
     {
@@ -35,8 +34,7 @@ export default function Feed({ onNavigate }) {
     },
   ];
 
-  const handleShare = (media) => {
-    setShareMedia(media);
+  const handleShare = () => {
     setShowShare(true);
   };
 
@@ -50,11 +48,11 @@ export default function Feed({ onNavigate }) {
       />
       <section className="stack">
         {posts.map((post) => (
-          <FeedPost key={post.activity.id} onNavigate={onNavigate} {...post} onShare={() => handleShare(post.media)} />
+          <FeedPost key={post.activity.id} onNavigate={onNavigate} {...post} onShare={handleShare} />
         ))}
       </section>
 
-      {showShare && <ShareSheet onClose={() => setShowShare(false)} onShare={() => setShowShare(false)} media={shareMedia} />}
+      {showShare && <FeedShareSheet onClose={() => setShowShare(false)} />}
     </main>
   );
 }

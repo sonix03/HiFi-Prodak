@@ -39,6 +39,7 @@ const artboards = [
   { title: "Registration", Screen: Registration },
   { title: "Forgot Password", Screen: ForgotPassword },
   { title: "Feed", Screen: Feed, nav: "feed" },
+  { title: "Feed - Share Sheet", Screen: Feed, props: { initialShareSheet: true }, nav: "feed" },
   { title: "Messages", Screen: Messages, nav: "feed" },
   { title: "Message Detail", Screen: MessageDetail },
   { title: "Activities", Screen: Activities },
