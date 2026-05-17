@@ -1,6 +1,8 @@
+import ShareBottomSheet from "../components/ShareBottomSheet";
 import ShareTargets from "../components/ShareTargets";
 import indomieLogo from "../assets/indomie-logo.png";
 import { clubs } from "../constants/data";
+import Club from "./Club";
 
 function ShareClubCard({ club }) {
   return (
@@ -33,19 +35,13 @@ export default function ShareClub({ onNavigate }) {
   const club = clubs[0];
 
   return (
-    <main className="screen flex h-full flex-col bg-white">
-      <header className="relative border-b border-[var(--divider)] bg-white px-6 py-5 shadow-[var(--shadow-header)]">
-        <button className="absolute left-6 top-1/2 -translate-y-1/2 text-sm font-semibold text-[var(--blue)]" onClick={() => onNavigate?.("club")}>
-          Close
-        </button>
-        <h1 className="text-center text-[20px] font-black tracking-normal">Share Club</h1>
-      </header>
-
-      <section className="flex-1 overflow-y-auto px-6 py-8">
+    <main className="screen relative h-full overflow-hidden bg-white">
+      <Club onNavigate={onNavigate} />
+      <ShareBottomSheet title="Share Club" onClose={() => onNavigate?.("club")}>
         <ShareClubCard club={club} />
 
         <ShareTargets className="mt-14" />
-      </section>
+      </ShareBottomSheet>
     </main>
   );
 }

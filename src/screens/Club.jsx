@@ -6,6 +6,8 @@ import Icon from "../components/Icon";
 import Pill from "../components/Pill";
 import ScreenHeader from "../components/ScreenHeader";
 import SectionHeader from "../components/SectionHeader";
+import ShareBottomSheet from "../components/ShareBottomSheet";
+import ShareTargets from "../components/ShareTargets";
 import indomieLogo from "../assets/indomie-logo.png";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
@@ -14,9 +16,10 @@ import { activities, clubs, users } from "../constants/data";
 export default function Club({ onNavigate }) {
   const club = clubs[0];
   const [joined, setJoined] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   return (
-    <main className="screen screen-pad">
+    <main className="screen screen-pad relative">
       <ScreenHeader title="Club detail" onBack={() => onNavigate?.("groups")} action={{ icon: "more", label: "Club actions" }} />
       <section className="hero-panel !border-b-0 !pb-0">
         <div className="relative -mx-2 pb-1">
@@ -45,7 +48,7 @@ export default function Club({ onNavigate }) {
           >
             {joined ? "Joined" : "Join"}
           </Button>
-          <Button size="sm" variant="outline" icon="share" onClick={() => onNavigate?.("shareClub")}>Share</Button>
+          <Button size="sm" variant="outline" icon="share" onClick={() => setShowShare(true)}>Share</Button>
         </div>
       </section>
 
@@ -73,7 +76,7 @@ export default function Club({ onNavigate }) {
             headline="Morning sprint check-in"
             media={[{ type: "photo", src: landscapeItb }]}
             onNavigate={onNavigate}
-            onShare={() => onNavigate?.("shareClub")}
+            onShare={() => setShowShare(true)}
             place={club.name}
           />
           <FeedPost
@@ -81,11 +84,38 @@ export default function Club({ onNavigate }) {
             headline="Proof from today's focus block"
             media={[{ type: "map", src: mapPic }]}
             onNavigate={onNavigate}
-            onShare={() => onNavigate?.("shareClub")}
+            onShare={() => setShowShare(true)}
             place={club.name}
           />
         </div>
       </section>
+
+      {showShare ? (
+        <ShareBottomSheet title="Share Club" onClose={() => setShowShare(false)}>
+          <div className="relative mx-auto flex h-[340px] w-[220px] flex-col items-center rounded-[22px] bg-[var(--text)] px-6 py-8 text-center text-white shadow-[var(--shadow-card)]">
+            <div className="grid h-14 w-14 place-items-center rounded-xl bg-white">
+              <img className="h-11 w-11 object-contain" src={indomieLogo} alt={`${club.name} logo`} />
+            </div>
+            <h2 className="mt-5 max-w-[170px] text-[18px] font-black leading-tight tracking-normal">
+              {club.name}
+            </h2>
+            <div className="mt-8 text-[12px] font-medium leading-snug text-white/90">
+              <p>Make some friends.</p>
+              <p>Get some kudos.</p>
+              <p className="font-extrabold text-white">Join the Club.</p>
+            </div>
+            <div className="absolute inset-x-0 bottom-8 grid justify-items-center">
+              <p className="text-[10px] font-semibold text-white/80">Join us on</p>
+              <div className="prodak-mark mt-1 text-white" aria-label="Prodak">
+                <span className="!h-6 !w-6 !border-white !border-r-[var(--blue)]" />
+                <strong className="!text-[15px] !font-extrabold text-white">Prodak</strong>
+              </div>
+            </div>
+          </div>
+
+          <ShareTargets className="mt-14" />
+        </ShareBottomSheet>
+      ) : null}
     </main>
   );
 }

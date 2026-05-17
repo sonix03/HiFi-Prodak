@@ -8,7 +8,6 @@ const defaultTargets = [
   { label: "Copy to Clipboard", icon: "copy" },
   { label: "Save", icon: "download" },
   { label: "Copy Link", icon: "copy" },
-  { label: "More", icon: "share" },
 ];
 
 export default function ShareTargets({ targets = defaultTargets, className = "", onSelect }) {

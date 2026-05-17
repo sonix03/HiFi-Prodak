@@ -2,6 +2,7 @@ import { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Location01Icon } from "@hugeicons/core-free-icons";
 import Icon from "../components/Icon";
+import ShareBottomSheet from "../components/ShareBottomSheet";
 import ShareTargets from "../components/ShareTargets";
 import avatar from "../assets/avatar.png";
 import bk from "../assets/bk.png";
@@ -77,7 +78,6 @@ const eventShareTargets = [
   { label: "Copy to Clipboard", icon: "copy" },
   { label: "Save", icon: "download" },
   { label: "Copy Link", icon: "copy" },
-  { label: "More", icon: "share" },
 ];
 
 const workTypes = [
@@ -178,7 +178,7 @@ function EventCard({ event, onOpen }) {
   );
 }
 
-function EventDetail({ event, joined, onBack, onJoin, onShare }) {
+function EventDetail({ event, joined, onBack, onJoin, onShare, showShareEvent, onCloseShare }) {
   return (
     <main className="screen flex h-full flex-col bg-white">
       <section className="relative h-[320px] shrink-0 overflow-hidden bg-[var(--surface-muted)]">
@@ -252,6 +252,8 @@ function EventDetail({ event, joined, onBack, onJoin, onShare }) {
           </>
         )}
       </footer>
+
+      {showShareEvent ? <ShareEvent event={event} onClose={onCloseShare} /> : null}
     </main>
   );
 }
@@ -290,19 +292,10 @@ function ShareEventCard({ event }) {
 
 function ShareEvent({ event, onClose }) {
   return (
-    <main className="screen flex h-full flex-col bg-white">
-      <header className="relative border-b border-[var(--divider)] bg-white px-6 py-5 shadow-[var(--shadow-header)]">
-        <button className="absolute left-6 top-1/2 -translate-y-1/2 text-sm font-semibold text-[var(--blue)]" onClick={onClose} type="button">
-          Close
-        </button>
-        <h1 className="text-center text-[20px] font-black tracking-normal">Share Event</h1>
-      </header>
-
-      <section className="flex-1 overflow-y-auto px-6 py-8">
-        <ShareEventCard event={event} />
-        <ShareTargets className="mt-16" targets={eventShareTargets} />
-      </section>
-    </main>
+    <ShareBottomSheet title="Share Event" onClose={onClose}>
+      <ShareEventCard event={event} />
+      <ShareTargets className="mt-16" targets={eventShareTargets} />
+    </ShareBottomSheet>
   );
 }
 
@@ -313,18 +306,17 @@ export default function BrowseEvents({ onNavigate, initialWorkSheet = false, ini
   const [joined, setJoined] = useState(initialJoined || initialShareEvent);
   const [showShareEvent, setShowShareEvent] = useState(initialShareEvent);
 
-  if (showShareEvent && activeEvent) {
-    return <ShareEvent event={activeEvent} onClose={() => setShowShareEvent(false)} />;
-  }
-
   if (activeEvent) {
     return (
       <EventDetail
         event={activeEvent}
         joined={joined}
+        showShareEvent={showShareEvent}
+        onCloseShare={() => setShowShareEvent(false)}
         onBack={() => {
           setActiveEvent(null);
           setJoined(false);
+          setShowShareEvent(false);
         }}
         onJoin={() => setJoined(true)}
         onShare={() => setShowShareEvent(true)}

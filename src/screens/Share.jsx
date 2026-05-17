@@ -2,7 +2,9 @@ import { useState } from "react";
 import Icon from "../components/Icon";
 import MessageRecipientSheet from "../components/MessageRecipientSheet";
 import PostComposer from "../components/PostComposer";
+import ShareBottomSheet from "../components/ShareBottomSheet";
 import ShareTargets from "../components/ShareTargets";
+import ActivityDetail from "./ActivityDetail";
 import MessageDetail from "./MessageDetail";
 import avatar from "../assets/avatar.png";
 import indomieLogo from "../assets/indomie-logo.png";
@@ -19,7 +21,6 @@ const prodakShareTargets = [
   { label: "WhatsApp", image: whatsappLogo },
   { label: "Copy Link", icon: "copy" },
   { label: "Save", icon: "download" },
-  { label: "More", icon: "share" },
 ];
 
 const postDestinations = [
@@ -165,15 +166,9 @@ export default function Share({ onNavigate, initialMessageSheet = false, initial
   }
 
   return (
-    <main className="screen flex h-full flex-col bg-white">
-      <header className="relative border-b border-[var(--divider)] bg-white px-6 py-5 shadow-[var(--shadow-header)]">
-        <button className="absolute left-6 top-1/2 -translate-y-1/2 text-sm font-medium" onClick={() => onNavigate?.("activityDetail")}>
-          Close
-        </button>
-        <h1 className="text-center text-[20px] font-black tracking-normal">Share Activity</h1>
-      </header>
-
-      <section className="flex-1 overflow-y-auto px-6 py-6">
+    <main className="screen relative h-full overflow-hidden bg-white">
+      <ActivityDetail onNavigate={onNavigate} />
+      <ShareBottomSheet title="Share Activity" onClose={() => onNavigate?.("activityDetail")}>
         <div className="-mx-6 flex snap-x gap-5 overflow-x-auto px-[calc(50%-84px)] pb-3">
           <CustomShareCard activity={activity} />
           <ImageShareCard src={mapPic} alt="Map share preview" />
@@ -196,7 +191,6 @@ export default function Share({ onNavigate, initialMessageSheet = false, initial
             }
           }}
         />
-      </section>
 
       {showPostSheet ? (
         <PostToSheet
@@ -218,6 +212,7 @@ export default function Share({ onNavigate, initialMessageSheet = false, initial
           }}
         />
       ) : null}
+      </ShareBottomSheet>
     </main>
   );
 }
