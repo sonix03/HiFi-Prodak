@@ -1,5 +1,7 @@
 import "./App.css";
+import { useState } from "react";
 import BottomNavigation from "./components/BottomNavigation";
+import Icon from "./components/Icon";
 import Phone from "./components/Phone";
 import {
   Activities,
@@ -86,38 +88,212 @@ const artboards = [
   { title: "Share Club", Screen: ShareClub },
 ];
 
+const designColors = [
+  { name: "Primary blue", value: "#2563EB", usage: "Main actions, active tabs, selected states" },
+  { name: "Primary dark", value: "#1D4ED8", usage: "Stronger action emphasis and pressed states" },
+  { name: "Primary soft", value: "#EFF6FF", usage: "Soft highlight backgrounds and active chips" },
+  { name: "White surface", value: "#FFFFFF", usage: "Page backgrounds, cards, sheets, headers, inputs" },
+  { name: "Surface muted", value: "#F5F5F5", usage: "Search fields, placeholders, quiet panels" },
+  { name: "Text primary", value: "#0A0A0A", usage: "Main titles, labels, and high emphasis content" },
+  { name: "Text secondary", value: "#525252", usage: "Metadata, helper text, timestamps" },
+  { name: "Text tertiary", value: "#8A8A8A", usage: "Disabled text, placeholders, low emphasis labels" },
+  { name: "Border", value: "#E5E5E5", usage: "Inputs, cards, dividers, sheet separators" },
+  { name: "Divider", value: "#EEEEEE", usage: "List separators, section breaks, subtle layout boundaries" },
+  { name: "Achievement yellow", value: "#FACC15", usage: "Achievements, badges, stopped state, progress accents" },
+  { name: "Yellow soft", value: "#FEF9C3", usage: "Light achievement backgrounds and warm highlights" },
+  { name: "Success", value: "#16A34A", usage: "Verified proof, positive completion, success feedback" },
+  { name: "Warning", value: "#F59E0B", usage: "Attention states and non-critical warnings" },
+  { name: "Danger", value: "#DC2626", usage: "Errors, destructive actions, failed states" },
+  { name: "Canvas background", value: "#E9E9E4", usage: "Outer prototype canvas background" },
+];
+
+const typographyScale = [
+  { role: "Screen title", size: "18-24px", weight: "700-800" },
+  { role: "Section title", size: "16-22px", weight: "650-800" },
+  { role: "Card title", size: "15-18px", weight: "650-800" },
+  { role: "Body text", size: "13-16px", weight: "400-500" },
+  { role: "Metadata", size: "11-13px", weight: "500" },
+];
+
+const typographySpecimen = [
+  { sample: "Menteng", label: "Plus Jakarta Sans · Extra Light", weight: 200 },
+  { sample: "Tanjung Priok", label: "Plus Jakarta Sans · Regular", weight: 400 },
+  { sample: "Pasar Minggu", label: "Plus Jakarta Sans · Bold", weight: 700 },
+  { sample: "+Jakarta Sans", label: "Plus Jakarta Sans · Extra Bold", weight: 800 },
+];
+
+const iconographyItems = [
+  { icon: "activity", label: "Activity" },
+  { icon: "analytics", label: "Analytics" },
+  { icon: "arrowLeft", label: "Back" },
+  { icon: "arrowRight", label: "Next" },
+  { icon: "award", label: "Award" },
+  { icon: "calendar", label: "Calendar" },
+  { icon: "cancel", label: "Cancel" },
+  { icon: "chart", label: "Chart" },
+  { icon: "check", label: "Check" },
+  { icon: "club", label: "Club" },
+  { icon: "comment", label: "Comment" },
+  { icon: "copy", label: "Copy" },
+  { icon: "download", label: "Download" },
+  { icon: "dropdown", label: "Dropdown" },
+  { icon: "edit", label: "Edit" },
+  { icon: "eye", label: "Visibility" },
+  { icon: "feed", label: "Home" },
+  { icon: "filter", label: "Filter" },
+  { icon: "fire", label: "Streak" },
+  { icon: "globe", label: "Public" },
+  { icon: "group", label: "Group" },
+  { icon: "heart", label: "Kudos" },
+  { icon: "list", label: "List" },
+  { icon: "lock", label: "Lock" },
+  { icon: "media", label: "Media" },
+  { icon: "messageShare", label: "Message" },
+  { icon: "more", label: "More" },
+  { icon: "notification", label: "Notification" },
+  { icon: "play", label: "Play" },
+  { icon: "plus", label: "Add" },
+  { icon: "profile", label: "Profile" },
+  { icon: "proof", label: "Proof" },
+  { icon: "qr", label: "QR code" },
+  { icon: "record", label: "Record" },
+  { icon: "route", label: "Route" },
+  { icon: "save", label: "Save" },
+  { icon: "search", label: "Search" },
+  { icon: "settings", label: "Settings" },
+  { icon: "share", label: "Share" },
+  { icon: "shield", label: "Shield" },
+  { icon: "target", label: "Target" },
+  { icon: "timer", label: "Timer" },
+  { icon: "trophy", label: "Trophy" },
+  { icon: "upload", label: "Upload" },
+  { icon: "userAdd", label: "Add user" },
+  { icon: "userCheck", label: "User check" },
+  { icon: "users", label: "Users" },
+  { icon: "link", label: "Copy link" },
+  { icon: "laptop", label: "Work" },
+];
+
 export default function App() {
   const navigate = () => {};
   const screenCount = artboards.length;
+  const [showDesignSystem, setShowDesignSystem] = useState(true);
 
   return (
     <main className="app">
       <section className="design-system-panel" aria-label="Design system overview">
-        <div>
-          <p className="canvas-eyebrow">Prodak design system</p>
-          <h2>Mobile prototype system</h2>
-          <p>
-            Plus Jakarta Sans, blue primary actions, soft layered surfaces, rounded controls, Hugeicons, reusable cards, headers, bottom navigation, and bottom sheets.
-          </p>
-        </div>
-        <div className="design-system-stats" aria-label="Prototype summary">
-          <div>
-            <span>{screenCount}</span>
-            <p>Screens rendered</p>
-          </div>
-          <div>
-            <span>#2563EB</span>
-            <p>Primary color</p>
-          </div>
-          <div>
-            <span>200-800</span>
-            <p>Font weights</p>
-          </div>
-          <div>
-            <span>4</span>
-            <p>Main navigation</p>
+        <div className="design-system-intro">
+          <p className="design-system-kicker">Prodak design system</p>
+          <div className="design-system-title-row">
+            <div>
+              <h2>Mobile prototype system</h2>
+              <p>
+                A compact reference for the visual language used across the prototype: color, typography, iconography, components, and rendered screen coverage.
+              </p>
+            </div>
+            <div className="design-system-summary">
+              <div className="design-system-count">
+                <span>{screenCount}</span>
+                <p>Screens rendered</p>
+              </div>
+              <button className="design-system-toggle" onClick={() => setShowDesignSystem((current) => !current)} type="button">
+                {showDesignSystem ? "Hide design system" : "Show design system"}
+              </button>
+            </div>
           </div>
         </div>
+
+        {showDesignSystem ? <div className="design-system-content">
+          <div className="design-system-card design-system-card-wide">
+            <div className="design-system-card-header">
+              <h3>Color system</h3>
+              <p>Core tokens used for hierarchy, feedback, surfaces, and interactive states.</p>
+            </div>
+            <div className="color-token-grid">
+              {designColors.map((color) => (
+                <div className="color-token" key={color.name}>
+                  <span className="color-swatch" style={{ background: color.value }} />
+                  <div>
+                    <strong>{color.name}</strong>
+                    <p>{color.value}</p>
+                    <small>{color.usage}</small>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="design-system-card typography-card">
+            <div className="design-system-card-header">
+              <h3>Typography</h3>
+              <p>Plus Jakarta Sans with flexible weights from 200 to 800.</p>
+            </div>
+            <div className="type-specimen-list">
+              {typographySpecimen.map((item) => (
+                <div key={item.label}>
+                  <strong style={{ fontWeight: item.weight }}>{item.sample}</strong>
+                  <p style={{ fontWeight: item.weight }}>{item.label}</p>
+                </div>
+              ))}
+            </div>
+            <div className="type-scale-list">
+              {typographyScale.map((item) => (
+                <div key={item.role}>
+                  <strong>{item.role}</strong>
+                  <span>{item.size}</span>
+                  <p>Weight {item.weight}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="design-system-card iconography-card">
+            <div className="design-system-card-header">
+              <h3>Iconography</h3>
+              <p>Hugeicons stroke icons used across navigation, actions, forms, proof states, sharing, profile, record, and productivity flows.</p>
+            </div>
+            <div className="iconography-grid">
+              {iconographyItems.map((item) => (
+                <div key={item.label}>
+                  <Icon name={item.icon} size={24} stroke={2} />
+                  <span>{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="design-system-card">
+            <div className="design-system-card-header">
+              <h3>Component language</h3>
+              <p>Reusable mobile patterns that keep the prototype consistent.</p>
+            </div>
+            <div className="component-chip-list">
+              {[
+                "App header",
+                "Screen header",
+                "Bottom navigation",
+                "Button",
+                "Pill",
+                "Avatar",
+                "Feed post",
+                "Activity map",
+                "Metric grid",
+                "Progress chart",
+                "Share bottom sheet",
+                "Option bottom sheet",
+                "Search bar",
+                "Form field",
+                "Select field",
+                "List item",
+                "Section header",
+                "Profile identity",
+                "Message sheet",
+              ].map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </div>
+          </div>
+        </div> : null}
       </section>
 
       <header className="canvas-header">

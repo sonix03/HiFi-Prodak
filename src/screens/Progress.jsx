@@ -65,22 +65,22 @@ export default function Progress() {
       </section>
       <div className="mt-4">
         <MetricGrid columns={2} items={[
-          { label: "Streak", value: "18d", sub: "Personal best", icon: "fire", tone: "yellow" },
-          { label: "Avg score", value: "86", sub: "+5 this week", icon: "analytics", tone: "blue" },
+          { label: "Streak", value: "18d", sub: "Personal best", icon: "fire" },
+          { label: "Avg score", value: "86", sub: "+5 this week", icon: "analytics" },
           { label: "Sessions", value: "24", sub: "May total", icon: "timer" },
-          { label: "Goal", value: "72%", sub: "50K challenge", icon: "target", tone: "blue" },
+          { label: "Goal", value: "72%", sub: "50K challenge", icon: "target" },
         ]} />
       </div>
       <section className="section">
         <SectionHeader title="Focus volume" meta="Hours recorded by day." />
-        <ProgressChart data={weeklyStats} />
+        <ProgressChart data={weeklyStats} highlightHigh />
       </section>
       <section className="section">
         
         <MonthlyHeatmap data={monthlyProductivity} />
       </section>
       <section className="section">
-        <SectionHeader title="Insights" />
+        <SectionHeader title="Achievements" />
         <div className="list mt-2">
           {challenges.map((challenge) => <ListItem key={challenge.title} icon={challenge.icon} accent="yellow" title={challenge.title} meta={challenge.reward} value={`${challenge.progress}%`} />)}
         </div>
