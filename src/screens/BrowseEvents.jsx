@@ -77,7 +77,7 @@ const eventShareTargets = [
   { label: "Instagram Story", image: instagramLogo },
   { label: "Copy to Clipboard", icon: "copy" },
   { label: "Save", icon: "download" },
-  { label: "Copy Link", icon: "copy" },
+  { label: "Copy Link", icon: "link" },
 ];
 
 const workTypes = [

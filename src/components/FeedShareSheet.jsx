@@ -67,7 +67,7 @@ export default function FeedShareSheet({ onClose }) {
             </button>
             <button className="grid w-[82px] justify-items-center gap-3 text-center text-[13px] font-semibold text-[var(--text)]" type="button">
               <span className="grid h-[66px] w-[66px] place-items-center rounded-full bg-[var(--surface-muted)]">
-                <Icon name="copy" size={34} stroke={2} />
+                <Icon name="link" size={34} stroke={2} />
               </span>
               Copy Link
             </button>

@@ -7,7 +7,7 @@ const defaultTargets = [
   { label: "WhatsApp", image: whatsappLogo },
   { label: "Copy to Clipboard", icon: "copy" },
   { label: "Save", icon: "download" },
-  { label: "Copy Link", icon: "copy" },
+  { label: "Copy Link", icon: "link" },
 ];
 
 export default function ShareTargets({ targets = defaultTargets, className = "", onSelect }) {

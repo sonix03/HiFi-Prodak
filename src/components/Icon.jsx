@@ -24,6 +24,7 @@ import {
   Home05Icon,
   ImageUploadIcon,
   LaptopIcon,
+  Link04Icon,
   ListViewIcon,
   MessageSquareShareIcon,
   MoreHorizontalIcon,
@@ -99,6 +100,7 @@ const icons = {
   userCheck: UserCheck02Icon,
   users: UserGroup03Icon,
   laptop: LaptopIcon,
+  link: Link04Icon,
 };
 
 const sizes = theme.iconSizes;

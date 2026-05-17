@@ -13,7 +13,7 @@ const destinations = [
   { label: "Message", icon: "comment" },
   { label: "Prodak Message", icon: "users" },
   { label: "Prodak Post", icon: "feed" },
-  { label: "Copy Link", icon: "copy" },
+  { label: "Copy Link", icon: "link" },
   { label: "More", icon: "more" },
 ];
 

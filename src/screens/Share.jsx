@@ -19,7 +19,7 @@ const prodakShareTargets = [
   { label: "Prodak Message", icon: "messageShare" },
   { label: "Instagram Story", image: instagramLogo },
   { label: "WhatsApp", image: whatsappLogo },
-  { label: "Copy Link", icon: "copy" },
+  { label: "Copy Link", icon: "link" },
   { label: "Save", icon: "download" },
 ];
 
