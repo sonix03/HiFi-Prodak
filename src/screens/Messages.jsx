@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Icon from "../components/Icon";
+import NewMessageSheet from "../components/NewMessageSheet";
 import avatar from "../assets/avatar.png";
 import { messageThreads } from "../constants/data";
 import MessageDetail from "./MessageDetail";
@@ -20,22 +21,23 @@ function MessageRow({ thread, onOpen }) {
   );
 }
 
-export default function Messages({ onNavigate }) {
+export default function Messages({ onNavigate, initialNewMessage = false }) {
   const [activeThread, setActiveThread] = useState(null);
+  const [showNewMessage, setShowNewMessage] = useState(initialNewMessage);
 
   if (activeThread) {
     return <MessageDetail bottomInset thread={activeThread} onBack={() => setActiveThread(null)} />;
   }
 
   return (
-    <main className="screen flex h-full flex-col bg-white">
+    <main className="screen relative flex h-full flex-col bg-white">
       <header className="relative flex h-[74px] shrink-0 items-center border-b border-[var(--border)] bg-white px-5 shadow-[var(--shadow-header)]">
         <button className="row gap-2 text-[18px] font-medium text-[var(--text)]" onClick={() => onNavigate?.("feed")} type="button">
           <Icon name="arrowLeft" size="lg" stroke={2} />
           <span>Home</span>
         </button>
         <h1 className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-[20px] font-black tracking-normal">Messages</h1>
-        <button className="ml-auto grid h-10 w-10 place-items-center text-[var(--text)]" type="button" aria-label="Compose message">
+        <button className="ml-auto grid h-10 w-10 place-items-center text-[var(--text)]" onClick={() => setShowNewMessage(true)} type="button" aria-label="Compose message">
           <Icon name="edit" size={26} stroke={2} />
         </button>
       </header>
@@ -45,6 +47,15 @@ export default function Messages({ onNavigate }) {
           <MessageRow key={thread.id} thread={thread} onOpen={setActiveThread} />
         ))}
       </section>
+      {showNewMessage ? (
+        <NewMessageSheet
+          onClose={() => setShowNewMessage(false)}
+          onCreate={() => {
+            setShowNewMessage(false);
+            setActiveThread(messageThreads[0]);
+          }}
+        />
+      ) : null}
     </main>
   );
 }

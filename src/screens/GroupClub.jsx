@@ -206,15 +206,23 @@ export default function GroupClub({ onNavigate, initialDetail = false, initialIn
 
       <section className="section">
         <SectionHeader title="Active Challenge" />
-        <div className="row mt-3">
-          <span className="grid h-14 w-14 place-items-center rounded-full bg-[var(--primary-soft)] text-[var(--blue)]">
-            <Icon name="timer" size="lg" />
-          </span>
-          <div>
-            <p className="font-semibold">Overtime Challenge</p>
-            <p className="meta">Complete 5 hours before Apr 30</p>
+        <button
+          className="card mt-3 overflow-hidden text-left"
+          onClick={() => setActiveChallenge(challenges[0])}
+          type="button"
+        >
+          <div className="relative h-[128px] bg-[var(--surface-muted)]">
+            <img className="h-full w-full object-cover" src={landscapeItb} alt="" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/45" />
+            <span className="absolute bottom-3 left-3 grid h-12 w-12 place-items-center rounded-full bg-white/95 text-[var(--blue)] shadow-[var(--shadow-card)]">
+              <Icon name="timer" size="lg" />
+            </span>
           </div>
-        </div>
+          <div className="p-4">
+            <p className="font-semibold">Overtime Challenge</p>
+            <p className="meta mt-1">Complete 5 hours before Apr 30</p>
+          </div>
+        </button>
       </section>
 
       <section className="section">
@@ -225,19 +233,21 @@ export default function GroupClub({ onNavigate, initialDetail = false, initialIn
             const isJoined = joinedChallenges.has(id);
 
             return (
-              <article className="card card-pad flex min-h-[190px] flex-col" key={id}>
-                <img
-                  className="h-12 w-12 rounded-full object-cover shadow-[var(--shadow-card)]"
-                  src={challengeImages[index % challengeImages.length]}
-                  alt=""
-                />
-                <button className="mt-4 grid gap-2 text-left" onClick={() => setActiveChallenge(challenge)} type="button">
+              <article className="card flex min-h-[238px] flex-col overflow-hidden" key={id}>
+                <button className="text-left" onClick={() => setActiveChallenge(challenge)} type="button">
+                  <img
+                    className="h-[92px] w-full object-cover"
+                    src={challengeImages[index % challengeImages.length]}
+                    alt=""
+                  />
+                </button>
+                <button className="grid gap-2 p-3 text-left" onClick={() => setActiveChallenge(challenge)} type="button">
                   <h2 className="card-title">{challenge.title}</h2>
                   <p className="body">{challenge.reward}</p>
                   <p className="meta">Apr 17 to Apr 30, 2026</p>
                 </button>
                 <Button
-                  className="mt-auto w-full"
+                  className="mx-3 mb-3 mt-auto w-[calc(100%-24px)]"
                   size="sm"
                   variant={isJoined ? "primary" : "outline"}
                   onClick={() => toggleChallenge(id)}
