@@ -125,7 +125,7 @@ export default function OtherProfile({ initialFollowed = false, onNavigate }) {
             <span className="mt-1.5 block text-[11px] font-semibold leading-tight text-[var(--text-secondary)]">Avg score</span>
           </div>
         </div>
-          <ProgressChart data={weeklyStats} flushX />
+          <ProgressChart data={weeklyStats} flushX highlightHigh />
         <div className="h-[3px] rounded-full bg-[var(--divider)]" />
         <div className="list">
           {profileActions.map((item) => (
