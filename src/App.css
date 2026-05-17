@@ -113,11 +113,11 @@
 }
 
 .screen-pad {
-  padding: 6px 20px 132px;
+  padding: 0 20px 132px;
 }
 
 .screen-pad-tight {
-  padding: 6px 16px 124px;
+  padding: 0 16px 124px;
 }
 
 .stack {
@@ -376,20 +376,20 @@
   top: 0;
   z-index: 25;
   display: flex;
-  min-height: 44px;
+  min-height: 52px;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: -6px -20px 18px;
+  margin: 0 -20px 18px;
   border-bottom: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.96);
-  padding: 2px 18px;
+  padding: 6px 18px;
   box-shadow: var(--shadow-header);
   backdrop-filter: blur(14px);
 }
 
 .app-header-main {
-  min-height: 46px;
+  min-height: 54px;
 }
 
 .app-header-record {
