@@ -60,6 +60,8 @@ const artboards = [
   { title: "Share Event", Screen: BrowseEvents, props: { initialShareEvent: true } },
   { title: "Event Filter", Screen: EventFilter },
   { title: "Groups - Challenges", Screen: GroupClub, nav: "groups" },
+  { title: "Challenge Detail", Screen: GroupClub, props: { initialDetail: true } },
+  { title: "Challenge Invite Friends", Screen: GroupClub, props: { initialInvite: true } },
   { title: "Club Detail", Screen: Club, nav: "groups" },
   { title: "Create Club 1", Screen: CreateClub, props: { initialStep: 0 } },
   { title: "Create Club 2", Screen: CreateClub, props: { initialStep: 1 } },
