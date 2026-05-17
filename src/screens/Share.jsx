@@ -1,7 +1,31 @@
+import { useState } from "react";
+import Icon from "../components/Icon";
+import PostComposer from "../components/PostComposer";
 import ShareTargets from "../components/ShareTargets";
+import avatar from "../assets/avatar.png";
+import indomieLogo from "../assets/indomie-logo.png";
+import instagramLogo from "../assets/instagram-logo.png";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
+import whatsappLogo from "../assets/whatsapp-logo.png";
 import { activities } from "../constants/data";
+
+const prodakShareTargets = [
+  { label: "Prodak Post", icon: "feed" },
+  { label: "Instagram Story", image: instagramLogo },
+  { label: "WhatsApp", image: whatsappLogo },
+  { label: "Copy Link", icon: "copy" },
+  { label: "Save", icon: "download" },
+  { label: "More", icon: "share" },
+];
+
+const postDestinations = [
+  { id: "followers", name: "Your Followers", icon: "users" },
+  { id: "hmif", name: "HMIF ITB Running Club", image: indomieLogo },
+  { id: "gajah", name: "Gajah Lulumpatan", image: avatar },
+  { id: "freerun", name: "FREERUNNERS BANDUNG", image: landscapeItb },
+  { id: "code", name: "Code Runners : IATB", icon: "club" },
+];
 
 function CustomShareCard({ activity }) {
   return (
@@ -52,8 +76,77 @@ function ImageShareCard({ src, alt }) {
   );
 }
 
+function DestinationAvatar({ destination }) {
+  return (
+    <span className="grid h-[66px] w-[66px] place-items-center overflow-hidden rounded-[12px] bg-[var(--surface-muted)] text-[var(--text)]">
+      {destination.image ? (
+        <img className="h-full w-full object-contain p-1.5" src={destination.image} alt="" />
+      ) : (
+        <Icon name={destination.icon} size={34} stroke={2} />
+      )}
+    </span>
+  );
+}
+
+function PostToSheet({ onClose, onSelect }) {
+  return (
+    <div className="absolute inset-0 z-20 flex flex-col justify-end bg-black/12">
+      <div className="rounded-t-[16px] bg-white px-6 pb-7 pt-3 shadow-[0_-10px_30px_rgba(15,23,42,0.12)]">
+        <div className="mx-auto h-1.5 w-9 rounded-full bg-[var(--border)]" />
+        <div className="between mt-6">
+          <h2 className="text-[22px] font-black tracking-normal">Post to</h2>
+          <button className="grid h-8 w-8 place-items-center text-[var(--text)]" onClick={onClose} type="button" aria-label="Close post destinations">
+            <Icon name="cancel" size="lg" stroke={2} />
+          </button>
+        </div>
+
+        <div className="-mx-2 mt-6 flex gap-5 overflow-x-auto px-2 pb-2">
+          {postDestinations.map((destination) => (
+            <button
+              className="grid w-[82px] shrink-0 justify-items-center gap-3 text-center text-[13px] font-semibold leading-tight text-[var(--text)]"
+              key={destination.id}
+              onClick={() => onSelect(destination)}
+              type="button"
+            >
+              <DestinationAvatar destination={destination} />
+              <span className="line-clamp-2">{destination.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Share({ onNavigate }) {
   const activity = activities[0];
+  const [showPostSheet, setShowPostSheet] = useState(false);
+  const [postDestination, setPostDestination] = useState(null);
+
+  if (postDestination) {
+    return (
+      <PostComposer
+        initialStep={1}
+        headerTitle={postDestination.name}
+        postingAs={{
+          name: postDestination.name,
+          image: postDestination.image,
+          onChange: () => {
+            setPostDestination(null);
+            setShowPostSheet(true);
+          },
+        }}
+        attachment={{
+          image: mapPic,
+          alt: "Activity route preview",
+          title: "Evening Run",
+          source: "PRODAK.APP",
+        }}
+        onClose={() => setPostDestination(null)}
+        onPublish={() => onNavigate?.("feed")}
+      />
+    );
+  }
 
   return (
     <main className="screen flex h-full flex-col bg-white">
@@ -76,8 +169,26 @@ export default function Share({ onNavigate }) {
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--divider)]" />
         </div>
 
-        <ShareTargets className="mt-8" />
+        <ShareTargets
+          className="mt-8"
+          targets={prodakShareTargets}
+          onSelect={(target) => {
+            if (target.label === "Prodak Post") {
+              setShowPostSheet(true);
+            }
+          }}
+        />
       </section>
+
+      {showPostSheet ? (
+        <PostToSheet
+          onClose={() => setShowPostSheet(false)}
+          onSelect={(destination) => {
+            setShowPostSheet(false);
+            setPostDestination(destination);
+          }}
+        />
+      ) : null}
     </main>
   );
 }

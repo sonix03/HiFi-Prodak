@@ -11,7 +11,7 @@ const defaultTargets = [
   { label: "More", icon: "share" },
 ];
 
-export default function ShareTargets({ targets = defaultTargets, className = "" }) {
+export default function ShareTargets({ targets = defaultTargets, className = "", onSelect }) {
   return (
     <section className={className}>
       <h2 className="section-title">Share to</h2>
@@ -20,6 +20,7 @@ export default function ShareTargets({ targets = defaultTargets, className = "" 
           <button
             className="grid justify-items-center gap-2 text-center text-[9px] font-semibold leading-[1.15] text-[var(--text)]"
             key={item.label}
+            onClick={() => onSelect?.(item)}
             type="button"
           >
             <span className="grid h-14 w-14 place-items-center rounded-full bg-[var(--surface-muted)] text-[var(--text)]">
