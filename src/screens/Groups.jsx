@@ -3,6 +3,7 @@ import GroupsHeader from "../components/GroupsHeader";
 import ListItem from "../components/ListItem";
 import Pill from "../components/Pill";
 import SectionHeader from "../components/SectionHeader";
+import indomieLogo from "../assets/indomie-logo.png";
 import { clubs } from "../constants/data";
 
 export default function Groups({ onNavigate }) {
@@ -29,7 +30,7 @@ export default function Groups({ onNavigate }) {
           {clubs.map((club) => (
             <ListItem
               accent={club.joined ? "blue" : "neutral"}
-              icon="users"
+              image={indomieLogo}
               key={club.id}
               meta={`${club.goal} • ${club.rank}`}
               onClick={() => onNavigate?.("club")}

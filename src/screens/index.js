@@ -30,3 +30,5 @@ export { default as SearchClub } from "./SearchClub";
 export { default as SearchFriend } from "./SearchFriend";
 export { default as Share } from "./Share";
 export { default as ShareClub } from "./ShareClub";
+
+export { default as IntegratedApp } from "./IntegratedApp";

@@ -47,8 +47,8 @@ export default function Feed({ onNavigate, initialShareSheet = false }) {
   return (
     <main className="screen screen-pad relative">
       <AppHeader
-        right="notification"
-        rightSecondary="profile"
+        right={{ icon: "notification", onClick: () => onNavigate?.("notifications") }}
+        rightSecondary={{ icon: "profile", onClick: () => onNavigate?.("profile") }}
         secondaryAction={{ icon: "messageShare", label: "Messages", onClick: () => onNavigate?.("messages") }}
         tertiaryAction={{ icon: "search", label: "Search", onClick: () => onNavigate?.("searchFriend") }}
       />

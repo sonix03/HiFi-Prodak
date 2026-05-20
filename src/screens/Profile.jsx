@@ -109,7 +109,7 @@ export default function Profile({ onNavigate }) {
       <ProfileHeader
         onBack={() => onNavigate?.("feed")}
         onSearch={() => onNavigate?.("searchFriend")}
-        onShare={() => onNavigate?.("share")}
+        onShare={() => navigator.share?.({ title: `${user.name} on Prodak`, text: `Check out ${user.name}'s profile on Prodak` })}
       />
       <section className="hero-panel !border-b-0 !pb-0">
         <ProfileIdentity user={user} />

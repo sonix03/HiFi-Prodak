@@ -1,10 +1,16 @@
+import { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { PlayIcon, PauseIcon, RacingFlagIcon } from "@hugeicons/core-free-icons";
 import Icon from "../components/Icon";
 import mapPic from "../assets/map-pic.png";
 
 export default function Record({ onNavigate, initialPlaying = false, initialRunning = false }) {
-  const time = initialPlaying || initialRunning ? "00:13" : "00:00";
+  const [phase, setPhase] = useState(
+    initialPlaying ? "stopped" : initialRunning ? "running" : "idle"
+  );
+
+  const isRunning = phase === "running";
+  const isStopped = phase === "stopped";
 
   return (
     <main className="screen relative" style={{ overflow: "hidden" }}>
@@ -34,16 +40,13 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
         </div>
 
         <section className="mx-5 mb-4 overflow-hidden rounded-[20px] bg-white text-center shadow-[0_18px_42px_rgba(15,23,42,0.18)]">
-          <div className={`relative px-5 py-4 text-center shadow-[0_1px_0_rgba(15,23,42,0.05)] ${initialPlaying ? "bg-[var(--yellow)]" : initialRunning ? "bg-[var(--blue)]" : "bg-white"}`}>
-            <p className={`text-base font-extrabold ${initialPlaying ? "text-black" : initialRunning ? "text-white" : "text-[var(--text-secondary)]"}`}>
-              {initialPlaying ? "Stopped" : initialRunning ? "Working" : "Work"}
+          <div className={`relative px-5 py-4 text-center shadow-[0_1px_0_rgba(15,23,42,0.05)] ${isStopped ? "bg-[var(--yellow)]" : isRunning ? "bg-[var(--blue)]" : "bg-white"}`}>
+            <p className={`text-base font-extrabold ${isStopped ? "text-black" : isRunning ? "text-white" : "text-[var(--text-secondary)]"}`}>
+              {isStopped ? "Stopped" : isRunning ? "Working" : "Work"}
             </p>
-            {/* {initialPlaying ? (
-              <Icon name="arrowRight" size={22} stroke="strong" className="absolute right-5 top-4 -rotate-45 text-black" />
-            ) : null} */}
           </div>
           <div className="grid grid-cols-3 px-5 pb-6 pt-7">
-            <Metric value={time} label="Time" />
+            <Metric value={isRunning || isStopped ? "00:13" : "00:00"} label="Time" />
             <Metric value="-:--" label="Focus Score" />
             <Metric value="0,00" label="Working Time" />
           </div>
@@ -51,14 +54,14 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
 
         <section className="rounded-t-[22px] bg-white px-7 pb-4 pt-4 shadow-[0_-18px_42px_rgba(15,23,42,0.16)]">
           <div className="mx-auto mb-7 h-1.5 w-16 rounded-full bg-black/20" />
-          {initialPlaying ? (
+          {isStopped ? (
             <div className="grid grid-cols-2 gap-5 pb-2">
-              <ActionButton icon="play" label="Resume" tone="primary" />
+              <ActionButton icon="play" label="Resume" tone="primary" onClick={() => setPhase("running")} />
               <ActionButton icon="finish" label="Finish" tone="dark" onClick={() => onNavigate?.("saveActivity")} />
             </div>
-          ) : initialRunning ? (
+          ) : isRunning ? (
             <div className="pb-2">
-              <button className="row w-full justify-center rounded-full bg-[var(--blue)] px-4 py-3 text-white shadow-[0_12px_24px_rgba(37,99,235,0.3)]">
+              <button className="row w-full justify-center rounded-full bg-[var(--blue)] px-4 py-3 text-white shadow-[0_12px_24px_rgba(37,99,235,0.3)]" onClick={() => setPhase("stopped")}>
                 <ActionIcon icon="pause" size={24} strokeWidth={2} />
                 <span className="text-base font-extrabold">Pause</span>
               </button>
@@ -66,7 +69,7 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
           ) : (
             <div className="grid grid-cols-3 items-center">
               <SmallAction icon="laptop" label="Work" tone="soft" />
-              <SmallAction icon="play" label="Start" tone="primary" onClick={() => onNavigate?.("saveActivity")} />
+              <SmallAction icon="play" label="Start" tone="primary" onClick={() => setPhase("running")} />
               <span aria-hidden="true" />
             </div>
           )}

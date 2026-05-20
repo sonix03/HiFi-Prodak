@@ -4,6 +4,7 @@ import BottomNavigation from "./components/BottomNavigation";
 import Icon from "./components/Icon";
 import Phone from "./components/Phone";
 import {
+  IntegratedApp,
   Activities,
   ActivityDetail,
   BrowseEvents,
@@ -90,6 +91,7 @@ const artboards = [
   { title: "Share Activity - Send to", Screen: Share, props: { initialMessageSheet: true } },
   { title: "Prodak Message Detail", Screen: Share, props: { initialMessageDetail: true } },
   { title: "Share Club", Screen: ShareClub },
+  { title: "Integrated App", Screen: IntegratedApp },
 ];
 
 const designColors = [

@@ -51,19 +51,19 @@ export default function SearchClub({ onNavigate }) {
 
           return (
             <article className="between overflow-hidden rounded-2xl border border-[var(--border)] bg-white p-3 shadow-[var(--shadow-card)]" key={club.id}>
-              <div className="row min-w-0">
+              <button className="row min-w-0 flex-1 text-left" onClick={() => onNavigate?.("club")} type="button">
                 <img className="h-12 w-12 shrink-0 rounded-full object-cover" src={bk} alt="" />
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold">{club.name}</p>
                   <p className="meta truncate">{club.members} members • {club.goal}</p>
                   <p className="meta truncate">Active May 16, 2026</p>
                 </div>
-              </div>
+              </button>
               <Button
                 className="w-[78px] shrink-0 px-2"
                 size="sm"
                 variant={isJoined ? "outline" : "primary"}
-                onClick={() => toggleJoined(club.id)}
+                onClick={(e) => { e.stopPropagation(); toggleJoined(club.id); }}
               >
                 {isJoined ? "Joined" : "Join"}
               </Button>

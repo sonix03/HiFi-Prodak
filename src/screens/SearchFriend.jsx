@@ -56,6 +56,7 @@ export default function SearchFriend({ onNavigate }) {
               key={person.id}
               meta={`${person.mutual} • ${person.metric}`}
               onAction={() => toggleAdded(person.id)}
+              onClick={() => onNavigate?.("otherProfile")}
               user={person}
             />
           );

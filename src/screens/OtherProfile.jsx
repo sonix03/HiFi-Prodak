@@ -50,7 +50,7 @@ export default function OtherProfile({ initialFollowed = false, onNavigate }) {
     <main className="screen screen-pad">
       <ProfileHeader
         onBack={() => onNavigate?.("feed")}
-        onShare={() => onNavigate?.("share")}
+        onShare={() => navigator.share?.({ title: `${user.name} on Prodak`, text: `Check out ${user.name}'s profile on Prodak` })}
         showSearch={false}
       />
       <section className="hero-panel !border-b-0 !pb-0">

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ActivityMap from "./ActivityMap";
 import Avatar from "./Avatar";
 import Icon from "./Icon";
@@ -16,6 +17,7 @@ export default function FeedPost({
   onOpenProfile,
   onShare,
 }) {
+  const [liked, setLiked] = useState(false);
   return (
     <article className="stack gap-2">
       <button className="row w-full text-left" onClick={onOpenProfile || (() => onNavigate?.("otherProfile"))} type="button">
@@ -74,7 +76,8 @@ export default function FeedPost({
 
       <div className="grid-3 border-b border-[var(--divider)] pb-3 pt-1 text-center">
         <button
-          className="row justify-center gap-1.5 text-[12px] font-semibold text-[var(--text-secondary)]"
+          className={`row justify-center gap-1.5 text-[12px] font-semibold ${liked ? "text-[var(--blue)]" : "text-[var(--text-secondary)]"}`}
+          onClick={() => setLiked((prev) => !prev)}
           aria-label="Like"
         >
           <Icon name="heart" size="md" />

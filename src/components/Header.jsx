@@ -63,7 +63,11 @@ export default function Header({
       <div className="header-actions">
         {secondaryAction ? <HeaderAction {...secondaryAction} /> : null}
         {tertiaryAction ? <HeaderAction {...tertiaryAction} /> : null}
-        {rightSecondary ? <HeaderAction icon={rightSecondary} label={rightSecondary} /> : null}
+        {rightSecondary ? (
+          typeof rightSecondary === "string"
+            ? <HeaderAction icon={rightSecondary} label={rightSecondary} />
+            : <HeaderAction icon={rightSecondary.icon} label={rightSecondary.label || rightSecondary.icon} onClick={rightSecondary.onClick} />
+        ) : null}
         {primaryAction ? (
           typeof primaryAction === "string" ? (
             <button className="header-text-action">{primaryAction}</button>
@@ -75,7 +79,9 @@ export default function Header({
             <HeaderAction {...primaryAction} />
           )
         ) : showRightAction ? (
-          <HeaderAction icon={right} label={right} />
+          typeof right === "string"
+            ? <HeaderAction icon={right} label={right} />
+            : <HeaderAction icon={right.icon} label={right.label || right.icon} onClick={right.onClick} />
         ) : null}
       </div>
     </header>

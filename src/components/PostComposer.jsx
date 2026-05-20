@@ -52,6 +52,8 @@ export default function PostComposer({
 }) {
   const [step, setStep] = useState(initialStep);
   const [allowComments, setAllowComments] = useState(true);
+  const [showTitle, setShowTitle] = useState(false);
+  const [title, setTitle] = useState("");
   const isCompose = step === 0;
 
   function handleClose() {
@@ -103,18 +105,42 @@ export default function PostComposer({
 
       <section className="flex-1 px-6 py-8">
         {isCompose ? (
-          <div className="flex h-full flex-col">
+          <div className="flex h-full flex-col gap-4">
+            {showTitle ? (
+              <div className="row">
+                <input
+                  className="min-w-0 flex-1 border-0 bg-transparent text-[22px] font-bold outline-none placeholder:text-[var(--text-secondary)]"
+                  placeholder="Add a Title (Optional)"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                {title ? (
+                  <button className="grid h-8 w-8 shrink-0 place-items-center text-[var(--text-secondary)]" onClick={() => setTitle("")} type="button" aria-label="Remove title">
+                    <Icon name="cancel" size="sm" stroke={2} />
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
             <textarea
-              className="min-h-[420px] flex-1 resize-none border-0 bg-transparent text-[20px] font-medium outline-none placeholder:text-[var(--text-tertiary)]"
+              className="min-h-[360px] flex-1 resize-none border-0 bg-transparent text-[20px] font-medium outline-none placeholder:text-[var(--text-tertiary)]"
               defaultValue="What’s going on?"
             />
           </div>
         ) : (
           <div className="stack">
-            <input
-              className="w-full border-0 bg-transparent text-[22px] font-bold outline-none placeholder:text-[var(--text-secondary)]"
-              defaultValue="Add a Title (Optional)"
-            />
+            <div className="row">
+              <input
+                className="min-w-0 flex-1 border-0 bg-transparent text-[22px] font-bold outline-none placeholder:text-[var(--text-secondary)]"
+                placeholder="Add a Title (Optional)"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              {title ? (
+                <button className="grid h-8 w-8 shrink-0 place-items-center text-[var(--text-secondary)]" onClick={() => setTitle("")} type="button" aria-label="Remove title">
+                  <Icon name="cancel" size="sm" stroke={2} />
+                </button>
+              ) : null}
+            </div>
             <textarea
               className={`${attachment ? "min-h-[210px]" : "min-h-[360px]"} w-full resize-none border-0 bg-transparent text-[18px] font-medium outline-none placeholder:text-[var(--text-tertiary)]`}
               defaultValue="What’s going on?"
@@ -143,10 +169,10 @@ export default function PostComposer({
         </button>
         <div className="row text-[var(--text)]">
           <button
-            className="grid h-8 w-8 place-items-center"
-            onClick={() => setStep(1)}
+            className={`grid h-8 w-8 place-items-center ${showTitle ? "text-[var(--blue)]" : ""}`}
+            onClick={() => setShowTitle((prev) => !prev)}
             type="button"
-            aria-label="Open post details"
+            aria-label="Toggle title"
           >
             <Icon name="list" size="lg" />
           </button>
