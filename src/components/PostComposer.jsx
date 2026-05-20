@@ -109,16 +109,12 @@ export default function PostComposer({
             {showTitle ? (
               <div className="row">
                 <input
-                  className="min-w-0 flex-1 border-0 bg-transparent text-[26px] font-black outline-none placeholder:text-[var(--text-secondary)]"
+                  className="min-w-0 flex-1 border-0 bg-transparent text-[36px] outline-none placeholder:text-[var(--text-secondary)] [&::placeholder]:font-extrabold"
+                  style={{ fontWeight: 800 }}
                   placeholder="Add a Title (Optional)"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                {title ? (
-                  <button className="grid h-8 w-8 shrink-0 place-items-center text-[var(--text-secondary)]" onClick={() => setTitle("")} type="button" aria-label="Remove title">
-                    <Icon name="cancel" size="sm" stroke={2} />
-                  </button>
-                ) : null}
               </div>
             ) : null}
             <textarea
@@ -130,16 +126,12 @@ export default function PostComposer({
           <div className="stack">
             <div className="row">
               <input
-                className="min-w-0 flex-1 border-0 bg-transparent text-[26px] font-black outline-none placeholder:text-[var(--text-secondary)]"
+                className="min-w-0 flex-1 border-0 bg-transparent text-[36px] outline-none placeholder:text-[var(--text-secondary)] [&::placeholder]:font-extrabold"
+                style={{ fontWeight: 800 }}
                 placeholder="Add a Title (Optional)"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
-              {title ? (
-                <button className="grid h-8 w-8 shrink-0 place-items-center text-[var(--text-secondary)]" onClick={() => setTitle("")} type="button" aria-label="Remove title">
-                  <Icon name="cancel" size="sm" stroke={2} />
-                </button>
-              ) : null}
             </div>
             <textarea
               className={`${attachment ? "min-h-[210px]" : "min-h-[360px]"} w-full resize-none border-0 bg-transparent text-[18px] font-medium outline-none placeholder:text-[var(--text-tertiary)]`}
