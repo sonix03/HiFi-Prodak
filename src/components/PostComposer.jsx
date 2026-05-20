@@ -109,7 +109,7 @@ export default function PostComposer({
             {showTitle ? (
               <div className="row">
                 <input
-                  className="min-w-0 flex-1 border-0 bg-transparent text-[22px] font-bold outline-none placeholder:text-[var(--text-secondary)]"
+                  className="min-w-0 flex-1 border-0 bg-transparent text-[26px] font-black outline-none placeholder:text-[var(--text-secondary)]"
                   placeholder="Add a Title (Optional)"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -130,7 +130,7 @@ export default function PostComposer({
           <div className="stack">
             <div className="row">
               <input
-                className="min-w-0 flex-1 border-0 bg-transparent text-[22px] font-bold outline-none placeholder:text-[var(--text-secondary)]"
+                className="min-w-0 flex-1 border-0 bg-transparent text-[26px] font-black outline-none placeholder:text-[var(--text-secondary)]"
                 placeholder="Add a Title (Optional)"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}

@@ -83,7 +83,7 @@ function InviteFriends({ onDone }) {
   );
 }
 
-function ChallengeDetail({ onBack }) {
+function ChallengeDetail({ onBack, onNavigate }) {
   const [showShare, setShowShare] = useState(false);
   const [showInvite, setShowInvite] = useState(false);
 
@@ -165,7 +165,7 @@ function ChallengeDetail({ onBack }) {
         </button>
       </footer>
 
-      {showShare ? <FeedShareSheet onClose={() => setShowShare(false)} /> : null}
+      {showShare ? <FeedShareSheet onClose={() => setShowShare(false)} onNavigate={onNavigate} /> : null}
     </main>
   );
 }
@@ -193,7 +193,7 @@ export default function GroupClub({ onNavigate, initialDetail = false, initialIn
   }
 
   if (activeChallenge) {
-    return <ChallengeDetail challenge={activeChallenge} onBack={() => setActiveChallenge(null)} />;
+    return <ChallengeDetail challenge={activeChallenge} onBack={() => setActiveChallenge(null)} onNavigate={onNavigate} />;
   }
 
   return (

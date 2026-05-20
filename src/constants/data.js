@@ -1,3 +1,9 @@
+import indomieLogo from "../assets/indomie-logo.png";
+import instagramLogo from "../assets/instagram-logo.png";
+import whatsappLogo from "../assets/whatsapp-logo.png";
+import avatar from "../assets/avatar.png";
+import landscapeItb from "../assets/landscape-itb.png";
+
 export const users = [
   { id: "u1", name: "Jane Doe", handle: "@jane", initials: "JD", role: "Product designer", streak: 18 },
   { id: "u2", name: "Alex Chen", handle: "@alex", initials: "AC", role: "Founder", streak: 31 },
@@ -207,7 +213,27 @@ export const proofStatuses = [
 
 export const privacyStatuses = ["Public", "Followers", "Club", "Private"];
 
-export const shareTargets = ["Prodak Feed", "Deep Work Jakarta", "Copy Link", "Export Image"];
+export const prodakShareTargets = [
+  { label: "Prodak Post", icon: "feed" },
+  { label: "Prodak Message", icon: "messageShare" },
+  { label: "Instagram Story", image: instagramLogo },
+  { label: "WhatsApp", image: whatsappLogo },
+  { label: "Copy Link", icon: "link" },
+  { label: "Save", icon: "download" },
+];
+
+export const postDestinations = [
+  { id: "followers", name: "Your Followers", icon: "users" },
+  { id: "hmif", name: "HMIF ITB Work Club", image: indomieLogo },
+  { id: "gajah", name: "Gajah Lulumpatan", image: avatar },
+  { id: "deep-work", name: "Deep Work Bandung", image: landscapeItb },
+  { id: "code", name: "Code Workers : IATB", icon: "club" },
+];
+
+export const messageRecipients = [
+  { id: "new", name: "New Chat", icon: "plus" },
+  { id: "jane", name: "Jane Doe", image: avatar },
+];
 
 export const people = users.map((user, index) => ({
   ...user,

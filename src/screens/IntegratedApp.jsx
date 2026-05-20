@@ -18,6 +18,7 @@ import GroupClub from "./GroupClub";
 import Groups from "./Groups";
 import Login from "./Login";
 import LoginIntro from "./LoginIntro";
+import MessageDetail from "./MessageDetail";
 import Messages from "./Messages";
 import Notifications from "./Notifications";
 import OtherProfile from "./OtherProfile";
@@ -37,6 +38,7 @@ const screenMap = {
   record: Record,
   groups: Groups,
   progress: Progress,
+  messageDetail: MessageDetail,
   messages: Messages,
   activityDetail: ActivityDetail,
   activities: Activities,
@@ -102,6 +104,7 @@ const noBottomNav = new Set([
   "qrCode",
   "editProfile",
   "messages",
+  "messageDetail",
 ]);
 
 const backTargets = {
@@ -115,8 +118,10 @@ const backTargets = {
   activities: "profile",
   activityDetail: "feed",
   messages: "feed",
+  messageDetail: "otherProfile",
   saveActivity: "record",
   editActivity: "activityDetail",
+  share: "feed",
   shareClub: "club",
   createClub: "groups",
 };
@@ -124,9 +129,11 @@ const backTargets = {
 export default function IntegratedApp() {
   const [navStack, setNavStack] = useState(["loginIntro"]);
   const [currentScreen, setCurrentScreen] = useState("loginIntro");
+  const [routeParams, setRouteParams] = useState({});
 
-  const handleNavigate = useCallback((screen) => {
+  const handleNavigate = useCallback((screen, params) => {
     const expectedBack = backTargets[currentScreen];
+    setRouteParams((prev) => (params ? { ...prev, [screen]: params } : prev));
 
     if (expectedBack && screen === expectedBack) {
       const idx = navStack.lastIndexOf(currentScreen);
@@ -167,7 +174,15 @@ export default function IntegratedApp() {
   return (
     <div className="relative h-full">
       <main className="screen">
-        <ScreenComponent onNavigate={handleNavigate} />
+        <ScreenComponent
+          onNavigate={handleNavigate}
+          onBack={
+            backTargets[currentScreen]
+              ? () => handleNavigate(backTargets[currentScreen])
+              : undefined
+          }
+          {...(routeParams[currentScreen] || {})}
+        />
       </main>
       {showNav && <BottomNavigation active={activeTab} onNavigate={handleNavigate} />}
     </div>

@@ -1,7 +1,15 @@
 import Icon from "./Icon";
 
-function HeaderAction({ icon, label, onClick }) {
-  if (!icon) return null;
+function HeaderAction({ icon, image, label, onClick }) {
+  if (!icon && !image) return null;
+
+  if (image) {
+    return (
+      <button className="header-action" onClick={onClick} aria-label={label || "Avatar"}>
+        <img className="h-[24px] w-[24px] rounded-full object-cover" src={image} alt="" />
+      </button>
+    );
+  }
 
   return (
     <button className="header-action" onClick={onClick} aria-label={label || icon}>
@@ -66,7 +74,7 @@ export default function Header({
         {rightSecondary ? (
           typeof rightSecondary === "string"
             ? <HeaderAction icon={rightSecondary} label={rightSecondary} />
-            : <HeaderAction icon={rightSecondary.icon} label={rightSecondary.label || rightSecondary.icon} onClick={rightSecondary.onClick} />
+            : <HeaderAction icon={rightSecondary.icon} image={rightSecondary.image} label={rightSecondary.label || rightSecondary.icon} onClick={rightSecondary.onClick} />
         ) : null}
         {primaryAction ? (
           typeof primaryAction === "string" ? (
@@ -81,7 +89,7 @@ export default function Header({
         ) : showRightAction ? (
           typeof right === "string"
             ? <HeaderAction icon={right} label={right} />
-            : <HeaderAction icon={right.icon} label={right.label || right.icon} onClick={right.onClick} />
+            : <HeaderAction icon={right.icon} image={right.image} label={right.label || right.icon} onClick={right.onClick} />
         ) : null}
       </div>
     </header>

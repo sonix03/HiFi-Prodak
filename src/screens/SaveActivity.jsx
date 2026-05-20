@@ -10,6 +10,7 @@ import OptionBottomSheet, {
 } from "../components/OptionBottomSheet";
 import ScreenHeader from "../components/ScreenHeader";
 import VisibilityField from "../components/VisibilityField";
+import ActivitySavedSplash from "./ActivitySavedSplash";
 import mapPic from "../assets/map-pic.png";
 import landscapeItb from "../assets/landscape-itb.png";
 import { activities } from "../constants/data";
@@ -37,6 +38,7 @@ const visibilityOptions = [
 ];
 
 export default function SaveActivity({ onNavigate }) {
+  const [showSplash, setShowSplash] = useState(false);
   const [selectedActivityType, setSelectedActivityType] = useState(0);
   const [selectedTag, setSelectedTag] = useState(0);
   const [selectedVisibility, setSelectedVisibility] = useState(0);
@@ -56,6 +58,10 @@ export default function SaveActivity({ onNavigate }) {
   const toggleHiddenDetail = (key) => {
     setHiddenDetails((current) => ({ ...current, [key]: !current[key] }));
   };
+
+  if (showSplash) {
+    return <ActivitySavedSplash activity={activity} onNavigate={onNavigate} />;
+  }
 
   return (
     <main className="screen screen-pad flex flex-col relative" style={{ paddingBottom: "20px" }}>
@@ -130,7 +136,7 @@ export default function SaveActivity({ onNavigate }) {
       </div>
 
       <div className="border-t border-[var(--divider)] bg-white py-3">
-        <Button className="w-full" onClick={() => onNavigate?.("feed")}>
+        <Button className="w-full" onClick={() => setShowSplash(true)}>
           Save Activity
         </Button>
       </div>

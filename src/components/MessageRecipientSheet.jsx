@@ -1,10 +1,6 @@
 import Icon from "./Icon";
-import avatar from "../assets/avatar.png";
-
-const recipients = [
-  { id: "new", name: "New Chat", icon: "plus" },
-  { id: "jane", name: "Jane Doe", image: avatar },
-];
+import CircleTarget from "./CircleTarget";
+import { messageRecipients } from "../constants/data";
 
 export default function MessageRecipientSheet({ onClose, onSelect }) {
   return (
@@ -19,22 +15,13 @@ export default function MessageRecipientSheet({ onClose, onSelect }) {
         </div>
 
         <div className="-mx-2 mt-6 flex gap-6 overflow-x-auto px-2 pb-2">
-          {recipients.map((recipient) => (
-            <button
-              className="grid w-[82px] shrink-0 justify-items-center gap-3 text-center text-[13px] font-semibold leading-tight text-[var(--text)]"
+          {messageRecipients.map((recipient) => (
+            <CircleTarget
+              item={recipient}
               key={recipient.id}
+              rounded="rounded-full"
               onClick={() => onSelect?.(recipient)}
-              type="button"
-            >
-              {recipient.image ? (
-                <img className="h-[66px] w-[66px] rounded-full object-cover" src={recipient.image} alt="" />
-              ) : (
-                <span className="grid h-[66px] w-[66px] place-items-center rounded-full bg-[var(--surface-muted)] text-[var(--text)]">
-                  <Icon name={recipient.icon} size={38} stroke={2} />
-                </span>
-              )}
-              <span className="line-clamp-2 whitespace-pre-line">{recipient.name}</span>
-            </button>
+            />
           ))}
         </div>
       </div>

@@ -66,7 +66,7 @@ export default function OtherProfile({ initialFollowed = false, onNavigate }) {
         <div className="mt-5 flex flex-wrap gap-2">
           {isFollowing ? (
             <>
-              <button className="profile-pill !border-[var(--blue)] !text-[var(--blue)]" onClick={() => onNavigate?.("messages")}>
+              <button className="profile-pill !border-[var(--blue)] !text-[var(--blue)]" onClick={() => onNavigate?.("messageDetail")}>
                 <Icon name="messageShare" size="sm" />
                 Message
               </button>
