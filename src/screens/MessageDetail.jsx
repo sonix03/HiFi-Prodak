@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowLeft01Icon, SentIcon } from "@hugeicons/core-free-icons";
 import Icon from "../components/Icon";
@@ -56,9 +57,10 @@ export default function MessageDetail({
   backLabel = "Messages",
   composeAttachment = false,
 }) {
+  const [message, setMessage] = useState("");
   return (
     <main className="screen flex h-full flex-col bg-white">
-      <header className="relative flex h-[74px] shrink-0 items-center border-b border-[var(--border)] bg-white px-5 shadow-[var(--shadow-header)]">
+      <header className="relative flex h-[74px] shrink-0 items-center border-b border-[var(--border)] bg-white px-3 shadow-[var(--shadow-header)]">
         <button className="row gap-2 text-[18px] font-medium text-[var(--text)]" onClick={onBack} type="button">
           <HugeiconsIcon icon={ArrowLeft01Icon} size={24} color="currentColor" strokeWidth={2} />
           <span>{backLabel}</span>
@@ -84,18 +86,25 @@ export default function MessageDetail({
         <div className="rounded-[24px] border border-[var(--border)] bg-white p-2 shadow-[0_1px_8px_rgba(15,23,42,0.08)]">
           {composeAttachment ? <ComposerAttachment /> : null}
           <div className="row gap-3">
-            <div className="flex h-10 flex-1 items-center rounded-full px-2 text-[15px] font-medium text-[var(--text-secondary)]">
-              Send a message
-            </div>
-            {composeAttachment ? (
-              <button
-                className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[var(--primary)] text-white"
-                type="button"
-                aria-label="Send message"
-              >
-                <HugeiconsIcon icon={SentIcon} size={22} color="currentColor" strokeWidth={2} />
-              </button>
-            ) : null}
+            <input
+              className="flex h-10 flex-1 items-center rounded-full bg-transparent px-2 text-[15px] font-medium outline-none placeholder:text-[var(--text-secondary)]"
+              placeholder="Send a message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && message.trim()) {
+                  setMessage("");
+                }
+              }}
+            />
+            <button
+              className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-white ${message.trim() ? "bg-[var(--primary)]" : "bg-[var(--text-tertiary)]"}`}
+              onClick={() => message.trim() && setMessage("")}
+              type="button"
+              aria-label="Send message"
+            >
+              <HugeiconsIcon icon={SentIcon} size={22} color="currentColor" strokeWidth={2} />
+            </button>
           </div>
         </div>
       </footer>

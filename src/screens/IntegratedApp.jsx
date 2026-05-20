@@ -101,6 +101,7 @@ const noBottomNav = new Set([
   "shareClub",
   "qrCode",
   "editProfile",
+  "messages",
 ]);
 
 const backTargets = {

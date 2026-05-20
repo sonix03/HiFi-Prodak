@@ -26,13 +26,13 @@ export default function Messages({ onNavigate, initialNewMessage = false }) {
   const [showNewMessage, setShowNewMessage] = useState(initialNewMessage);
 
   if (activeThread) {
-    return <MessageDetail bottomInset thread={activeThread} onBack={() => setActiveThread(null)} />;
+    return <MessageDetail thread={activeThread} onBack={() => setActiveThread(null)} />;
   }
 
   return (
     <main className="screen relative flex h-full flex-col bg-white">
       <header className="relative flex h-[74px] shrink-0 items-center border-b border-[var(--border)] bg-white px-5 shadow-[var(--shadow-header)]">
-        <button className="row gap-2 text-[18px] font-medium text-[var(--text)]" onClick={() => onNavigate?.("feed")} type="button">
+        <button className="row gap-[6px] text-[18px] font-medium text-[var(--text)]" onClick={() => onNavigate?.("feed")} type="button">
           <Icon name="arrowLeft" size="lg" stroke={2} />
           <span>Home</span>
         </button>
