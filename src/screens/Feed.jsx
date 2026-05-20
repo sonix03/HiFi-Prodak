@@ -5,7 +5,7 @@ import FeedShareSheet from "../components/FeedShareSheet";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
 import avatar from "../assets/avatar.png";
-import { activities, clubs } from "../constants/data";
+import { activities, clubs, notifications } from "../constants/data";
 import OtherProfile from "./OtherProfile";
 
 export default function Feed({ onNavigate, initialShareSheet = false }) {
@@ -48,7 +48,7 @@ export default function Feed({ onNavigate, initialShareSheet = false }) {
   return (
     <main className="screen screen-pad relative">
       <AppHeader
-        right={{ icon: "notification", onClick: () => onNavigate?.("notifications") }}
+        right={{ icon: "notification", onClick: () => onNavigate?.("notifications"), badge: notifications.length > 0 }}
         rightSecondary={{ image: avatar, onClick: () => onNavigate?.("profile") }}
         secondaryAction={{ icon: "messageShare", label: "Messages", onClick: () => onNavigate?.("messages") }}
         tertiaryAction={{ icon: "search", label: "Search", onClick: () => onNavigate?.("searchFriend") }}

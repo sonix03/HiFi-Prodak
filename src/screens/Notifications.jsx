@@ -12,10 +12,12 @@ export default function Notifications({ onNavigate }) {
         {notifications.map((item) => (
           <ListItem
             accent={item.type === "achievement" ? "yellow" : item.type === "club" ? "blue" : "neutral"}
+            hideDivider
             icon={item.icon}
             key={item.id}
             meta={item.body}
             title={item.title}
+            unread={item.unread}
             value={item.time}
           />
         ))}

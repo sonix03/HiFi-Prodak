@@ -158,10 +158,10 @@ export const challenges = [
 ];
 
 export const notifications = [
-  { id: "n1", type: "kudos", icon: "fire", title: "Alex gave kudos", body: "On Shipped the onboarding prototype", time: "3m" },
-  { id: "n2", type: "comment", icon: "comment", title: "Sam commented", body: "This is the kind of morning block I need.", time: "18m" },
-  { id: "n3", type: "club", icon: "users", title: "Deep Work Jakarta moved up", body: "Your club is now #2 in the city leaderboard.", time: "1h" },
-  { id: "n4", type: "achievement", icon: "trophy", title: "18-day streak", body: "You kept your productivity identity alive.", time: "Today" },
+  { id: "n1", type: "kudos", icon: "fire", title: "Alex gave kudos", body: "On Shipped the onboarding prototype", time: "3m", unread: true },
+  { id: "n2", type: "comment", icon: "comment", title: "Sam commented", body: "This is the kind of morning block I need.", time: "18m", unread: true },
+  { id: "n3", type: "club", icon: "users", title: "Deep Work Jakarta moved up", body: "Your club is now #2 in the city leaderboard.", time: "1h", unread: false },
+  { id: "n4", type: "achievement", icon: "trophy", title: "18-day streak", body: "You kept your productivity identity alive.", time: "Today", unread: false },
 ];
 
 export const weeklyStats = [
