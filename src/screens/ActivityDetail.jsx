@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ActivityHeader from "../components/ActivityHeader";
 import ActivityMap from "../components/ActivityMap";
 import Avatar from "../components/Avatar";
@@ -7,14 +8,16 @@ import Icon from "../components/Icon";
 import MetricGrid from "../components/MetricGrid";
 import Pill from "../components/Pill";
 import SectionHeader from "../components/SectionHeader";
+import Share from "./Share";
 import mapPic from "../assets/map-pic.png";
 import { activities, comments, deviceProofs } from "../constants/data";
 
 export default function ActivityDetail({ onNavigate }) {
   const activity = activities[0];
+  const [showShare, setShowShare] = useState(false);
 
   return (
-    <main className="screen screen-pad">
+    <main className="screen screen-pad relative">
       <ActivityHeader title="Activity" onBack={() => onNavigate?.("feed")} />
       <section className="hero-panel stack gap-3" style={{ borderBottom: 'none' }}>
         <div className="row">
@@ -56,8 +59,10 @@ export default function ActivityDetail({ onNavigate }) {
 
       <div className="mt-5 grid-2">
         <Button variant="outline" icon="edit" onClick={() => onNavigate?.("editActivity")}>Edit</Button>
-        <Button icon="lock" onClick={() => onNavigate?.("share")}>Share</Button>
+        <Button icon="lock" onClick={() => setShowShare(true)}>Share</Button>
       </div>
+
+      {showShare ? <Share onNavigate={() => setShowShare(false)} /> : null}
     </main>
   );
 }

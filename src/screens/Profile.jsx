@@ -6,7 +6,9 @@ import ProfileHeader from "../components/ProfileHeader";
 import ProfileIdentity from "../components/ProfileIdentity";
 import QRCodeSheet from "../components/QRCodeSheet";
 import SectionHeader from "../components/SectionHeader";
+import AddGear from "./AddGear";
 import EditProfile from "./EditProfile";
+import Gear from "./Gear";
 import landscapeItb from "../assets/landscape-itb.png";
 import loginVideo from "../assets/login_page_video.mp4";
 import mapPic from "../assets/map-pic.png";
@@ -28,13 +30,64 @@ const profileMedia = [
 const profileActions = [
   { icon: "activity", title: "Activities", route: "activities" },
   { icon: "list", title: "Posts" },
-  { icon: "settings", title: "Gear" },
+  { icon: "settings", title: "Gear", route: "gear" },
 ];
 
 export default function Profile({ onNavigate }) {
   const user = users[0];
   const [showQRCode, setShowQRCode] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
+  const [gearScreen, setGearScreen] = useState(null);
+  const [selectedGear, setSelectedGear] = useState(null);
+
+  if (gearScreen === "gear") {
+    return (
+      <Gear
+        onNavigate={(screen, gear) => {
+          if (screen === "profile") {
+            setGearScreen(null);
+            return;
+          }
+
+          if (screen === "addGear") {
+            setSelectedGear(null);
+            setGearScreen("addGear");
+            return;
+          }
+
+          if (screen === "editGear") {
+            setSelectedGear(gear);
+            setGearScreen("editGear");
+            return;
+          }
+
+          onNavigate?.(screen);
+        }}
+      />
+    );
+  }
+
+  if (gearScreen === "addGear" || gearScreen === "editGear") {
+    return (
+      <AddGear
+        gear={selectedGear}
+        mode={gearScreen === "editGear" ? "edit" : "add"}
+        onNavigate={(screen) => {
+          if (screen === "gear") {
+            setGearScreen("gear");
+            return;
+          }
+
+          if (screen === "profile") {
+            setGearScreen(null);
+            return;
+          }
+
+          onNavigate?.(screen);
+        }}
+      />
+    );
+  }
 
   if (showEditProfile) {
     return (
@@ -56,7 +109,7 @@ export default function Profile({ onNavigate }) {
       <ProfileHeader
         onBack={() => onNavigate?.("feed")}
         onSearch={() => onNavigate?.("searchFriend")}
-        onShare={() => onNavigate?.("share")}
+        onShare={() => navigator.share?.({ title: `${user.name} on Prodak`, text: `Check out ${user.name}'s profile on Prodak` })}
       />
       <section className="hero-panel !border-b-0 !pb-0">
         <ProfileIdentity user={user} />
@@ -122,7 +175,7 @@ export default function Profile({ onNavigate }) {
             <span className="mt-1.5 block text-[11px] font-semibold leading-tight text-[var(--text-secondary)]">Avg score</span>
           </div>
         </div>
-          <ProgressChart data={weeklyStats} flushX />
+          <ProgressChart data={weeklyStats} flushX highlightHigh />
         <div className="h-[3px] rounded-full bg-[var(--divider)]" />
         <div className="list">
           {profileActions.map((item) => (
@@ -130,7 +183,7 @@ export default function Profile({ onNavigate }) {
               action={<Icon name="arrowRight" size="sm" className="text-[var(--text-tertiary)]" />}
               icon={item.icon}
               key={item.title}
-              onClick={item.route ? () => onNavigate?.(item.route) : undefined}
+              onClick={item.route ? () => (item.route === "gear" ? setGearScreen("gear") : onNavigate?.(item.route)) : undefined}
               title={item.title}
             />
           ))}

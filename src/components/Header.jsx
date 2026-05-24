@@ -1,11 +1,20 @@
 import Icon from "./Icon";
 
-function HeaderAction({ icon, label, onClick }) {
-  if (!icon) return null;
+function HeaderAction({ icon, image, label, onClick, badge }) {
+  if (!icon && !image) return null;
+
+  if (image) {
+    return (
+      <button className="header-action" onClick={onClick} aria-label={label || "Avatar"}>
+        <img className="h-[24px] w-[24px] rounded-full object-cover" src={image} alt="" />
+      </button>
+    );
+  }
 
   return (
-    <button className="header-action" onClick={onClick} aria-label={label || icon}>
+    <button className="header-action relative" onClick={onClick} aria-label={label || icon}>
       <Icon name={icon} size={22} />
+      {badge ? <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-red-500" /> : null}
     </button>
   );
 }
@@ -19,6 +28,7 @@ export default function Header({
   centeredTitle = false,
   primaryAction,
   secondaryAction,
+  tertiaryAction,
   right = "notification",
   rightSecondary,
   status,
@@ -61,7 +71,7 @@ export default function Header({
 
       <div className="header-actions">
         {secondaryAction ? <HeaderAction {...secondaryAction} /> : null}
-        {rightSecondary ? <HeaderAction icon={rightSecondary} label={rightSecondary} /> : null}
+        {tertiaryAction ? <HeaderAction {...tertiaryAction} /> : null}
         {primaryAction ? (
           typeof primaryAction === "string" ? (
             <button className="header-text-action">{primaryAction}</button>
@@ -73,7 +83,14 @@ export default function Header({
             <HeaderAction {...primaryAction} />
           )
         ) : showRightAction ? (
-          <HeaderAction icon={right} label={right} />
+          typeof right === "string"
+            ? <HeaderAction icon={right} label={right} />
+            : <HeaderAction icon={right.icon} image={right.image} label={right.label || right.icon} onClick={right.onClick} />
+        ) : null}
+        {rightSecondary ? (
+          typeof rightSecondary === "string"
+            ? <HeaderAction icon={rightSecondary} label={rightSecondary} />
+            : <HeaderAction icon={rightSecondary.icon} image={rightSecondary.image} label={rightSecondary.label || rightSecondary.icon} onClick={rightSecondary.onClick} />
         ) : null}
       </div>
     </header>

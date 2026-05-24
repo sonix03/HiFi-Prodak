@@ -6,7 +6,7 @@ import { comments } from "../constants/data";
 export default function Comments({ onNavigate }) {
   return (
     <main className="screen screen-pad">
-      <ScreenHeader title="Discussion" onBack={() => onNavigate?.("activityDetail")} />
+      <ScreenHeader title="Discussion" onBack={() => onNavigate?.("activityDetail")} right={null} />
       <section className="mt-5 list gap-4 pb-24">
         {comments.map((comment) => <CommentItem key={comment.id} comment={comment} />)}
       </section>

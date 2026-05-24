@@ -92,7 +92,7 @@ export default function EditProfile({ onNavigate }) {
         <FieldRow
           label="Weekly Goal"
           muted
-          value="hours"
+          value="1-8 hours"
         />
       </section>
     </main>

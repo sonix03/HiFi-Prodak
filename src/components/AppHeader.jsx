@@ -1,6 +1,6 @@
 import Header from "./Header";
 
-export default function AppHeader({ title, eyebrow, right = "notification", rightSecondary, secondaryAction }) {
+export default function AppHeader({ title, eyebrow, right = "notification", rightSecondary, secondaryAction, tertiaryAction }) {
   return (
     <Header
       eyebrow={eyebrow}
@@ -8,6 +8,7 @@ export default function AppHeader({ title, eyebrow, right = "notification", righ
       right={right}
       rightSecondary={rightSecondary}
       secondaryAction={secondaryAction}
+      tertiaryAction={tertiaryAction}
       title={title}
     />
   );

@@ -46,7 +46,7 @@ export const theme = {
   },
   typography: {
     ui: '"Plus Jakarta Sans", Inter, system-ui, sans-serif',
-    heading: '"Plus Jakarta Sans", Manrope, Inter, system-ui, sans-serif',
+    heading: '"Plus Jakarta Sans", Inter, system-ui, sans-serif',
     pageTitle: "22px",
     sectionTitle: "17px",
     cardTitle: "16px",

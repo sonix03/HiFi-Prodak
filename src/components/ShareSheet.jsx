@@ -1,6 +1,10 @@
+import { useState } from "react";
 import Icon from "./Icon";
+import MessageRecipientSheet from "./MessageRecipientSheet";
+import MessageDetail from "../screens/MessageDetail";
 import instagramLogo from "../assets/instagram-logo.png";
 import whatsappLogo from "../assets/whatsapp-logo.png";
+import { messageThreads } from "../constants/data";
 
 const destinations = [
   { label: "Instagram Story", image: instagramLogo },
@@ -9,11 +13,28 @@ const destinations = [
   { label: "Message", icon: "comment" },
   { label: "Prodak Message", icon: "users" },
   { label: "Prodak Post", icon: "feed" },
-  { label: "Copy Link", icon: "copy" },
+  { label: "Copy Link", icon: "link" },
   { label: "More", icon: "more" },
 ];
 
 export default function ShareSheet({ onClose, onShare, media }) {
+  const [showMessages, setShowMessages] = useState(false);
+  const [messageRecipient, setMessageRecipient] = useState(null);
+
+  if (messageRecipient) {
+    return (
+      <div className="absolute inset-0 z-50 bg-white">
+        <MessageDetail
+          backLabel="Back"
+          bottomInset
+          composeAttachment
+          thread={{ ...messageThreads[0], name: messageRecipient.name }}
+          onBack={() => setMessageRecipient(null)}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="absolute inset-0 z-50">
       <div className="absolute inset-0 bg-black/30" onClick={onClose} />
@@ -48,7 +69,14 @@ export default function ShareSheet({ onClose, onShare, media }) {
             <button
               className="grid justify-items-center gap-2 text-center text-[10px] font-medium text-[var(--text-secondary)]"
               key={item.label}
-              onClick={onShare}
+              onClick={() => {
+                if (item.label === "Prodak Message") {
+                  setShowMessages(true);
+                  return;
+                }
+
+                onShare?.();
+              }}
             >
               <span className="grid h-10 w-10 place-items-center rounded-full border border-[var(--border)] bg-white text-[var(--text)]">
                 {item.image ? (
@@ -62,6 +90,17 @@ export default function ShareSheet({ onClose, onShare, media }) {
           ))}
         </div>
       </div>
+
+      {showMessages ? (
+        <MessageRecipientSheet
+          onClose={() => setShowMessages(false)}
+          onSelect={(recipient) => {
+            if (recipient.id === "new") return;
+            setShowMessages(false);
+            setMessageRecipient(recipient);
+          }}
+        />
+      ) : null}
     </div>
   );
 }

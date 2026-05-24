@@ -68,7 +68,7 @@ export default function QRCodeSheet({ user, onDone }) {
           </div>
 
           <button className="mx-auto mt-9 inline-flex h-10 items-center gap-2 rounded-full bg-[var(--blue-soft)] px-5 text-[13px] font-extrabold text-[var(--blue)]">
-            <Icon name="copy" size="sm" />
+            <Icon name="link" size="sm" />
             Copy Link
           </button>
         </div>

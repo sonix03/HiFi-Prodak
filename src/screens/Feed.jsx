@@ -1,14 +1,16 @@
 import { useState } from "react";
 import AppHeader from "../components/AppHeader";
 import FeedPost from "../components/FeedPost";
-import ShareSheet from "../components/ShareSheet";
+import FeedShareSheet from "../components/FeedShareSheet";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
-import { activities, clubs } from "../constants/data";
+import avatar from "../assets/avatar.png";
+import { activities, clubs, notifications } from "../constants/data";
+import OtherProfile from "./OtherProfile";
 
-export default function Feed({ onNavigate }) {
-  const [showShare, setShowShare] = useState(false);
-  const [shareMedia, setShareMedia] = useState([]);
+export default function Feed({ onNavigate, initialShareSheet = false }) {
+  const [showShare, setShowShare] = useState(initialShareSheet);
+  const [showOtherProfile, setShowOtherProfile] = useState(false);
 
   const posts = [
     {
@@ -35,21 +37,29 @@ export default function Feed({ onNavigate }) {
     },
   ];
 
-  const handleShare = (media) => {
-    setShareMedia(media);
+  const handleShare = () => {
     setShowShare(true);
   };
 
+  if (showOtherProfile) {
+    return <OtherProfile onNavigate={(screen) => (screen === "feed" ? setShowOtherProfile(false) : onNavigate?.(screen))} />;
+  }
+
   return (
     <main className="screen screen-pad relative">
-      <AppHeader right="notification" rightSecondary="profile" secondaryAction={{ icon: "search", label: "Search" }} />
+      <AppHeader
+        right={{ icon: "notification", onClick: () => onNavigate?.("notifications"), badge: notifications.length > 0 }}
+        rightSecondary={{ image: avatar, onClick: () => onNavigate?.("profile") }}
+        secondaryAction={{ icon: "messageShare", label: "Messages", onClick: () => onNavigate?.("messages") }}
+        tertiaryAction={{ icon: "search", label: "Search", onClick: () => onNavigate?.("searchFriend") }}
+      />
       <section className="stack">
         {posts.map((post) => (
-          <FeedPost key={post.activity.id} onNavigate={onNavigate} {...post} onShare={() => handleShare(post.media)} />
+          <FeedPost key={post.activity.id} onNavigate={onNavigate} {...post} onOpenProfile={() => setShowOtherProfile(true)} onShare={handleShare} />
         ))}
       </section>
 
-      {showShare && <ShareSheet onClose={() => setShowShare(false)} onShare={() => setShowShare(false)} media={shareMedia} />}
+      {showShare && <FeedShareSheet onClose={() => setShowShare(false)} onNavigate={onNavigate} />}
     </main>
   );
 }

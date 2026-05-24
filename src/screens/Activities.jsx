@@ -27,7 +27,7 @@ export default function Activities({ onNavigate }) {
         {["All", "Deep Work", "Study", "Club", "Proof"].map((tab, index) => <Pill key={tab} active={index === 0}>{tab}</Pill>)}
       </div>
       <section className="section">
-        <SectionHeader title="Mika's activities" meta="Tap any activity to review proof and comments." />
+        <SectionHeader title="Jane's activities" meta="Tap any activity to review proof and comments." />
         <div className="stack mt-3">
           {mikaActivities.map((activity, index) => (
             <FeedPost
