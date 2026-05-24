@@ -1,21 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { PlayIcon, PauseIcon, RacingFlagIcon } from "@hugeicons/core-free-icons";
+import { MaximizeScreenIcon, PlayIcon, PauseIcon, RacingFlagIcon } from "@hugeicons/core-free-icons";
 import Icon from "../components/Icon";
 import WorkTypeSheet from "../components/WorkTypeSheet";
 import { workTypes as workTypeOptions } from "../constants/workTypes";
 import mapPic from "../assets/map-pic.png";
 
-export default function Record({ onNavigate, initialPlaying = false, initialRunning = false }) {
+export default function Record({ onNavigate, initialPlaying = false, initialRunning = false, initialWorkType = "Work" }) {
   const [phase, setPhase] = useState(
     initialPlaying ? "stopped" : initialRunning ? "running" : "idle"
   );
-  const [workType, setWorkType] = useState("Work");
+  const [elapsedSeconds, setElapsedSeconds] = useState(initialPlaying || initialRunning ? 13 : 0);
+  const [workingSeconds, setWorkingSeconds] = useState(initialPlaying || initialRunning ? 13 : 0);
+  const [workType, setWorkType] = useState(initialWorkType);
   const [showWorkSheet, setShowWorkSheet] = useState(false);
   const [liveSharing, setLiveSharing] = useState(false);
 
   const isRunning = phase === "running";
   const isStopped = phase === "stopped";
+
+  useEffect(() => {
+    if (!isRunning && !isStopped) return undefined;
+
+    const timer = setInterval(() => {
+      setElapsedSeconds((current) => current + 1);
+      if (isRunning) {
+        setWorkingSeconds((current) => current + 1);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isRunning, isStopped]);
 
   return (
     <main className="screen relative" style={{ overflow: "hidden" }}>
@@ -35,14 +50,25 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
         <Icon name="arrowLeft" size={26} stroke="strong" />
       </button>
 
+      {(isRunning || isStopped) ? (
+        <button
+          className="absolute right-6 top-10 z-20 grid h-12 w-12 place-items-center rounded-full bg-white text-black shadow-[0_10px_24px_rgba(15,23,42,0.18)]"
+          onClick={() => onNavigate?.("recordFocus", { initialPhase: phase, workType })}
+          type="button"
+          aria-label="Open focus view"
+        >
+          <HugeiconsIcon icon={MaximizeScreenIcon} size={24} color="currentColor" strokeWidth={2} />
+        </button>
+      ) : null}
+
       <div className="absolute inset-x-0 bottom-0 z-20">
-        <div className="mb-4 mr-6 grid justify-end gap-4">
+        {/* <div className="mb-4 mr-6 grid justify-end gap-4">
           <MapControl icon="list" label="Layers" />
           <button className="grid h-12 w-12 place-items-center rounded-full bg-white text-base font-bold text-black shadow-[0_10px_24px_rgba(15,23,42,0.16)]">
             3D
           </button>
           <MapControl icon="target" label="Locate" />
-        </div>
+        </div> */}
 
         <section className="mx-5 mb-4 overflow-hidden rounded-[20px] bg-white text-center shadow-[0_18px_42px_rgba(15,23,42,0.18)]">
           <div className={`relative px-5 py-4 text-center shadow-[0_1px_0_rgba(15,23,42,0.05)] ${isStopped ? "bg-[var(--yellow)]" : isRunning ? "bg-[var(--blue)]" : "bg-white"}`}>
@@ -51,13 +77,13 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
             </p>
           </div>
           <div className="grid grid-cols-3 px-5 pb-6 pt-7">
-            <Metric value={isRunning || isStopped ? "00:13" : "00:00"} label="Time" />
-            <Metric value="-:--" label="Focus Score" />
-            <Metric value="0,00" label="Working Time" />
+            <Metric value={formatTime(elapsedSeconds)} label="Elapsed Time" />
+            <Metric value={isRunning || isStopped ? "82" : "-:--"} label="Focus Score" />
+            <Metric value={formatTime(workingSeconds)} label="Working Time" />
           </div>
         </section>
 
-        <section className="rounded-t-[22px] bg-white px-7 pb-4 pt-4 shadow-[0_-18px_42px_rgba(15,23,42,0.16)]">
+        <section className="min-h-[160px] rounded-t-[22px] bg-white px-7 pb-4 pt-4 shadow-[0_-18px_42px_rgba(15,23,42,0.16)]">
           <div className="mx-auto mb-7 h-1.5 w-16 rounded-full bg-black/20" />
           {isStopped ? (
             <div>
@@ -79,10 +105,12 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
             </div>
           ) : isRunning ? (
             <div>
-              <button className="row w-full justify-center rounded-full bg-[var(--blue)] px-4 py-3 text-white shadow-[0_12px_24px_rgba(37,99,235,0.3)]" onClick={() => setPhase("stopped")}>
-                <ActionIcon icon="pause" size={24} strokeWidth={2} />
-                <span className="text-base font-extrabold">Pause</span>
-              </button>
+              <div className="pb-2">
+                <button className="row w-full justify-center rounded-full bg-[var(--blue)] px-4 py-3 text-white shadow-[0_12px_24px_rgba(37,99,235,0.3)]" onClick={() => setPhase("stopped")}>
+                  <ActionIcon icon="pause" size={24} strokeWidth={2} />
+                  <span className="text-base font-extrabold">Pause</span>
+                </button>
+              </div>
               <div className="between mt-4">
                 <span className="text-sm font-semibold text-[var(--text-secondary)]">Live Sharing</span>
                 <button
@@ -129,14 +157,6 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
         />
       ) : null}
     </main>
-  );
-}
-
-function MapControl({ icon, label }) {
-  return (
-    <button className="grid h-12 w-12 place-items-center rounded-full bg-white text-black shadow-[0_10px_24px_rgba(15,23,42,0.16)]" aria-label={label}>
-      <Icon name={icon} size={24} stroke="strong" />
-    </button>
   );
 }
 
@@ -219,4 +239,10 @@ function ActionIcon({ icon, size, strokeWidth }) {
   }
 
   return <Icon name={icon} size={size} stroke={strokeWidth} />;
+}
+
+function formatTime(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, "0");
+  const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+  return `${minutes}:${seconds}`;
 }

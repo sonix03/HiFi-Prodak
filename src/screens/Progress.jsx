@@ -7,6 +7,8 @@ import ListItem from "../components/ListItem";
 import MetricGrid from "../components/MetricGrid";
 import ProgressChart from "../components/ProgressChart";
 import SectionHeader from "../components/SectionHeader";
+import ShareBottomSheet from "../components/ShareBottomSheet";
+import ShareTargets from "../components/ShareTargets";
 import { challenges, monthlyProductivity, weeklyStats } from "../constants/data";
 
 function HeatmapCell({ item }) {
@@ -24,12 +26,12 @@ function HeatmapCell({ item }) {
   );
 }
 
-function MonthlyHeatmap({ data }) {
+function MonthlyHeatmap({ data, onShare }) {
   return (
     <div>
       <div className="between">
         <p className="text-lg font-bold">May 2026</p>
-        <button className="flex items-center gap-1 rounded-[20px] border border-[var(--blue)] px-2 py-1 text-sm font-semibold text-[var(--blue)]">
+        <button className="flex items-center gap-1 rounded-[20px] border border-[var(--blue)] px-2 py-1 text-sm font-semibold text-[var(--blue)]" onClick={onShare} type="button">
           <HugeiconsIcon icon={Share03Icon} size={14} />
           Share
         </button>
@@ -58,6 +60,7 @@ function MonthlyHeatmap({ data }) {
 
 export default function Progress({ onNavigate }) {
   const [showMenu, setShowMenu] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   return (
     <main className="screen screen-pad">
@@ -99,13 +102,34 @@ export default function Progress({ onNavigate }) {
           { label: "Goal", value: "72%", sub: "50K challenge", icon: "target" },
         ]} />
       </div>
+      <div className="list mt-4 border-y border-[var(--divider)]">
+        <ListItem
+          action={<Icon name="arrowRight" size="sm" className="text-[var(--text-tertiary)]" />}
+          icon="activity"
+          onClick={() => onNavigate?.("activities")}
+          title="Activities"
+          meta="Review tracked work sessions and device signals"
+        />
+      </div>
       <section className="section">
-        <SectionHeader title="Focus volume" meta="Hours recorded by day." />
+        <SectionHeader title="Focus volume" meta="Working time tracked across devices." />
         <ProgressChart data={weeklyStats} highlightHigh />
+        <div className="list border-t border-[var(--divider)]">
+          <div className="list-row py-2">
+            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--yellow)]" />
+            <p className="min-w-0 flex-1 text-[12px] font-semibold text-[var(--text-secondary)]">Yellow marks above-average focus days</p>
+            <span className="text-[12px] font-black text-[var(--text)]">Peak 4h</span>
+          </div>
+          <div className="list-row py-2">
+            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--blue)]" />
+            <p className="min-w-0 flex-1 text-[12px] font-semibold text-[var(--text-secondary)]">Blue marks regular working volume</p>
+            <span className="text-[12px] font-black text-[var(--text)]">Avg 2.3h</span>
+          </div>
+        </div>
       </section>
       <section className="section">
         
-        <MonthlyHeatmap data={monthlyProductivity} />
+        <MonthlyHeatmap data={monthlyProductivity} onShare={() => setShowShare(true)} />
       </section>
       <section className="section">
         <SectionHeader title="Achievements" />
@@ -113,6 +137,30 @@ export default function Progress({ onNavigate }) {
           {challenges.map((challenge) => <ListItem key={challenge.title} icon={challenge.icon} accent="yellow" title={challenge.title} meta={challenge.reward} value={`${challenge.progress}%`} />)}
         </div>
       </section>
+      {showShare ? (
+        <ShareBottomSheet title="Share Progress" onClose={() => setShowShare(false)}>
+          <div className="rounded-[8px] bg-[var(--text)] px-5 py-6 text-white shadow-[var(--shadow-card)]">
+            <p className="text-[11px] font-bold uppercase tracking-wide text-white/70">May 2026</p>
+            <h2 className="mt-3 text-[28px] font-black leading-none tracking-normal">17h 12m</h2>
+            <p className="mt-2 text-[13px] font-semibold text-white/80">Weekly focus time across connected devices</p>
+            <div className="mt-5 grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-md bg-white/10 px-2 py-3">
+                <p className="text-[17px] font-black">18d</p>
+                <p className="mt-1 text-[10px] font-semibold text-white/70">Streak</p>
+              </div>
+              <div className="rounded-md bg-white/10 px-2 py-3">
+                <p className="text-[17px] font-black">86</p>
+                <p className="mt-1 text-[10px] font-semibold text-white/70">Score</p>
+              </div>
+              <div className="rounded-md bg-white/10 px-2 py-3">
+                <p className="text-[17px] font-black">24</p>
+                <p className="mt-1 text-[10px] font-semibold text-white/70">Sessions</p>
+              </div>
+            </div>
+          </div>
+          <ShareTargets className="mt-8" />
+        </ShareBottomSheet>
+      ) : null}
     </main>
   );
 }

@@ -6,6 +6,7 @@ import AddGear from "./AddGear";
 import BrowseEvents from "./BrowseEvents";
 import Club from "./Club";
 import Comments from "./Comments";
+import Connections from "./Connections";
 import CreateClub from "./CreateClub";
 import CreatePost from "./CreatePost";
 import EditActivity from "./EditActivity";
@@ -26,6 +27,7 @@ import Profile from "./Profile";
 import Progress from "./Progress";
 import QRCode from "./QRCode";
 import Record from "./Record";
+import RecordFocus from "./RecordFocus";
 import Registration from "./Registration";
 import SaveActivity from "./SaveActivity";
 import SearchClub from "./SearchClub";
@@ -46,6 +48,7 @@ const screenMap = {
   club: Club,
   groupClub: GroupClub,
   comments: Comments,
+  connections: Connections,
   createClub: CreateClub,
   createPost: CreatePost,
   editActivity: EditActivity,
@@ -59,6 +62,7 @@ const screenMap = {
   qrCode: QRCode,
   registration: Registration,
   saveActivity: SaveActivity,
+  recordFocus: RecordFocus,
   searchClub: SearchClub,
   searchFriend: SearchFriend,
   share: Share,
@@ -81,12 +85,14 @@ const tabForScreen = {
   browseEvents: "groups",
   progress: "progress",
   profile: "progress",
+  connections: "progress",
   gear: "progress",
   addGear: "progress",
 };
 
 const noBottomNav = new Set([
   "record",
+  "recordFocus",
   "saveActivity",
   "editActivity",
   "login",
@@ -94,6 +100,7 @@ const noBottomNav = new Set([
   "registration",
   "forgotPassword",
   "comments",
+  "connections",
   "createClub",
   "createPost",
   "eventFilter",
@@ -111,6 +118,7 @@ const backTargets = {
   searchFriend: "groups",
   searchClub: "groups",
   comments: "activityDetail",
+  connections: "profile",
   eventFilter: "browseEvents",
   otherProfile: "feed",
   club: "groups",
@@ -120,6 +128,7 @@ const backTargets = {
   messages: "feed",
   messageDetail: "otherProfile",
   saveActivity: "record",
+  recordFocus: "record",
   editActivity: "activityDetail",
   share: "feed",
   shareClub: "club",
@@ -130,10 +139,28 @@ export default function IntegratedApp() {
   const [navStack, setNavStack] = useState(["loginIntro"]);
   const [currentScreen, setCurrentScreen] = useState("loginIntro");
   const [routeParams, setRouteParams] = useState({});
+  const [hideBottomNav, setHideBottomNav] = useState(false);
+
+  const handleBottomNavVisibilityChange = useCallback((visible) => {
+    setHideBottomNav(!visible);
+  }, []);
 
   const handleNavigate = useCallback((screen, params) => {
     const expectedBack = backTargets[currentScreen];
-    setRouteParams((prev) => (params ? { ...prev, [screen]: params } : prev));
+    setHideBottomNav(false);
+    setRouteParams((prev) => {
+      if (params) {
+        return { ...prev, [screen]: params };
+      }
+
+      if (!(screen in prev)) {
+        return prev;
+      }
+
+      const next = { ...prev };
+      delete next[screen];
+      return next;
+    });
 
     if (expectedBack && screen === expectedBack) {
       const idx = navStack.lastIndexOf(currentScreen);
@@ -168,7 +195,7 @@ export default function IntegratedApp() {
     );
   }
 
-  const showNav = !noBottomNav.has(currentScreen);
+  const showNav = !hideBottomNav && !noBottomNav.has(currentScreen);
   const activeTab = tabForScreen[currentScreen] || "feed";
 
   return (
@@ -181,6 +208,7 @@ export default function IntegratedApp() {
               ? () => handleNavigate(backTargets[currentScreen])
               : undefined
           }
+          onBottomNavVisibilityChange={handleBottomNavVisibilityChange}
           {...(routeParams[currentScreen] || {})}
         />
       </main>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "../components/Button";
 import GroupsHeader from "../components/GroupsHeader";
 import ListItem from "../components/ListItem";
@@ -7,6 +8,8 @@ import indomieLogo from "../assets/indomie-logo.png";
 import { clubs } from "../constants/data";
 
 export default function Groups({ onNavigate }) {
+  const [activeTopic, setActiveTopic] = useState("Work");
+
   return (
     <main className="screen screen-pad">
       <GroupsHeader active="clubs" onNavigate={onNavigate} />
@@ -22,7 +25,7 @@ export default function Groups({ onNavigate }) {
         </div>
       </section>
 
-      <div className="mt-5 tab-row">{["Work", "Research", "Arts", "Laboratory"].map((item, index) => <Pill key={item} active={index === 0}>{item}</Pill>)}</div>
+      <div className="mt-5 tab-row">{["Work", "Research", "Arts", "Laboratory"].map((item) => <Pill key={item} active={activeTopic === item} onClick={() => setActiveTopic(item)}>{item}</Pill>)}</div>
 
       <section className="section">
         <SectionHeader title="Featured clubs" action="Create" />

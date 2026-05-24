@@ -47,10 +47,13 @@ export default class EditActivity extends Component {
       focusScore: false,
     },
     selectedFeeling: 1,
+    selectedVisualType: "map",
     showActivityTypeSheet: false,
     showTagSheet: false,
     showFeelingSheet: false,
     showHiddenDetailsSheet: false,
+    showVisualTypeSheet: false,
+    showDeleteConfirm: false,
   };
 
   setSheet = (sheet, value) => {
@@ -76,10 +79,13 @@ function EditActivityView({ onNavigate, state, setSheet, setSelected }) {
     selectedVisibility,
     hiddenDetails,
     selectedFeeling,
+    selectedVisualType,
     showActivityTypeSheet,
     showTagSheet,
     showFeelingSheet,
     showHiddenDetailsSheet,
+    showVisualTypeSheet,
+    showDeleteConfirm,
   } = state;
   const activity = activities[0];
   const toggleHiddenDetail = (key) => {
@@ -113,7 +119,7 @@ function EditActivityView({ onNavigate, state, setSheet, setSelected }) {
 
           <div className="flex gap-3">
             <div className="flex-1 overflow-hidden rounded-xl border border-[var(--blue)]">
-              <ActivityMap height={120} imageSrc={mapPic} />
+              <ActivityMap height={120} imageSrc={mapPic} visualType={selectedVisualType} />
             </div>
             <div className="flex-1 overflow-hidden rounded-xl border border-[var(--border)]">
               <img
@@ -124,7 +130,13 @@ function EditActivityView({ onNavigate, state, setSheet, setSelected }) {
             </div>
           </div>
 
-          <ChangeMapType />
+          <ChangeMapType
+            selected={selectedVisualType}
+            onChange={(value) => setSelected("selectedVisualType", value)}
+            open={showVisualTypeSheet}
+            onOpen={() => setSheet("showVisualTypeSheet", true)}
+            onClose={() => setSheet("showVisualTypeSheet", false)}
+          />
 
           <div className="mt-2">
             <p className="mb-2 font-semibold text-[var(--text)]">Details</p>
@@ -158,7 +170,8 @@ function EditActivityView({ onNavigate, state, setSheet, setSelected }) {
 
           <button
             className="mt-2 text-center text-sm font-semibold text-[var(--red)]"
-            onClick={() => onNavigate?.("activityDetail")}
+            onClick={() => setSheet("showDeleteConfirm", true)}
+            type="button"
           >
             Delete Activity
           </button>
@@ -215,6 +228,31 @@ function EditActivityView({ onNavigate, state, setSheet, setSelected }) {
         />
       )}
 
+      {showDeleteConfirm ? (
+        <ConfirmDialog
+          title="Delete activity?"
+          body="This removes the saved activity and its device proof from your activity history."
+          confirmLabel="Delete"
+          onCancel={() => setSheet("showDeleteConfirm", false)}
+          onConfirm={() => onNavigate?.("activityDetail")}
+        />
+      ) : null}
+
     </main>
+  );
+}
+
+function ConfirmDialog({ title, body, confirmLabel, onCancel, onConfirm }) {
+  return (
+    <div className="absolute inset-0 z-50 grid place-items-center bg-black/30 px-6">
+      <div className="w-full rounded-2xl bg-white p-5 shadow-[var(--shadow-floating)]">
+        <h2 className="text-[18px] font-black text-[var(--text)]">{title}</h2>
+        <p className="mt-2 text-[13px] font-semibold leading-snug text-[var(--text-secondary)]">{body}</p>
+        <div className="mt-6 grid grid-cols-2 gap-3">
+          <Button variant="outline" onClick={onCancel}>Cancel</Button>
+          <Button className="!bg-[var(--red)]" onClick={onConfirm}>{confirmLabel}</Button>
+        </div>
+      </div>
+    </div>
   );
 }

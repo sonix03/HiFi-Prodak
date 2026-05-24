@@ -2,6 +2,7 @@ import Header from "./Header";
 
 export default function ScreenHeader({
   title,
+  className,
   eyebrow,
   onBack,
   backLabel,
@@ -18,6 +19,7 @@ export default function ScreenHeader({
       mode={mode}
       backLabel={backLabel}
       centeredTitle={centeredTitle}
+      className={className}
       onBack={onBack}
       primaryAction={action}
       secondaryAction={secondaryAction}

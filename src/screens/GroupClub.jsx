@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowLeft01Icon, Share03Icon } from "@hugeicons/core-free-icons";
 import Button from "../components/Button";
@@ -24,6 +24,8 @@ const challengeDetail = {
   rule: "Complete 400 mins of focused work in May - any productive session counts.",
   qualifying: "Qualifying activities: Deep Work, Study, Research, Writing, and Design.",
 };
+
+const activeChallengeId = "active-challenge";
 
 const invitees = [
   { name: "Jane Doe", location: "Jakarta" },
@@ -83,7 +85,7 @@ function InviteFriends({ onDone }) {
   );
 }
 
-function ChallengeDetail({ onBack, onNavigate }) {
+function ChallengeDetail({ isJoined, onBack, onJoin, onNavigate }) {
   const [showShare, setShowShare] = useState(false);
   const [showInvite, setShowInvite] = useState(false);
 
@@ -159,10 +161,21 @@ function ChallengeDetail({ onBack, onNavigate }) {
         </div>
       </section>
 
-      <footer className="absolute inset-x-0 bottom-0 bg-white/95 px-6 py-5 shadow-[var(--shadow-navbar)] backdrop-blur">
-        <button className="h-14 w-full rounded-full bg-[var(--blue)] text-[16px] font-black text-white" onClick={() => setShowInvite(true)} type="button">
-          Invite Friends
-        </button>
+      <footer className="absolute inset-x-0 bottom-0 flex gap-3 bg-white/95 px-6 py-5 shadow-[var(--shadow-navbar)] backdrop-blur">
+        {isJoined ? (
+          <>
+            <button className="grid h-14 w-28 place-items-center rounded-full border border-[var(--border)] bg-white text-[var(--blue)]" onClick={onJoin} type="button" aria-label="Cancel challenge join">
+              <Icon name="check" size="lg" stroke={2} />
+            </button>
+            <button className="h-14 flex-1 rounded-full bg-[var(--blue)] text-[16px] font-black text-white" onClick={() => setShowInvite(true)} type="button">
+              Invite Friends
+            </button>
+          </>
+        ) : (
+          <button className="h-14 flex-1 rounded-full bg-[var(--blue)] text-[16px] font-black text-white" onClick={onJoin} type="button">
+            Join
+          </button>
+        )}
       </footer>
 
       {showShare ? <FeedShareSheet onClose={() => setShowShare(false)} onNavigate={onNavigate} /> : null}
@@ -170,10 +183,25 @@ function ChallengeDetail({ onBack, onNavigate }) {
   );
 }
 
-export default function GroupClub({ onNavigate, initialDetail = false, initialInvite = false }) {
-  const [joinedChallenges, setJoinedChallenges] = useState(() => new Set());
+export default function GroupClub({ onNavigate, onBottomNavVisibilityChange, initialDetail = false, initialInvite = false }) {
+  const [joinedChallenges, setJoinedChallenges] = useState(() => new Set([activeChallengeId]));
   const [activeChallenge, setActiveChallenge] = useState(initialDetail ? challenges[0] : null);
+  const [activeChallengeKey, setActiveChallengeKey] = useState(initialDetail ? activeChallengeId : null);
+  const [activeTopic, setActiveTopic] = useState("Work");
   const [showInitialInvite, setShowInitialInvite] = useState(initialInvite);
+  const isFocusedFlow = Boolean(activeChallenge || showInitialInvite);
+
+  const openChallenge = (challenge, id) => {
+    setActiveChallenge(challenge);
+    setActiveChallengeKey(id);
+  };
+
+  useEffect(() => {
+    onBottomNavVisibilityChange?.(!isFocusedFlow);
+
+    return () => onBottomNavVisibilityChange?.(true);
+  }, [isFocusedFlow, onBottomNavVisibilityChange]);
+
   const toggleChallenge = (id) => {
     setJoinedChallenges((current) => {
       const next = new Set(current);
@@ -193,7 +221,20 @@ export default function GroupClub({ onNavigate, initialDetail = false, initialIn
   }
 
   if (activeChallenge) {
-    return <ChallengeDetail challenge={activeChallenge} onBack={() => setActiveChallenge(null)} onNavigate={onNavigate} />;
+    const isJoined = joinedChallenges.has(activeChallengeKey);
+
+    return (
+      <ChallengeDetail
+        challenge={activeChallenge}
+        isJoined={isJoined}
+        onBack={() => {
+          setActiveChallenge(null);
+          setActiveChallengeKey(null);
+        }}
+        onJoin={() => toggleChallenge(activeChallengeKey)}
+        onNavigate={onNavigate}
+      />
+    );
   }
 
   return (
@@ -201,14 +242,14 @@ export default function GroupClub({ onNavigate, initialDetail = false, initialIn
       <GroupsHeader active="challenges" onNavigate={onNavigate} />
 
       <div className="mt-4 tab-row">
-        {["Work", "Research", "Arts", "Laboratory"].map((item, index) => <Pill key={item} active={index === 0}>{item}</Pill>)}
+        {["Work", "Research", "Arts", "Laboratory"].map((item) => <Pill key={item} active={activeTopic === item} onClick={() => setActiveTopic(item)}>{item}</Pill>)}
       </div>
 
       <section className="section">
         <SectionHeader title="Active Challenge" />
         <button
           className="card mt-3 overflow-hidden text-left"
-          onClick={() => setActiveChallenge(challenges[0])}
+          onClick={() => openChallenge(challenges[0], activeChallengeId)}
           type="button"
         >
           <div className="relative h-[128px] bg-[var(--surface-muted)]">
@@ -234,14 +275,14 @@ export default function GroupClub({ onNavigate, initialDetail = false, initialIn
 
             return (
               <article className="card flex min-h-[238px] flex-col overflow-hidden" key={id}>
-                <button className="text-left" onClick={() => setActiveChallenge(challenge)} type="button">
+                <button className="text-left" onClick={() => openChallenge(challenge, id)} type="button">
                   <img
                     className="h-[92px] w-full object-cover"
                     src={challengeImages[index % challengeImages.length]}
                     alt=""
                   />
                 </button>
-                <button className="grid gap-2 p-3 text-left" onClick={() => setActiveChallenge(challenge)} type="button">
+                <button className="grid gap-2 p-3 text-left" onClick={() => openChallenge(challenge, id)} type="button">
                   <h2 className="card-title">{challenge.title}</h2>
                   <p className="body">{challenge.reward}</p>
                   <p className="meta">Apr 17 to Apr 30, 2026</p>

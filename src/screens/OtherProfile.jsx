@@ -57,10 +57,15 @@ export default function OtherProfile({ initialFollowed = false, onNavigate }) {
         <ProfileIdentity user={user} />
         <div className="profile-stats mt-5">
           {stats.map((stat) => (
-            <div key={stat.label}>
+            <button
+              className="min-w-0 text-left"
+              key={stat.label}
+              onClick={stat.label === "Following" || stat.label === "Followers" ? () => onNavigate?.("connections", { initialTab: stat.label.toLowerCase(), returnTo: "otherProfile" }) : undefined}
+              type="button"
+            >
               <p>{stat.value}</p>
               <span>{stat.label}</span>
-            </div>
+            </button>
           ))}
         </div>
         <div className="mt-5 flex flex-wrap gap-2">

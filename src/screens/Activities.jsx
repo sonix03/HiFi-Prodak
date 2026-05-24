@@ -1,3 +1,4 @@
+import { useState } from "react";
 import FeedPost from "../components/FeedPost";
 import Pill from "../components/Pill";
 import SectionHeader from "../components/SectionHeader";
@@ -7,6 +8,7 @@ import mapPic from "../assets/map-pic.png";
 import { mikaActivities } from "../constants/data";
 
 export default function Activities({ onNavigate }) {
+  const [activeFilter, setActiveFilter] = useState("All");
   const activityMedia = [
     [{ type: "map", src: mapPic }],
     [{ type: "photo", src: landscapeItb }],
@@ -24,7 +26,11 @@ export default function Activities({ onNavigate }) {
         title="Activities"
       />
       <div className="tab-row">
-        {["All", "Deep Work", "Study", "Club", "Proof"].map((tab, index) => <Pill key={tab} active={index === 0}>{tab}</Pill>)}
+        {["All", "Deep Work", "Study", "Club", "Proof"].map((tab) => (
+          <Pill key={tab} active={activeFilter === tab} onClick={() => setActiveFilter(tab)}>
+            {tab}
+          </Pill>
+        ))}
       </div>
       <section className="section">
         <SectionHeader title="Jane's activities" meta="Tap any activity to review proof and comments." />
