@@ -188,7 +188,7 @@ export default function Profile({ onNavigate }) {
               action={<Icon name="arrowRight" size="sm" className="text-[var(--text-tertiary)]" />}
               icon={item.icon}
               key={item.title}
-              onClick={item.route ? () => (item.route === "gear" ? setGearScreen("gear") : onNavigate?.(item.route)) : undefined}
+              onClick={item.route ? () => (item.route === "gear" ? setGearScreen("gear") : onNavigate?.(item.route, item.route === "activities" ? { returnTo: "profile" } : undefined)) : undefined}
               title={item.title}
             />
           ))}

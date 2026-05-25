@@ -9,24 +9,72 @@ import ProgressChart from "../components/ProgressChart";
 import SectionHeader from "../components/SectionHeader";
 import ShareBottomSheet from "../components/ShareBottomSheet";
 import ShareTargets from "../components/ShareTargets";
-import { challenges, monthlyProductivity, weeklyStats } from "../constants/data";
+import { challenges, mikaActivities, monthlyProductivity, weeklyStats } from "../constants/data";
 
-function HeatmapCell({ item }) {
+function getMayActivityDay(activity) {
+  const match = activity.time.match(/^May\s+(\d{1,2}),\s+2026/);
+  return match ? Number(match[1]) : null;
+}
+
+function getActivitiesForDay(day) {
+  return mikaActivities.filter((activity) => getMayActivityDay(activity) === day);
+}
+
+const focusVolumeData = weeklyStats.map((item, index) => ({
+  ...item,
+  dayNumber: 11 + index,
+}));
+
+function HeatmapCell({ item, selected, onNavigate, onSelect }) {
   const level =
     item.hours >= 4 ? "bg-[var(--primary)] text-white" :
     item.hours >= 2.5 ? "bg-[var(--blue)]/80 text-white" :
     item.hours >= 1 ? "bg-[var(--primary-soft)] text-[var(--blue)]" :
     item.hours > 0 ? "bg-[var(--surface-muted)] text-[var(--text-secondary)]" :
     "bg-white text-[var(--text-tertiary)]";
+  const selectedActivities = getActivitiesForDay(item.day);
+  const column = (item.day - 1) % 7;
+  const tooltipAlign = column >= 4 ? "right-0" : "left-5";
 
   return (
-    <div className={`grid aspect-square place-items-center rounded-xl border border-[var(--border)] ${level}`}>
-      <span className="text-[11px] font-semibold">{item.day}</span>
+    <div className="relative">
+      <button
+        className={`grid aspect-square w-full place-items-center rounded-xl border ${selected ? "border-[var(--text)] ring-2 ring-[var(--blue)]/20" : "border-[var(--border)]"} ${level}`}
+        onClick={() => onSelect(item)}
+        type="button"
+        aria-label={`Show activities for May ${item.day}`}
+      >
+        <span className="text-[11px] font-semibold">{item.day}</span>
+      </button>
+      {selected ? (
+        <button
+          className={`absolute bottom-[18px] z-20 w-[190px] rounded-[8px] border border-[var(--border)] bg-white px-3 py-2 text-left text-[var(--text)] shadow-[var(--shadow-card)] active:scale-[0.99] ${tooltipAlign}`}
+          onClick={() => onNavigate?.("activities", { returnTo: "progress", selectedDay: item.day })}
+          type="button"
+        >
+          <div className="between gap-3">
+            <div className="min-w-0">
+              <p className="text-[11px] font-black">May {item.day}, 2026</p>
+              <p className="mt-0.5 text-[10px] font-semibold text-[var(--text-secondary)]">{selectedActivities.length} activities completed</p>
+            </div>
+            <span className="shrink-0 text-[10px] font-black text-[var(--blue)]">
+              View
+            </span>
+          </div>
+          <p className="mt-1 truncate text-[10px] font-semibold text-[var(--text-secondary)]">
+            {selectedActivities.length ? selectedActivities.map((activity) => activity.title).join(", ") : "No completed activity"}
+          </p>
+        </button>
+      ) : null}
     </div>
   );
 }
 
-function MonthlyHeatmap({ data, onShare }) {
+function MonthlyHeatmap({ data, onNavigate, onShare }) {
+  const [selectedDay, setSelectedDay] = useState(
+    data.find((item) => getActivitiesForDay(item.day).length > 0) || data[0],
+  );
+
   return (
     <div>
       <div className="between">
@@ -37,22 +85,19 @@ function MonthlyHeatmap({ data, onShare }) {
         </button>
       </div>
 
-      <div className="mt-3 grid grid-cols-2 gap-4">
-        <div>
-          <p className="text-xs text-[var(--text-secondary)]">Your Streak</p>
-          <p className="text-lg font-bold">18d</p>
-        </div>
-        <div>
-          <p className="text-xs text-[var(--text-secondary)]">Activities</p>
-          <p className="text-lg font-bold">10</p>
-        </div>
-      </div>
-
-      <div className="mt-4 grid grid-cols-7 gap-2">
+      <div className="relative mt-4 grid grid-cols-7 gap-2">
         {["M", "T", "W", "T", "F", "S", "S"].map((day, index) => (
           <span className="text-center text-[10px] font-semibold text-[var(--text-tertiary)]" key={`${day}-${index}`}>{day}</span>
         ))}
-        {data.map((item) => <HeatmapCell item={item} key={item.day} />)}
+        {data.map((item) => (
+          <HeatmapCell
+            item={item}
+            key={item.day}
+            selected={selectedDay?.day === item.day}
+            onNavigate={onNavigate}
+            onSelect={setSelectedDay}
+          />
+        ))}
       </div>
     </div>
   );
@@ -106,14 +151,34 @@ export default function Progress({ onNavigate }) {
         <ListItem
           action={<Icon name="arrowRight" size="sm" className="text-[var(--text-tertiary)]" />}
           icon="activity"
-          onClick={() => onNavigate?.("activities")}
-          title="Activities"
-          meta="Review tracked work sessions and device signals"
+          onClick={() => onNavigate?.("activities", { returnTo: "progress" })}
+          title="All activities"
+          meta="Open the complete activity history"
         />
       </div>
       <section className="section">
         <SectionHeader title="Focus volume" meta="Working time tracked across devices." />
-        <ProgressChart data={weeklyStats} highlightHigh />
+        <ProgressChart
+          data={focusVolumeData}
+          getTooltipContent={(item) => {
+            const activities = getActivitiesForDay(item.dayNumber);
+
+            return (
+              <>
+                <div className="between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-black">May {item.dayNumber}, 2026</p>
+                    <p className="mt-0.5 text-[10px] font-semibold text-[var(--text-secondary)]">{activities.length} activities completed</p>
+                  </div>
+                  <span className="shrink-0 text-[10px] font-black text-[var(--blue)]">View</span>
+                </div>
+                <p className="mt-1 text-[10px] font-semibold text-[var(--text-secondary)]">{item.hours.toFixed(1)}h focus volume</p>
+              </>
+            );
+          }}
+          highlightHigh
+          onTooltipClick={(item) => onNavigate?.("activities", { returnTo: "progress", selectedDay: item.dayNumber })}
+        />
         <div className="list border-t border-[var(--divider)]">
           <div className="list-row py-2">
             <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--yellow)]" />
@@ -129,7 +194,7 @@ export default function Progress({ onNavigate }) {
       </section>
       <section className="section">
         
-        <MonthlyHeatmap data={monthlyProductivity} onShare={() => setShowShare(true)} />
+        <MonthlyHeatmap data={monthlyProductivity} onNavigate={onNavigate} onShare={() => setShowShare(true)} />
       </section>
       <section className="section">
         <SectionHeader title="Achievements" />

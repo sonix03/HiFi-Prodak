@@ -13,7 +13,7 @@ export default function Pill({ children, active = false, tone = "neutral", icon,
 
   return (
     <Wrapper
-      className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 text-[10px] font-semibold whitespace-nowrap ${onClick ? "transition active:scale-[0.98]" : ""} ${tones[tone]}`}
+      className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap ${onClick ? "transition active:scale-[0.98]" : ""} ${tones[tone]}`}
       onClick={onClick}
       type={onClick ? "button" : undefined}
     >
