@@ -28,7 +28,7 @@ const activityTags = [
   { label: "Coding" },
 ];
 
-const feelingLevels = ["Easy", "Moderate", "Max Effort"];
+const feelingLevels = Array.from({ length: 10 }, (_, index) => `${index + 1}`);
 
 const visibilityOptions = [
   { label: "Public", icon: "globe" },
@@ -46,7 +46,7 @@ export default class EditActivity extends Component {
       steps: false,
       focusScore: false,
     },
-    selectedFeeling: 1,
+    selectedFeeling: 6,
     selectedVisualType: "map",
     showActivityTypeSheet: false,
     showTagSheet: false,
@@ -148,7 +148,7 @@ function EditActivityView({ onNavigate, state, setSheet, setSelected }) {
             />
 
             <FeelingField
-              value={feelingLevels[selectedFeeling]}
+              value={`${feelingLevels[selectedFeeling]}/10`}
               onOpen={() => setSheet("showFeelingSheet", true)}
             />
           </div>

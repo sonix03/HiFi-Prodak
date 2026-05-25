@@ -29,7 +29,7 @@ const activityTags = [
   { label: "Coding" },
 ];
 
-const feelingLevels = ["Easy", "Moderate", "Max Effort"];
+const feelingLevels = Array.from({ length: 10 }, (_, index) => `${index + 1}`);
 
 const visibilityOptions = [
   { label: "Public", icon: "globe" },
@@ -47,7 +47,7 @@ export default function SaveActivity({ onNavigate }) {
     steps: false,
     focusScore: false,
   });
-  const [selectedFeeling, setSelectedFeeling] = useState(1);
+  const [selectedFeeling, setSelectedFeeling] = useState(6);
   const [selectedVisualType, setSelectedVisualType] = useState("map");
 
   const [showActivityTypeSheet, setShowActivityTypeSheet] = useState(false);
@@ -115,7 +115,7 @@ export default function SaveActivity({ onNavigate }) {
             />
 
             <FeelingField
-              value={feelingLevels[selectedFeeling]}
+              value={`${feelingLevels[selectedFeeling]}/10`}
               onOpen={() => setShowFeelingSheet(true)}
             />
           </div>

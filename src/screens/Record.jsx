@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { MaximizeScreenIcon, PlayIcon, PauseIcon, RacingFlagIcon } from "@hugeicons/core-free-icons";
+import { ArrowExpandIcon, PlayIcon, PauseIcon, RacingFlagIcon } from "@hugeicons/core-free-icons";
 import Icon from "../components/Icon";
 import WorkTypeSheet from "../components/WorkTypeSheet";
 import { workTypes as workTypeOptions } from "../constants/workTypes";
@@ -57,7 +57,7 @@ export default function Record({ onNavigate, initialPlaying = false, initialRunn
           type="button"
           aria-label="Open focus view"
         >
-          <HugeiconsIcon icon={MaximizeScreenIcon} size={24} color="currentColor" strokeWidth={2} />
+          <HugeiconsIcon icon={ArrowExpandIcon} size={24} color="currentColor" strokeWidth={2} />
         </button>
       ) : null}
 

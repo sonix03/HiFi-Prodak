@@ -77,30 +77,25 @@ export function FeelingBottomSheet({
 }) {
   return (
     <OptionBottomSheet title="How did that activity feel" onClose={onClose}>
-      <div className="mb-6 flex justify-between gap-2">
-        {levels.map((item, index) => (
-          <button
-            key={item}
-            className={`flex-1 rounded-xl py-3 text-center text-sm font-medium ${
-              selectedIndex === index
-                ? "bg-[var(--blue)] text-white"
-                : "bg-[var(--surface-muted)] text-[var(--text-secondary)]"
-            }`}
-            onClick={() => onSelect(index)}
-          >
-            {item}
-          </button>
-        ))}
-      </div>
       <div className="mb-6">
+        <div className="mb-4 grid grid-cols-3 text-[11px] font-black text-[var(--text-secondary)]">
+          <span>Easy (1)</span>
+          <span className="text-center">Moderate (5)</span>
+          <span className="text-right">Max Effort (10)</span>
+        </div>
         <input
           type="range"
           min="0"
-          max="2"
+          max={levels.length - 1}
           value={selectedIndex}
           onChange={(event) => onSelect(parseInt(event.target.value))}
           className="h-2 w-full appearance-none rounded-full bg-[var(--divider)] accent-[var(--blue)]"
         />
+        <div className="between mt-2 text-[11px] font-semibold text-[var(--text-secondary)]">
+          <span>1</span>
+          <span>{levels[selectedIndex]}/10</span>
+          <span>10</span>
+        </div>
       </div>
       <Button className="w-full" onClick={onClose}>
         Confirm

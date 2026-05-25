@@ -25,6 +25,14 @@ const focusVolumeData = weeklyStats.map((item, index) => ({
   dayNumber: 11 + index,
 }));
 
+const topAchievements = [
+  { title: "18-Day Focus Streak", meta: "Personal best", value: "18d", icon: "fire" },
+  { title: "May Focus 50K", meta: "Gold badge progress", value: "72%", icon: "trophy" },
+  { title: "7-Day Morning Streak", meta: "Streak flame", value: "86%", icon: "fire" },
+  { title: "Proof Verified Week", meta: "Verified mark", value: "55%", icon: "proof" },
+  { title: "Weekly Focus Time", meta: "Across connected devices", value: "17h 12m", icon: "timer" },
+];
+
 function HeatmapCell({ item, selected, onNavigate, onSelect }) {
   const level =
     item.hours >= 4 ? "bg-[var(--primary)] text-white" :
@@ -106,6 +114,7 @@ function MonthlyHeatmap({ data, onNavigate, onShare }) {
 export default function Progress({ onNavigate }) {
   const [showMenu, setShowMenu] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [showAchievementShare, setShowAchievementShare] = useState(false);
 
   return (
     <main className="screen screen-pad">
@@ -197,30 +206,64 @@ export default function Progress({ onNavigate }) {
         <MonthlyHeatmap data={monthlyProductivity} onNavigate={onNavigate} onShare={() => setShowShare(true)} />
       </section>
       <section className="section">
-        <SectionHeader title="Achievements" />
+        <div className="between">
+          <h2 className="section-title">Achievements</h2>
+          <button
+            className="flex items-center gap-1 rounded-[20px] border border-[var(--blue)] px-2 py-1 text-sm font-semibold text-[var(--blue)]"
+            onClick={() => setShowAchievementShare(true)}
+            type="button"
+          >
+            <HugeiconsIcon icon={Share03Icon} size={14} />
+            Share
+          </button>
+        </div>
         <div className="list mt-2">
           {challenges.map((challenge) => <ListItem key={challenge.title} icon={challenge.icon} accent="yellow" title={challenge.title} meta={challenge.reward} value={`${challenge.progress}%`} />)}
         </div>
       </section>
       {showShare ? (
         <ShareBottomSheet title="Share Progress" onClose={() => setShowShare(false)}>
-          <div className="rounded-[8px] bg-[var(--text)] px-5 py-6 text-white shadow-[var(--shadow-card)]">
-            <p className="text-[11px] font-bold uppercase tracking-wide text-white/70">May 2026</p>
+          <div className="rounded-[8px] border border-[var(--border)] bg-white px-5 py-6 text-[var(--text)] shadow-[var(--shadow-card)]">
+            <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--text-secondary)]">May 2026</p>
             <h2 className="mt-3 text-[28px] font-black leading-none tracking-normal">17h 12m</h2>
-            <p className="mt-2 text-[13px] font-semibold text-white/80">Weekly focus time across connected devices</p>
+            <p className="mt-2 text-[13px] font-semibold text-[var(--text-secondary)]">Weekly focus time across connected devices</p>
             <div className="mt-5 grid grid-cols-3 gap-2 text-center">
-              <div className="rounded-md bg-white/10 px-2 py-3">
+              <div className="rounded-md bg-[var(--surface-muted)] px-2 py-3">
                 <p className="text-[17px] font-black">18d</p>
-                <p className="mt-1 text-[10px] font-semibold text-white/70">Streak</p>
+                <p className="mt-1 text-[10px] font-semibold text-[var(--text-secondary)]">Streak</p>
               </div>
-              <div className="rounded-md bg-white/10 px-2 py-3">
-                <p className="text-[17px] font-black">86</p>
-                <p className="mt-1 text-[10px] font-semibold text-white/70">Score</p>
+              <div className="rounded-md bg-[var(--blue-soft)] px-2 py-3">
+                <p className="text-[17px] font-black text-[var(--blue)]">86</p>
+                <p className="mt-1 text-[10px] font-semibold text-[var(--text-secondary)]">Score</p>
               </div>
-              <div className="rounded-md bg-white/10 px-2 py-3">
+              <div className="rounded-md bg-[var(--surface-muted)] px-2 py-3">
                 <p className="text-[17px] font-black">24</p>
-                <p className="mt-1 text-[10px] font-semibold text-white/70">Sessions</p>
+                <p className="mt-1 text-[10px] font-semibold text-[var(--text-secondary)]">Sessions</p>
               </div>
+            </div>
+          </div>
+          <ShareTargets className="mt-8" />
+        </ShareBottomSheet>
+      ) : null}
+      {showAchievementShare ? (
+        <ShareBottomSheet title="Share Achievements" onClose={() => setShowAchievementShare(false)}>
+          <div className="rounded-[8px] border border-[var(--border)] bg-white px-5 py-6 text-[var(--text)] shadow-[var(--shadow-card)]">
+            <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--text-secondary)]">Top 5 achievements</p>
+            <h2 className="mt-3 text-[26px] font-black leading-none tracking-normal">May Progress</h2>
+            <p className="mt-2 text-[13px] font-semibold text-[var(--text-secondary)]">Verified productivity wins across devices</p>
+            <div className="mt-5 divide-y divide-[var(--divider)]">
+              {topAchievements.map((achievement, index) => (
+                <div className="flex items-center gap-3 py-3" key={achievement.title}>
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[var(--blue-soft)] text-[12px] font-black text-[var(--blue)]">
+                    {index + 1}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-[13px] font-black text-[var(--text)]">{achievement.title}</p>
+                    <p className="mt-0.5 truncate text-[10px] font-semibold text-[var(--text-secondary)]">{achievement.meta}</p>
+                  </div>
+                  <p className="shrink-0 text-[13px] font-black text-[var(--blue)]">{achievement.value}</p>
+                </div>
+              ))}
             </div>
           </div>
           <ShareTargets className="mt-8" />
