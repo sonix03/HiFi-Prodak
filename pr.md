@@ -32,11 +32,19 @@ This PR expands the productivity tracking experience across the app, with a stro
   - `Groups`
   - `GroupClub`
 - Added active state behavior for topic pills.
+- Connected `Activities` back navigation to the source screen, so it can return to either `Profile` or `Progress`.
+- Added date-aware filtering when `Activities` is opened from Progress.
 
 ### Progress Screen
 - Added an `Activities` action entry in `Progress`.
 - Added annotation rows beneath `Focus volume`.
 - Made the `Share` action in `Progress` open a share sheet.
+- Made the May 2026 productivity calendar interactive by date.
+- Added compact clickable tooltips on calendar dates showing the number of completed activities.
+- Connected calendar tooltips to open `Activities` filtered to the selected date.
+- Removed the unclear `Activities` count summary from the May 2026 header.
+- Made `Focus volume` bars interactive with clickable tooltips.
+- Connected `Focus volume` tooltips to open `Activities` filtered to the selected day.
 
 ### Save / Edit Activity
 - Reworked the visualization selector from a map-only concept to a broader activity visualization selector.
