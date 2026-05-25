@@ -1,4 +1,5 @@
 import { useState } from "react";
+import FeedShareSheet from "../components/FeedShareSheet";
 import FeedPost from "../components/FeedPost";
 import Pill from "../components/Pill";
 import SectionHeader from "../components/SectionHeader";
@@ -9,6 +10,7 @@ import { mikaActivities } from "../constants/data";
 
 export default function Activities({ onNavigate }) {
   const [activeFilter, setActiveFilter] = useState("All");
+  const [showShare, setShowShare] = useState(false);
   const activityMedia = [
     [{ type: "map", src: mapPic }],
     [{ type: "photo", src: landscapeItb }],
@@ -41,11 +43,13 @@ export default function Activities({ onNavigate }) {
               activity={activity}
               media={activityMedia[index] || [{ type: "map", src: mapPic }]}
               onNavigate={onNavigate}
+              onShare={() => setShowShare(true)}
               place={activity.type}
             />
           ))}
         </div>
       </section>
+      {showShare ? <FeedShareSheet onClose={() => setShowShare(false)} onNavigate={onNavigate} /> : null}
     </main>
   );
 }
