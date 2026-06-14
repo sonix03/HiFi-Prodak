@@ -35,7 +35,7 @@ const steps = [
   },
   {
     title: "Customize your club",
-    helper: "Add a clear name and one compact description.",
+    helper: "Add a clear name, photo, and short about text.",
     form: true,
   },
   {
@@ -130,8 +130,8 @@ function CustomizeStep({ photo, onOpenPhotoPicker }) {
         <input className="input" defaultValue="Deep Work Jakarta" />
       </div>
       <div className="form-field">
-        <label>Description</label>
-        <textarea className="textarea" defaultValue="A club for verified focus sessions and weekly output challenges." />
+        <label>About</label>
+        <textarea className="textarea" defaultValue="A working environment initiative by and from HMIF." />
       </div>
       </div>
   );

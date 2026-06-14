@@ -1,5 +1,6 @@
 import { useState } from "react";
-import AppHeader from "../components/AppHeader";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { MessageMultiple01Icon, Notification01Icon, Search02Icon } from "@hugeicons/core-free-icons";
 import FeedPost from "../components/FeedPost";
 import FeedShareSheet from "../components/FeedShareSheet";
 import landscapeItb from "../assets/landscape-itb.png";
@@ -47,12 +48,25 @@ export default function Feed({ onNavigate, initialShareSheet = false }) {
 
   return (
     <main className="screen screen-pad relative">
-      <AppHeader
-        right={{ icon: "notification", onClick: () => onNavigate?.("notifications"), badge: notifications.length > 0 }}
-        rightSecondary={{ image: avatar, onClick: () => onNavigate?.("profile") }}
-        secondaryAction={{ icon: "messageShare", label: "Messages", onClick: () => onNavigate?.("messages") }}
-        tertiaryAction={{ icon: "search", label: "Search", onClick: () => onNavigate?.("searchFriend") }}
-      />
+      <header className="app-header app-header-main">
+        <div className="flex items-center gap-2">
+          <button className="header-action !h-[26px] !w-[26px] overflow-hidden border border-[var(--border)]" onClick={() => onNavigate?.("profile")} type="button" aria-label="Profile">
+            <img className="h-full w-full rounded-full object-cover" src={avatar} alt="" />
+          </button>
+          <button className="header-action" onClick={() => onNavigate?.("searchFriend")} type="button" aria-label="Search">
+            <HugeiconsIcon icon={Search02Icon} size={24} color="currentColor" strokeWidth={2} />
+          </button>
+        </div>
+        <div className="flex items-center gap-2">
+          <button className="header-action" onClick={() => onNavigate?.("messages")} type="button" aria-label="Messages">
+            <HugeiconsIcon icon={MessageMultiple01Icon} size={24} color="currentColor" strokeWidth={2} />
+          </button>
+          <button className="header-action relative" onClick={() => onNavigate?.("notifications")} type="button" aria-label="Notifications">
+            <HugeiconsIcon icon={Notification01Icon} size={24} color="currentColor" strokeWidth={2} />
+            {notifications.length > 0 ? <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-red-500" /> : null}
+          </button>
+        </div>
+      </header>
       <section className="stack">
         {posts.map((post) => (
           <FeedPost key={post.activity.id} onNavigate={onNavigate} {...post} onOpenProfile={() => setShowOtherProfile(true)} onShare={handleShare} />

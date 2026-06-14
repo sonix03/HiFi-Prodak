@@ -6,20 +6,15 @@ import SectionHeader from "../components/SectionHeader";
 import ScreenHeader from "../components/ScreenHeader";
 import landscapeItb from "../assets/landscape-itb.png";
 import mapPic from "../assets/map-pic.png";
-import { mikaActivities } from "../constants/data";
-
-function getMayActivityDay(activity) {
-  const match = activity.time.match(/^May\s+(\d{1,2}),\s+2026/);
-  return match ? Number(match[1]) : null;
-}
+import { getMayActivitiesForDay, mikaActivities } from "../constants/data";
 
 export default function Activities({ onNavigate, returnTo = "profile", selectedDay = null }) {
   const [activeFilter, setActiveFilter] = useState("All");
   const [showShare, setShowShare] = useState(false);
   const backLabel = returnTo === "progress" ? "Progress" : "Profile";
   const selectedDayNumber = selectedDay ? Number(selectedDay) : null;
-  const filteredActivities = mikaActivities.filter((activity) => {
-    const matchesDay = selectedDayNumber ? getMayActivityDay(activity) === selectedDayNumber : true;
+  const sourceActivities = selectedDayNumber ? getMayActivitiesForDay(selectedDayNumber) : mikaActivities;
+  const filteredActivities = sourceActivities.filter((activity) => {
     const matchesFilter =
       activeFilter === "All" ||
       activity.type === activeFilter ||
@@ -27,7 +22,7 @@ export default function Activities({ onNavigate, returnTo = "profile", selectedD
       activity.privacy === activeFilter ||
       (activeFilter === "Proof" && activity.proof);
 
-    return matchesDay && matchesFilter;
+    return matchesFilter;
   });
   const activityMedia = [
     [{ type: "map", src: mapPic }],

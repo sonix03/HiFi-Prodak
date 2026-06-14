@@ -34,6 +34,7 @@ This PR expands the productivity tracking experience across the app, with a stro
 - Added active state behavior for topic pills.
 - Connected `Activities` back navigation to the source screen, so it can return to either `Profile` or `Progress`.
 - Added date-aware filtering when `Activities` is opened from Progress.
+- Connected Progress date drilldowns to generated productivity activity data so focused days do not open as empty activity lists.
 
 ### Progress Screen
 - Added an `Activities` action entry in `Progress`.
@@ -45,6 +46,10 @@ This PR expands the productivity tracking experience across the app, with a stro
 - Removed the unclear `Activities` count summary from the May 2026 header.
 - Made `Focus volume` bars interactive with clickable tooltips.
 - Connected `Focus volume` tooltips to open `Activities` filtered to the selected day.
+- Added outside-click dismissal for calendar and focus-volume tooltips.
+- Added a `Share Achievements` action with a top-5 achievement share template.
+- Updated Progress and Achievements share templates to use a white preview background.
+- Updated the Achievements share template to use icon-based rows with blue/yellow accents instead of numbered badges.
 
 ### Save / Edit Activity
 - Reworked the visualization selector from a map-only concept to a broader activity visualization selector.
@@ -57,6 +62,22 @@ This PR expands the productivity tracking experience across the app, with a stro
 - Added confirm dialogs before destructive actions:
   - `Discard Activity`
   - `Delete Activity`
+- Updated `How did that activity feel` to use a 1-10 effort scale with `Easy (1)`, `Moderate (5)`, and `Max Effort (10)` anchors.
+
+### Feed
+- Reworked the Feed header to remove the Prodak logo.
+- Added a compact left/right header layout:
+  - profile and search on the left
+  - messages and notifications on the right
+- Updated Feed header icons to use the requested Hugeicons variants and consistent `strokeWidth={2}`.
+- Added a border-only profile avatar treatment without extra padding.
+
+### Clubs
+- Added a minimal club description directly below the club title.
+- Updated the club description copy to: `A working environment initiative by and from HMIF.`
+- Added club photo changing in `CreateClub`.
+- Added simulated phone gallery selection for club photos through an image file picker.
+- Added validation to `CreateClub` so `Choose your club’s productivity` must be selected before continuing.
 
 ### Connections
 - Added a new `Connections` screen for:

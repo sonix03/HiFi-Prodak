@@ -224,6 +224,40 @@ export const monthlyProductivity = [
   { day: 28, hours: 1.8 },
 ];
 
+export function getMayActivityDay(activity) {
+  const match = activity.time.match(/^May\s+(\d{1,2}),\s+2026/);
+  return match ? Number(match[1]) : null;
+}
+
+export function getMayActivitiesForDay(day) {
+  const realActivities = mikaActivities.filter((activity) => getMayActivityDay(activity) === day);
+  if (realActivities.length) return realActivities;
+
+  const productivity = monthlyProductivity.find((item) => item.day === day);
+  if (!productivity || productivity.hours <= 0) return [];
+
+  const count = Math.max(1, Math.round(productivity.hours / 1.6));
+  return Array.from({ length: count }, (_, index) => ({
+    id: `generated-may-${day}-${index + 1}`,
+    user: users[0],
+    type: index % 2 === 0 ? "Deep Work" : "Study",
+    title: index % 2 === 0 ? "Tracked focus block" : "Device review session",
+    time: `May ${day}, 2026, ${String(9 + index * 2).padStart(2, "0")}:00`,
+    duration: `${Math.max(24, Math.round((productivity.hours * 60) / count))}m`,
+    focusScore: Math.min(94, 78 + Math.round(productivity.hours * 3)),
+    output: `${Math.round(productivity.hours * 1800)}`,
+    streak: "18d",
+    category: index % 2 === 0 ? "Design" : "Learning",
+    caption: "Auto-synced productivity activity from connected devices.",
+    kudos: 0,
+    comments: 0,
+    shares: 0,
+    proof: "Device activity verified",
+    privacy: "Private",
+    color: productivity.hours >= 2.5 ? "blue" : "yellow",
+  }));
+}
+
 export const proofStatuses = [
   { label: "Verified proof", tone: "success", icon: "proof" },
   { label: "Map context", tone: "blue", icon: "globe" },
