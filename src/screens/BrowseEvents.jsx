@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Location01Icon } from "@hugeicons/core-free-icons";
 import Icon from "../components/Icon";
@@ -165,7 +165,7 @@ function EventDetail({ event, joined, onBack, onJoin, onShare, showShareEvent, o
       <footer className="absolute inset-x-0 bottom-0 flex gap-3 bg-white/95 px-6 py-5 shadow-[var(--shadow-navbar)] backdrop-blur">
         {joined ? (
           <>
-            <button className="grid h-14 w-28 place-items-center rounded-full border border-[var(--border)] bg-white text-[var(--blue)]" type="button" aria-label="Joined">
+            <button className="grid h-14 w-28 place-items-center rounded-full border border-[var(--border)] bg-white text-[var(--blue)]" onClick={onJoin} type="button" aria-label="Cancel event join">
               <Icon name="check" size="lg" stroke={2} />
             </button>
             <button className="row h-14 flex-1 justify-center rounded-full bg-[var(--blue)] text-[16px] font-black text-white" onClick={onShare} type="button">
@@ -231,12 +231,18 @@ function ShareEvent({ event, onClose }) {
   );
 }
 
-export default function BrowseEvents({ onNavigate, initialWorkSheet = false, initialEventDetail = false, initialJoined = false, initialShareEvent = false }) {
+export default function BrowseEvents({ onNavigate, onBottomNavVisibilityChange, initialWorkSheet = false, initialEventDetail = false, initialJoined = false, initialShareEvent = false }) {
   const [selectedWork, setSelectedWork] = useState("Work");
   const [showWorkSheet, setShowWorkSheet] = useState(initialWorkSheet);
   const [activeEvent, setActiveEvent] = useState(initialEventDetail || initialJoined || initialShareEvent ? events[0] : null);
   const [joined, setJoined] = useState(initialJoined || initialShareEvent);
   const [showShareEvent, setShowShareEvent] = useState(initialShareEvent);
+
+  useEffect(() => {
+    onBottomNavVisibilityChange?.(!activeEvent);
+
+    return () => onBottomNavVisibilityChange?.(true);
+  }, [activeEvent, onBottomNavVisibilityChange]);
 
   if (activeEvent) {
     return (
@@ -250,7 +256,7 @@ export default function BrowseEvents({ onNavigate, initialWorkSheet = false, ini
           setJoined(false);
           setShowShareEvent(false);
         }}
-        onJoin={() => setJoined(true)}
+        onJoin={() => setJoined((current) => !current)}
         onShare={() => setShowShareEvent(true)}
       />
     );

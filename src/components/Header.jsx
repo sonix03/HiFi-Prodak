@@ -22,6 +22,7 @@ function HeaderAction({ icon, image, label, onClick, badge }) {
 export default function Header({
   title,
   eyebrow,
+  className = "",
   mode = "main",
   onBack,
   backLabel,
@@ -40,7 +41,7 @@ export default function Header({
   const showInlineTitle = hasTitleContent && !centeredTitle;
 
   return (
-    <header className={`app-header app-header-${mode}`}>
+    <header className={`app-header app-header-${mode} ${className}`}>
       <div className="header-main">
         {isDetail ? (
           <button className="header-back" onClick={onBack} aria-label={backLabel ? `Back to ${backLabel}` : "Back"}>

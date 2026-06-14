@@ -7,50 +7,105 @@ import ListItem from "../components/ListItem";
 import MetricGrid from "../components/MetricGrid";
 import ProgressChart from "../components/ProgressChart";
 import SectionHeader from "../components/SectionHeader";
-import { challenges, monthlyProductivity, weeklyStats } from "../constants/data";
+import ShareBottomSheet from "../components/ShareBottomSheet";
+import ShareTargets from "../components/ShareTargets";
+import { challenges, mikaActivities, monthlyProductivity, weeklyStats } from "../constants/data";
 
-function HeatmapCell({ item }) {
+function getMayActivityDay(activity) {
+  const match = activity.time.match(/^May\s+(\d{1,2}),\s+2026/);
+  return match ? Number(match[1]) : null;
+}
+
+function getActivitiesForDay(day) {
+  return mikaActivities.filter((activity) => getMayActivityDay(activity) === day);
+}
+
+const focusVolumeData = weeklyStats.map((item, index) => ({
+  ...item,
+  dayNumber: 11 + index,
+}));
+
+const topAchievements = [
+  { title: "18-Day Focus Streak", meta: "Personal best", value: "18d", icon: "fire" },
+  { title: "May Focus 50K", meta: "Gold badge progress", value: "72%", icon: "trophy" },
+  { title: "7-Day Morning Streak", meta: "Streak flame", value: "86%", icon: "fire" },
+  { title: "Proof Verified Week", meta: "Verified mark", value: "55%", icon: "proof" },
+  { title: "Weekly Focus Time", meta: "Across connected devices", value: "17h 12m", icon: "timer" },
+];
+
+function HeatmapCell({ item, selected, onNavigate, onSelect }) {
   const level =
     item.hours >= 4 ? "bg-[var(--primary)] text-white" :
     item.hours >= 2.5 ? "bg-[var(--blue)]/80 text-white" :
     item.hours >= 1 ? "bg-[var(--primary-soft)] text-[var(--blue)]" :
     item.hours > 0 ? "bg-[var(--surface-muted)] text-[var(--text-secondary)]" :
     "bg-white text-[var(--text-tertiary)]";
+  const selectedActivities = getActivitiesForDay(item.day);
+  const column = (item.day - 1) % 7;
+  const tooltipAlign = column >= 4 ? "right-0" : "left-5";
 
   return (
-    <div className={`grid aspect-square place-items-center rounded-xl border border-[var(--border)] ${level}`}>
-      <span className="text-[11px] font-semibold">{item.day}</span>
+    <div className="relative">
+      <button
+        className={`grid aspect-square w-full place-items-center rounded-xl border ${selected ? "border-[var(--text)] ring-2 ring-[var(--blue)]/20" : "border-[var(--border)]"} ${level}`}
+        onClick={() => onSelect(item)}
+        type="button"
+        aria-label={`Show activities for May ${item.day}`}
+      >
+        <span className="text-[11px] font-semibold">{item.day}</span>
+      </button>
+      {selected ? (
+        <button
+          className={`absolute bottom-[18px] z-20 w-[190px] rounded-[8px] border border-[var(--border)] bg-white px-3 py-2 text-left text-[var(--text)] shadow-[var(--shadow-card)] active:scale-[0.99] ${tooltipAlign}`}
+          onClick={() => onNavigate?.("activities", { returnTo: "progress", selectedDay: item.day })}
+          type="button"
+        >
+          <div className="between gap-3">
+            <div className="min-w-0">
+              <p className="text-[11px] font-black">May {item.day}, 2026</p>
+              <p className="mt-0.5 text-[10px] font-semibold text-[var(--text-secondary)]">{selectedActivities.length} activities completed</p>
+            </div>
+            <span className="shrink-0 text-[10px] font-black text-[var(--blue)]">
+              View
+            </span>
+          </div>
+          <p className="mt-1 truncate text-[10px] font-semibold text-[var(--text-secondary)]">
+            {selectedActivities.length ? selectedActivities.map((activity) => activity.title).join(", ") : "No completed activity"}
+          </p>
+        </button>
+      ) : null}
     </div>
   );
 }
 
-function MonthlyHeatmap({ data }) {
+function MonthlyHeatmap({ data, onNavigate, onShare }) {
+  const [selectedDay, setSelectedDay] = useState(
+    data.find((item) => getActivitiesForDay(item.day).length > 0) || data[0],
+  );
+
   return (
     <div>
       <div className="between">
         <p className="text-lg font-bold">May 2026</p>
-        <button className="flex items-center gap-1 rounded-[20px] border border-[var(--blue)] px-2 py-1 text-sm font-semibold text-[var(--blue)]">
+        <button className="flex items-center gap-1 rounded-[20px] border border-[var(--blue)] px-2 py-1 text-sm font-semibold text-[var(--blue)]" onClick={onShare} type="button">
           <HugeiconsIcon icon={Share03Icon} size={14} />
           Share
         </button>
       </div>
 
-      <div className="mt-3 grid grid-cols-2 gap-4">
-        <div>
-          <p className="text-xs text-[var(--text-secondary)]">Your Streak</p>
-          <p className="text-lg font-bold">18d</p>
-        </div>
-        <div>
-          <p className="text-xs text-[var(--text-secondary)]">Activities</p>
-          <p className="text-lg font-bold">10</p>
-        </div>
-      </div>
-
-      <div className="mt-4 grid grid-cols-7 gap-2">
+      <div className="relative mt-4 grid grid-cols-7 gap-2">
         {["M", "T", "W", "T", "F", "S", "S"].map((day, index) => (
           <span className="text-center text-[10px] font-semibold text-[var(--text-tertiary)]" key={`${day}-${index}`}>{day}</span>
         ))}
-        {data.map((item) => <HeatmapCell item={item} key={item.day} />)}
+        {data.map((item) => (
+          <HeatmapCell
+            item={item}
+            key={item.day}
+            selected={selectedDay?.day === item.day}
+            onNavigate={onNavigate}
+            onSelect={setSelectedDay}
+          />
+        ))}
       </div>
     </div>
   );
@@ -58,6 +113,8 @@ function MonthlyHeatmap({ data }) {
 
 export default function Progress({ onNavigate }) {
   const [showMenu, setShowMenu] = useState(false);
+  const [showShare, setShowShare] = useState(false);
+  const [showAchievementShare, setShowAchievementShare] = useState(false);
 
   return (
     <main className="screen screen-pad">
@@ -99,20 +156,119 @@ export default function Progress({ onNavigate }) {
           { label: "Goal", value: "72%", sub: "50K challenge", icon: "target" },
         ]} />
       </div>
+      <div className="list mt-4 border-y border-[var(--divider)]">
+        <ListItem
+          action={<Icon name="arrowRight" size="sm" className="text-[var(--text-tertiary)]" />}
+          icon="activity"
+          onClick={() => onNavigate?.("activities", { returnTo: "progress" })}
+          title="All activities"
+          meta="Open the complete activity history"
+        />
+      </div>
       <section className="section">
-        <SectionHeader title="Focus volume" meta="Hours recorded by day." />
-        <ProgressChart data={weeklyStats} highlightHigh />
+        <SectionHeader title="Focus volume" meta="Working time tracked across devices." />
+        <ProgressChart
+          data={focusVolumeData}
+          getTooltipContent={(item) => {
+            const activities = getActivitiesForDay(item.dayNumber);
+
+            return (
+              <>
+                <div className="between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-black">May {item.dayNumber}, 2026</p>
+                    <p className="mt-0.5 text-[10px] font-semibold text-[var(--text-secondary)]">{activities.length} activities completed</p>
+                  </div>
+                  <span className="shrink-0 text-[10px] font-black text-[var(--blue)]">View</span>
+                </div>
+                <p className="mt-1 text-[10px] font-semibold text-[var(--text-secondary)]">{item.hours.toFixed(1)}h focus volume</p>
+              </>
+            );
+          }}
+          highlightHigh
+          onTooltipClick={(item) => onNavigate?.("activities", { returnTo: "progress", selectedDay: item.dayNumber })}
+        />
+        <div className="list border-t border-[var(--divider)]">
+          <div className="list-row py-2">
+            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--yellow)]" />
+            <p className="min-w-0 flex-1 text-[12px] font-semibold text-[var(--text-secondary)]">Yellow marks above-average focus days</p>
+            <span className="text-[12px] font-black text-[var(--text)]">Peak 4h</span>
+          </div>
+          <div className="list-row py-2">
+            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--blue)]" />
+            <p className="min-w-0 flex-1 text-[12px] font-semibold text-[var(--text-secondary)]">Blue marks regular working volume</p>
+            <span className="text-[12px] font-black text-[var(--text)]">Avg 2.3h</span>
+          </div>
+        </div>
       </section>
       <section className="section">
         
-        <MonthlyHeatmap data={monthlyProductivity} />
+        <MonthlyHeatmap data={monthlyProductivity} onNavigate={onNavigate} onShare={() => setShowShare(true)} />
       </section>
       <section className="section">
-        <SectionHeader title="Achievements" />
+        <div className="between">
+          <h2 className="section-title">Achievements</h2>
+          <button
+            className="flex items-center gap-1 rounded-[20px] border border-[var(--blue)] px-2 py-1 text-sm font-semibold text-[var(--blue)]"
+            onClick={() => setShowAchievementShare(true)}
+            type="button"
+          >
+            <HugeiconsIcon icon={Share03Icon} size={14} />
+            Share
+          </button>
+        </div>
         <div className="list mt-2">
           {challenges.map((challenge) => <ListItem key={challenge.title} icon={challenge.icon} accent="yellow" title={challenge.title} meta={challenge.reward} value={`${challenge.progress}%`} />)}
         </div>
       </section>
+      {showShare ? (
+        <ShareBottomSheet title="Share Progress" onClose={() => setShowShare(false)}>
+          <div className="rounded-[8px] border border-[var(--border)] bg-white px-5 py-6 text-[var(--text)] shadow-[var(--shadow-card)]">
+            <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--text-secondary)]">May 2026</p>
+            <h2 className="mt-3 text-[28px] font-black leading-none tracking-normal">17h 12m</h2>
+            <p className="mt-2 text-[13px] font-semibold text-[var(--text-secondary)]">Weekly focus time across connected devices</p>
+            <div className="mt-5 grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-md bg-[var(--surface-muted)] px-2 py-3">
+                <p className="text-[17px] font-black">18d</p>
+                <p className="mt-1 text-[10px] font-semibold text-[var(--text-secondary)]">Streak</p>
+              </div>
+              <div className="rounded-md bg-[var(--blue-soft)] px-2 py-3">
+                <p className="text-[17px] font-black text-[var(--blue)]">86</p>
+                <p className="mt-1 text-[10px] font-semibold text-[var(--text-secondary)]">Score</p>
+              </div>
+              <div className="rounded-md bg-[var(--surface-muted)] px-2 py-3">
+                <p className="text-[17px] font-black">24</p>
+                <p className="mt-1 text-[10px] font-semibold text-[var(--text-secondary)]">Sessions</p>
+              </div>
+            </div>
+          </div>
+          <ShareTargets className="mt-8" />
+        </ShareBottomSheet>
+      ) : null}
+      {showAchievementShare ? (
+        <ShareBottomSheet title="Share Achievements" onClose={() => setShowAchievementShare(false)}>
+          <div className="rounded-[8px] border border-[var(--border)] bg-white px-5 py-6 text-[var(--text)] shadow-[var(--shadow-card)]">
+            <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--text-secondary)]">Top 5 achievements</p>
+            <h2 className="mt-3 text-[26px] font-black leading-none tracking-normal">May Progress</h2>
+            <p className="mt-2 text-[13px] font-semibold text-[var(--text-secondary)]">Verified productivity wins across devices</p>
+            <div className="mt-5 divide-y divide-[var(--divider)]">
+              {topAchievements.map((achievement, index) => (
+                <div className="flex items-center gap-3 py-3" key={achievement.title}>
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[var(--blue-soft)] text-[12px] font-black text-[var(--blue)]">
+                    {index + 1}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-[13px] font-black text-[var(--text)]">{achievement.title}</p>
+                    <p className="mt-0.5 truncate text-[10px] font-semibold text-[var(--text-secondary)]">{achievement.meta}</p>
+                  </div>
+                  <p className="shrink-0 text-[13px] font-black text-[var(--blue)]">{achievement.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <ShareTargets className="mt-8" />
+        </ShareBottomSheet>
+      ) : null}
     </main>
   );
 }

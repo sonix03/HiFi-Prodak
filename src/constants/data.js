@@ -11,6 +11,25 @@ export const users = [
   { id: "u4", name: "Jordan Lee", handle: "@jordan", initials: "JL", role: "Frontend engineer", streak: 9 },
 ];
 
+export const connections = {
+  following: [
+    { id: "cf1", name: "Jane Doe", handle: "@jane", initials: "JD", role: "Product builder", location: "Jawa Barat", following: true },
+    { id: "cf2", name: "Alex Chen", handle: "@alex", initials: "AC", role: "Research assistant", location: "Bandung", following: true },
+    { id: "cf3", name: "Sam Taylor", handle: "@sam", initials: "ST", role: "Data analyst", location: "Jawa Barat", following: true },
+    { id: "cf4", name: "Jordan Lee", handle: "@jordan", initials: "JL", role: "Frontend engineer", location: "Daerah Khusus Ibukota Jakarta", following: true },
+    { id: "cf5", name: "Casey Morgan", handle: "@casey", initials: "CM", role: "Product designer", location: "Bandung", following: true },
+    { id: "cf6", name: "Riley Brooks", handle: "@riley", initials: "RB", role: "Founder", location: "Yogyakarta", following: true },
+  ],
+  followers: [
+    { id: "cr1", name: "Morgan Smith", handle: "@morgan", initials: "MS", role: "Creative technologist", location: "Sukabumi, Indonesia", following: true },
+    { id: "cr2", name: "Taylor Kim", handle: "@taylor", initials: "TK", role: "UX researcher", location: "Bintaro", following: true },
+    { id: "cr3", name: "Jamie Park", handle: "@jamie", initials: "JP", role: "Product manager", location: "Bandung, Jawa Barat", following: true },
+    { id: "cr4", name: "Drew Carter", handle: "@drew", initials: "DC", role: "Design lead", location: "Jakarta", following: false },
+    { id: "cr5", name: "Avery Quinn", handle: "@avery", initials: "AQ", role: "Software engineer", location: "Surabaya", following: false },
+    { id: "cr6", name: "Skyler Reed", handle: "@skyler", initials: "SR", role: "Product designer", location: "Bandung", following: true },
+  ],
+};
+
 export const activities = [
   {
     id: "a1",
@@ -276,6 +295,6 @@ export const leaderboard = [
 
 export const deviceProofs = [
   { label: "Laptop activity", value: "2h 18m", icon: "laptop" },
-  { label: "Distraction blocks", value: "17", icon: "lock" },
-  { label: "Steps events", value: "42", icon: "proof" },
+  { label: "Phone distractions blocked", value: "17", icon: "lock" },
+  { label: "Browser work events", value: "42", icon: "proof" },
 ];

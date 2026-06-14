@@ -57,7 +57,9 @@ body {
 button,
 input,
 textarea {
-  font: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
 }
 
 button {

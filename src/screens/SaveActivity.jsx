@@ -29,7 +29,7 @@ const activityTags = [
   { label: "Coding" },
 ];
 
-const feelingLevels = ["Easy", "Moderate", "Max Effort"];
+const feelingLevels = Array.from({ length: 10 }, (_, index) => `${index + 1}`);
 
 const visibilityOptions = [
   { label: "Public", icon: "globe" },
@@ -47,12 +47,15 @@ export default function SaveActivity({ onNavigate }) {
     steps: false,
     focusScore: false,
   });
-  const [selectedFeeling, setSelectedFeeling] = useState(1);
+  const [selectedFeeling, setSelectedFeeling] = useState(6);
+  const [selectedVisualType, setSelectedVisualType] = useState("map");
 
   const [showActivityTypeSheet, setShowActivityTypeSheet] = useState(false);
   const [showTagSheet, setShowTagSheet] = useState(false);
   const [showFeelingSheet, setShowFeelingSheet] = useState(false);
   const [showHiddenDetailsSheet, setShowHiddenDetailsSheet] = useState(false);
+  const [showVisualTypeSheet, setShowVisualTypeSheet] = useState(false);
+  const [showDiscardConfirm, setShowDiscardConfirm] = useState(false);
 
   const activity = activities[0];
   const toggleHiddenDetail = (key) => {
@@ -87,14 +90,20 @@ export default function SaveActivity({ onNavigate }) {
 
           <div className="flex gap-3">
             <div className="flex-1 overflow-hidden rounded-xl border border-[var(--blue)]">
-              <ActivityMap height={120} imageSrc={mapPic} />
+              <ActivityMap height={120} imageSrc={mapPic} visualType={selectedVisualType} />
             </div>
             <div className="flex-1 overflow-hidden rounded-xl border border-[var(--border)]">
               <img className="h-[120px] w-full object-cover" src={landscapeItb} alt="" />
             </div>
           </div>
 
-          <ChangeMapType />
+          <ChangeMapType
+            selected={selectedVisualType}
+            onChange={setSelectedVisualType}
+            open={showVisualTypeSheet}
+            onOpen={() => setShowVisualTypeSheet(true)}
+            onClose={() => setShowVisualTypeSheet(false)}
+          />
 
           <div className="mt-2">
             <p className="mb-2 font-semibold text-[var(--text)]">Details</p>
@@ -106,7 +115,7 @@ export default function SaveActivity({ onNavigate }) {
             />
 
             <FeelingField
-              value={feelingLevels[selectedFeeling]}
+              value={`${feelingLevels[selectedFeeling]}/10`}
               onOpen={() => setShowFeelingSheet(true)}
             />
           </div>
@@ -128,7 +137,8 @@ export default function SaveActivity({ onNavigate }) {
 
           <button
             className="mt-2 text-center text-sm font-semibold text-[var(--red)]"
-            onClick={() => onNavigate?.("record")}
+            onClick={() => setShowDiscardConfirm(true)}
+            type="button"
           >
             Discard Activity
           </button>
@@ -185,6 +195,31 @@ export default function SaveActivity({ onNavigate }) {
         />
       )}
 
+      {showDiscardConfirm ? (
+        <ConfirmDialog
+          title="Discard activity?"
+          body="Your title, description, visualization, and visibility choices will be lost."
+          confirmLabel="Discard"
+          onCancel={() => setShowDiscardConfirm(false)}
+          onConfirm={() => onNavigate?.("record")}
+        />
+      ) : null}
+
     </main>
+  );
+}
+
+function ConfirmDialog({ title, body, confirmLabel, onCancel, onConfirm }) {
+  return (
+    <div className="absolute inset-0 z-50 grid place-items-center bg-black/30 px-6">
+      <div className="w-full rounded-2xl bg-white p-5 shadow-[var(--shadow-floating)]">
+        <h2 className="text-[18px] font-black text-[var(--text)]">{title}</h2>
+        <p className="mt-2 text-[13px] font-semibold leading-snug text-[var(--text-secondary)]">{body}</p>
+        <div className="mt-6 grid grid-cols-2 gap-3">
+          <Button variant="outline" onClick={onCancel}>Cancel</Button>
+          <Button className="!bg-[var(--red)]" onClick={onConfirm}>{confirmLabel}</Button>
+        </div>
+      </div>
+    </div>
   );
 }

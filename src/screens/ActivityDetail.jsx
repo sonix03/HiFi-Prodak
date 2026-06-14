@@ -29,7 +29,7 @@ export default function ActivityDetail({ onNavigate }) {
           <Pill tone="success">{activity.privacy}</Pill>
         </div>
         <h1 className="text-[22px] font-bold leading-tight">{activity.title}</h1>
-        <p className="body">{activity.caption}</p>
+        <p className="body">Tracked across laptop, phone, and browser activity to show how focused this work block really was.</p>
       </section>
 
       <div>
@@ -38,15 +38,38 @@ export default function ActivityDetail({ onNavigate }) {
 
       <div className="mt-4">
         <MetricGrid columns={2} items={[
-          { label: "Duration", value: activity.duration, sub: "Focused time" },
-          { label: "Focus score", value: activity.focusScore, sub: "Top 8% today", tone: "blue" },
-          { label: "Steps", value: activity.output, sub: "Total movement", tone: "blue" },
-          { label: "Streak", value: activity.streak, sub: "Active identity", tone: "yellow" },
+          {
+            label: "Synced time",
+            value: activity.duration,
+            sub: "Laptop + browser",
+            tooltip: "Time counted only while your connected work devices showed active, productive work.",
+          },
+          {
+            label: "Focus score",
+            value: activity.focusScore,
+            sub: "Top 8% today",
+            tone: "blue",
+            tooltip: "A score from productive app usage, low context switching, and consistent device signals.",
+          },
+          {
+            label: "Output events",
+            value: activity.output,
+            sub: "Edits, commits, docs",
+            tone: "blue",
+            tooltip: "Tracked work actions from connected tools, such as document edits, design updates, or code activity.",
+          },
+          {
+            label: "Device streak",
+            value: activity.streak,
+            sub: "Multi-device consistency",
+            tone: "yellow",
+            tooltip: "How long you have kept verified productivity sessions across your connected devices.",
+          },
         ]} />
       </div>
 
       <section className="section">
-        <SectionHeader title="Proof signals" />
+        <SectionHeader title="Device signals" />
         <div className="list mt-2">
           {deviceProofs.map((proof) => <div className="list-row" key={proof.label}><Icon name={proof.icon} size="sm" className="text-[var(--blue)]" /><span className="flex-1 text-sm font-medium">{proof.label}</span><span className="text-sm font-semibold">{proof.value}</span></div>)}
         </div>

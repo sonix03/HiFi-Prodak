@@ -115,10 +115,15 @@ export default function Profile({ onNavigate }) {
         <ProfileIdentity user={user} />
         <div className="profile-stats mt-5">
           {profileStats.map((stat) => (
-            <div key={stat.label}>
+            <button
+              className="min-w-0 text-left"
+              key={stat.label}
+              onClick={stat.label === "Following" || stat.label === "Followers" ? () => onNavigate?.("connections", { initialTab: stat.label.toLowerCase(), returnTo: "profile" }) : undefined}
+              type="button"
+            >
               <p>{stat.value}</p>
               <span>{stat.label}</span>
-            </div>
+            </button>
           ))}
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
@@ -183,7 +188,7 @@ export default function Profile({ onNavigate }) {
               action={<Icon name="arrowRight" size="sm" className="text-[var(--text-tertiary)]" />}
               icon={item.icon}
               key={item.title}
-              onClick={item.route ? () => (item.route === "gear" ? setGearScreen("gear") : onNavigate?.(item.route)) : undefined}
+              onClick={item.route ? () => (item.route === "gear" ? setGearScreen("gear") : onNavigate?.(item.route, item.route === "activities" ? { returnTo: "profile" } : undefined)) : undefined}
               title={item.title}
             />
           ))}
