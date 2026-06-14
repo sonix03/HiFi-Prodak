@@ -35,6 +35,9 @@ export default function Club({ onNavigate }) {
           </div>
         </div>
         <h1 className="mt-4 title">{club.name}</h1>
+        <div className="mt-2">    <p className="mt-2 text-[13px] font-semibold leading-snug text-[var(--text-secondary)]">
+            A working environment initiative by and from HMIF.
+          </p></div>
         <div className="mt-3 row flex-wrap">
           <Pill icon="users">{club.members} Members</Pill>
           <Pill icon="globe">Public</Pill>

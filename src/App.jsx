@@ -186,13 +186,103 @@ const iconographyItems = [
   { icon: "laptop", label: "Work" },
 ];
 
+const promoHighlights = [
+  {
+    icon: "record",
+    title: "Record work faster",
+    body: "Start a focus session, pause when needed, and save the activity with clear proof and context.",
+  },
+  {
+    icon: "feed",
+    title: "Share progress clearly",
+    body: "Activity cards combine time, score, proof, media, and social feedback in one readable flow.",
+  },
+  {
+    icon: "group",
+    title: "Build momentum together",
+    body: "Clubs, challenges, and progress screens make productivity feel social and easy to revisit.",
+  },
+];
+
+const userFlow = ["Open Prodak", "Record activity", "Review progress", "Share with clubs"];
+
 export default function App() {
   const navigate = () => {};
   const screenCount = artboards.length;
-  const [showDesignSystem, setShowDesignSystem] = useState(true);
+  const [showDesignSystem, setShowDesignSystem] = useState(false);
+  const [showScreens, setShowScreens] = useState(false);
 
   return (
     <main className="app">
+      <section className="promo-hero" aria-label="Prodak promotional showcase">
+        <div className="promo-copy">
+          <p className="promo-eyebrow">Prodak productivity app</p>
+          <h1>Track focused work, prove progress, and grow with your community.</h1>
+          <p className="promo-lede">
+            Prodak turns daily productivity into a simple mobile flow: record an activity, attach context, review progress, and share achievements through a familiar social experience.
+          </p>
+          <div className="promo-actions">
+            <a className="promo-primary-action" href="#integrated-demo">
+              Try the app demo
+            </a>
+            <button className="promo-secondary-action" onClick={() => setShowScreens((current) => !current)} type="button">
+              {showScreens ? "Hide screens" : "See more screens"}
+            </button>
+          </div>
+          <div className="promo-flow" aria-label="Core app flow">
+            {userFlow.map((item, index) => (
+              <div className="promo-flow-item" key={item}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <p>{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="promo-demo" id="integrated-demo">
+          <div className="promo-demo-label">
+            <span>Interactive app</span>
+            <strong>Integrated flow</strong>
+          </div>
+          <div className="promo-phone">
+            <Phone>
+              <IntegratedApp />
+            </Phone>
+          </div>
+        </div>
+      </section>
+
+      <section className="promo-feature-grid" aria-label="UX and feature advantages">
+        {promoHighlights.map((item) => (
+          <article className="promo-feature" key={item.title}>
+            <span className="promo-feature-icon">
+              <Icon name={item.icon} size={24} stroke={2} />
+            </span>
+            <h2>{item.title}</h2>
+            <p>{item.body}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="support-panel" aria-label="Prototype support materials">
+        <div className="support-panel-copy">
+          <p className="canvas-eyebrow">Prototype coverage</p>
+          <h2>{screenCount} separated screens are available for deeper inspection.</h2>
+          <p>
+            The main demo above shows the user journey as one application. Use the separated screen gallery when you need to inspect individual flows, states, and poster or video source material.
+          </p>
+        </div>
+        <div className="support-panel-actions">
+          <button className="design-system-toggle" onClick={() => setShowScreens((current) => !current)} type="button">
+            {showScreens ? "Hide separated screens" : "See more screens"}
+          </button>
+          <button className="design-system-toggle" onClick={() => setShowDesignSystem((current) => !current)} type="button">
+            {showDesignSystem ? "Hide design system" : "Show design system"}
+          </button>
+        </div>
+      </section>
+
+      {showDesignSystem ? (
       <section className="design-system-panel" aria-label="Design system overview">
         <div className="design-system-intro">
           <p className="design-system-kicker">Prodak design system</p>
@@ -208,14 +298,11 @@ export default function App() {
                 <span>{screenCount}</span>
                 <p>Screens rendered</p>
               </div>
-              <button className="design-system-toggle" onClick={() => setShowDesignSystem((current) => !current)} type="button">
-                {showDesignSystem ? "Hide design system" : "Show design system"}
-              </button>
             </div>
           </div>
         </div>
 
-        {showDesignSystem ? <div className="design-system-content">
+        <div className="design-system-content">
           <div className="design-system-card design-system-card-wide">
             <div className="design-system-card-header">
               <h3>Color system</h3>
@@ -305,15 +392,17 @@ export default function App() {
               ))}
             </div>
           </div>
-        </div> : null}
+        </div>
       </section>
+      ) : null}
 
-      <header className="canvas-header">
-        <p className="canvas-eyebrow">Prodak screens</p>
-        <h1>Separated screen artboards</h1>
-        <p>Each phone below renders a separate React screen file, with multi-step flows split into individual artboards for Figma-style inspection.</p>
-      </header>
-
+      {showScreens ? (
+      <section className="screen-gallery" aria-label="Separated screen artboards">
+        <header className="canvas-header">
+          <p className="canvas-eyebrow">Prodak screens</p>
+          <h1>Separated screen artboards</h1>
+          <p>Each phone below renders a separate React screen file, with multi-step flows split into individual artboards for Figma-style inspection.</p>
+        </header>
       <section className="artboard-grid" aria-label="Screen artboards">
         {artboards.map(({ title, Screen, props = {}, nav }) => (
           <article className="artboard" key={title}>
@@ -330,6 +419,8 @@ export default function App() {
           </article>
         ))}
       </section>
+      </section>
+      ) : null}
     </main>
   );
 }

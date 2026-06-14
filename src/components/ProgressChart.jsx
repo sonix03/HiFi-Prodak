@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Icon from "./Icon";
 
 export default function ProgressChart({
@@ -9,13 +9,27 @@ export default function ProgressChart({
   onTooltipClick,
 }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const chartRef = useRef(null);
   const max = Math.max(...data.map((d) => d.hours), 1);
   const average = data.length ? data.reduce((total, item) => total + item.hours, 0) / data.length : 0;
   const highThreshold = Math.max(average, max * 0.75);
   const isInteractive = Boolean(getTooltipContent);
 
+  useEffect(() => {
+    if (!isInteractive) return undefined;
+
+    function clearTooltip(event) {
+      if (!chartRef.current?.contains(event.target)) {
+        setSelectedIndex(null);
+      }
+    }
+
+    document.addEventListener("pointerdown", clearTooltip);
+    return () => document.removeEventListener("pointerdown", clearTooltip);
+  }, [isInteractive]);
+
   return (
-    <div className={`rounded-2xl bg-white ${flushX ? "py-4" : "p-4"}`}>
+    <div ref={chartRef} className={`rounded-2xl bg-white ${flushX ? "py-4" : "p-4"}`}>
       <div className="flex h-36 items-end gap-3">
         {data.map((item, index) => {
           const isHigh = highlightHigh && item.hours >= highThreshold;

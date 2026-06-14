@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Share03Icon } from "@hugeicons/core-free-icons";
 import AppHeader from "../components/AppHeader";
@@ -9,16 +9,7 @@ import ProgressChart from "../components/ProgressChart";
 import SectionHeader from "../components/SectionHeader";
 import ShareBottomSheet from "../components/ShareBottomSheet";
 import ShareTargets from "../components/ShareTargets";
-import { challenges, mikaActivities, monthlyProductivity, weeklyStats } from "../constants/data";
-
-function getMayActivityDay(activity) {
-  const match = activity.time.match(/^May\s+(\d{1,2}),\s+2026/);
-  return match ? Number(match[1]) : null;
-}
-
-function getActivitiesForDay(day) {
-  return mikaActivities.filter((activity) => getMayActivityDay(activity) === day);
-}
+import { challenges, getMayActivitiesForDay, monthlyProductivity, weeklyStats } from "../constants/data";
 
 const focusVolumeData = weeklyStats.map((item, index) => ({
   ...item,
@@ -40,7 +31,7 @@ function HeatmapCell({ item, selected, onNavigate, onSelect }) {
     item.hours >= 1 ? "bg-[var(--primary-soft)] text-[var(--blue)]" :
     item.hours > 0 ? "bg-[var(--surface-muted)] text-[var(--text-secondary)]" :
     "bg-white text-[var(--text-tertiary)]";
-  const selectedActivities = getActivitiesForDay(item.day);
+  const selectedActivities = getMayActivitiesForDay(item.day);
   const column = (item.day - 1) % 7;
   const tooltipAlign = column >= 4 ? "right-0" : "left-5";
 
@@ -79,12 +70,22 @@ function HeatmapCell({ item, selected, onNavigate, onSelect }) {
 }
 
 function MonthlyHeatmap({ data, onNavigate, onShare }) {
-  const [selectedDay, setSelectedDay] = useState(
-    data.find((item) => getActivitiesForDay(item.day).length > 0) || data[0],
-  );
+  const [selectedDay, setSelectedDay] = useState(null);
+  const heatmapRef = useRef(null);
+
+  useEffect(() => {
+    function clearTooltip(event) {
+      if (!heatmapRef.current?.contains(event.target)) {
+        setSelectedDay(null);
+      }
+    }
+
+    document.addEventListener("pointerdown", clearTooltip);
+    return () => document.removeEventListener("pointerdown", clearTooltip);
+  }, []);
 
   return (
-    <div>
+    <div ref={heatmapRef}>
       <div className="between">
         <p className="text-lg font-bold">May 2026</p>
         <button className="flex items-center gap-1 rounded-[20px] border border-[var(--blue)] px-2 py-1 text-sm font-semibold text-[var(--blue)]" onClick={onShare} type="button">
@@ -170,7 +171,7 @@ export default function Progress({ onNavigate }) {
         <ProgressChart
           data={focusVolumeData}
           getTooltipContent={(item) => {
-            const activities = getActivitiesForDay(item.dayNumber);
+            const activities = getMayActivitiesForDay(item.dayNumber);
 
             return (
               <>
@@ -252,18 +253,23 @@ export default function Progress({ onNavigate }) {
             <h2 className="mt-3 text-[26px] font-black leading-none tracking-normal">May Progress</h2>
             <p className="mt-2 text-[13px] font-semibold text-[var(--text-secondary)]">Verified productivity wins across devices</p>
             <div className="mt-5 divide-y divide-[var(--divider)]">
-              {topAchievements.map((achievement, index) => (
+              {topAchievements.map((achievement, index) => {
+                const iconTone = index % 2 === 0 ? "text-[var(--blue)]" : "text-[var(--yellow)]";
+                const valueTone = index % 2 === 0 ? "text-[var(--blue)]" : "text-[var(--text)]";
+
+                return (
                 <div className="flex items-center gap-3 py-3" key={achievement.title}>
-                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[var(--blue-soft)] text-[12px] font-black text-[var(--blue)]">
-                    {index + 1}
+                  <span className={`grid h-7 w-7 shrink-0 place-items-center ${iconTone}`}>
+                    <Icon name={achievement.icon} size="sm" stroke={2} />
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[13px] font-black text-[var(--text)]">{achievement.title}</p>
                     <p className="mt-0.5 truncate text-[10px] font-semibold text-[var(--text-secondary)]">{achievement.meta}</p>
                   </div>
-                  <p className="shrink-0 text-[13px] font-black text-[var(--blue)]">{achievement.value}</p>
+                  <p className={`shrink-0 text-[13px] font-black ${valueTone}`}>{achievement.value}</p>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
           <ShareTargets className="mt-8" />
