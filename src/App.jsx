@@ -253,10 +253,6 @@ export default function App() {
         </div>
 
         <div className="promo-demo" id="integrated-demo">
-          <div className="promo-demo-label">
-            <span>Interactive app</span>
-            <strong>Integrated flow</strong>
-          </div>
           <div className="promo-phone">
             <Phone>
               <IntegratedApp />
