@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BottomNavigation from "./components/BottomNavigation";
 import Icon from "./components/Icon";
 import Phone from "./components/Phone";
@@ -212,6 +212,19 @@ export default function App() {
   const [showDesignSystem, setShowDesignSystem] = useState(false);
   const [showScreens, setShowScreens] = useState(false);
 
+  useEffect(() => {
+    if (!showScreens) return;
+
+    document.getElementById("separated-screens")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, [showScreens]);
+
+  const handleScreensToggle = () => {
+    setShowScreens((current) => !current);
+  };
+
   return (
     <main className="app">
       <section className="promo-hero" aria-label="Prodak promotional showcase">
@@ -225,7 +238,7 @@ export default function App() {
             <a className="promo-primary-action" href="#integrated-demo">
               Try the app demo
             </a>
-            <button className="promo-secondary-action" onClick={() => setShowScreens((current) => !current)} type="button">
+            <button className="promo-secondary-action" onClick={handleScreensToggle} type="button">
               {showScreens ? "Hide screens" : "See more screens"}
             </button>
           </div>
@@ -273,7 +286,7 @@ export default function App() {
           </p>
         </div>
         <div className="support-panel-actions">
-          <button className="design-system-toggle" onClick={() => setShowScreens((current) => !current)} type="button">
+          <button className="design-system-toggle" onClick={handleScreensToggle} type="button">
             {showScreens ? "Hide separated screens" : "See more screens"}
           </button>
           <button className="design-system-toggle" onClick={() => setShowDesignSystem((current) => !current)} type="button">
@@ -397,7 +410,7 @@ export default function App() {
       ) : null}
 
       {showScreens ? (
-      <section className="screen-gallery" aria-label="Separated screen artboards">
+      <section className="screen-gallery" id="separated-screens" aria-label="Separated screen artboards">
         <header className="canvas-header">
           <p className="canvas-eyebrow">Prodak screens</p>
           <h1>Separated screen artboards</h1>
