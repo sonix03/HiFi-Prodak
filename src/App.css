@@ -332,21 +332,20 @@
 }
 
 .design-system-content {
+  display: grid;
+  gap: 14px;
   width: 100%;
-  column-count: 3;
-  column-gap: 14px;
 }
 
 .design-system-card {
-  display: inline-block;
+  display: block;
   width: 100%;
   min-width: 0;
-  margin: 0 0 14px;
+  margin: 0;
   border: 1px solid var(--border);
   border-radius: 20px;
   background: var(--surface);
   padding: 18px;
-  break-inside: avoid;
 }
 
 .design-system-card-header h3 {
@@ -362,6 +361,15 @@
   font-size: 13px;
   font-weight: 600;
   line-height: 1.5;
+}
+
+.typography-card .design-system-card-header {
+  text-align: center;
+}
+
+.typography-card .design-system-card-header p {
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .color-token-grid {
@@ -434,21 +442,28 @@
 .type-specimen-list div {
   display: grid;
   gap: 4px;
+  justify-items: center;
 }
 
 .type-specimen-list strong {
+  display: block;
+  width: 100%;
   color: var(--text);
   font-size: clamp(34px, 5vw, 78px);
   letter-spacing: 0;
   line-height: 0.95;
+  text-align: center;
 }
 
 .type-specimen-list p {
+  width: 100%;
+  max-width: none;
   margin-top: 0;
   color: var(--text);
   font-size: clamp(14px, 1.8vw, 22px);
   font-weight: 400;
   line-height: 1.2;
+  text-align: center;
 }
 
 .type-scale-list div {
@@ -1230,7 +1245,7 @@
   }
 
   .design-system-content {
-    column-count: 2;
+    gap: 14px;
   }
 
   .color-token-grid {
@@ -1241,6 +1256,29 @@
 @media (max-width: 520px) {
   .app {
     padding-inline: 14px;
+  }
+
+  .promo-hero {
+    gap: 24px;
+  }
+
+  .promo-demo {
+    margin: -34px -14px 0;
+  }
+
+  .promo-demo-label {
+    display: none;
+  }
+
+  .promo-phone {
+    width: 100%;
+  }
+
+  .promo-phone .phone {
+    height: 100svh;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .promo-copy h1 {
@@ -1273,7 +1311,7 @@
   }
 
   .design-system-content {
-    column-count: 1;
+    gap: 14px;
   }
 
   .color-token-grid,

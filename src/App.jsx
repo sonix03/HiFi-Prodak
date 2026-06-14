@@ -322,6 +322,21 @@ export default function App() {
             </div>
           </div>
 
+          <div className="design-system-card iconography-card">
+            <div className="design-system-card-header">
+              <h3>Iconography</h3>
+              <p>Hugeicons stroke icons used across navigation, actions, forms, proof states, sharing, profile, record, and productivity flows.</p>
+            </div>
+            <div className="iconography-grid">
+              {iconographyItems.map((item) => (
+                <div key={item.label}>
+                  <Icon name={item.icon} size={24} stroke={2} />
+                  <span>{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="design-system-card typography-card">
             <div className="design-system-card-header">
               <h3>Typography</h3>
@@ -341,21 +356,6 @@ export default function App() {
                   <strong>{item.role}</strong>
                   <span>{item.size}</span>
                   <p>Weight {item.weight}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="design-system-card iconography-card">
-            <div className="design-system-card-header">
-              <h3>Iconography</h3>
-              <p>Hugeicons stroke icons used across navigation, actions, forms, proof states, sharing, profile, record, and productivity flows.</p>
-            </div>
-            <div className="iconography-grid">
-              {iconographyItems.map((item) => (
-                <div key={item.label}>
-                  <Icon name={item.icon} size={24} stroke={2} />
-                  <span>{item.label}</span>
                 </div>
               ))}
             </div>
