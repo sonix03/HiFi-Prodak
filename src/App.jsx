@@ -209,8 +209,21 @@ const userFlow = ["Open Prodak", "Record activity", "Review progress", "Share wi
 export default function App() {
   const navigate = () => {};
   const screenCount = artboards.length;
+  const isMobileAppPage = window.location.pathname === "/app" || window.location.search.includes("app=1");
   const [showDesignSystem, setShowDesignSystem] = useState(false);
   const [showScreens, setShowScreens] = useState(false);
+
+  useEffect(() => {
+    if (!isMobileAppPage) return undefined;
+
+    document.documentElement.classList.add("mobile-app-lock");
+    document.body.classList.add("mobile-app-lock");
+
+    return () => {
+      document.documentElement.classList.remove("mobile-app-lock");
+      document.body.classList.remove("mobile-app-lock");
+    };
+  }, [isMobileAppPage]);
 
   useEffect(() => {
     if (!showScreens) return;
@@ -225,6 +238,14 @@ export default function App() {
     setShowScreens((current) => !current);
   };
 
+  if (isMobileAppPage) {
+    return (
+      <main className="mobile-app-page">
+        <IntegratedApp />
+      </main>
+    );
+  }
+
   return (
     <main className="app">
       <section className="promo-hero" aria-label="Prodak promotional showcase">
@@ -235,7 +256,7 @@ export default function App() {
             Prodak turns daily productivity into a simple mobile flow: record an activity, attach context, review progress, and share achievements through a familiar social experience.
           </p>
           <div className="promo-actions">
-            <a className="promo-primary-action" href="#integrated-demo">
+            <a className="promo-primary-action" href="/?app=1" aria-label="Open the full-screen Prodak app demo">
               Try the app demo
             </a>
             <button className="promo-secondary-action" onClick={handleScreensToggle} type="button">
