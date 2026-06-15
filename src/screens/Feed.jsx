@@ -63,7 +63,7 @@ export default function Feed({ onNavigate, initialShareSheet = false }) {
           </button>
           <button className="header-action relative" onClick={() => onNavigate?.("notifications")} type="button" aria-label="Notifications">
             <HugeiconsIcon icon={Notification01Icon} size={24} color="currentColor" strokeWidth={2} />
-            {notifications.length > 0 ? <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-red-500" /> : null}
+            {notifications.length > 0 ? <span className="absolute right-0.5 top-0.5 h-2 w-2 rounded-full bg-red-500" /> : null}
           </button>
         </div>
       </header>

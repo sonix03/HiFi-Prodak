@@ -14,7 +14,7 @@ function HeaderAction({ icon, image, label, onClick, badge }) {
   return (
     <button className="header-action relative" onClick={onClick} aria-label={label || icon}>
       <Icon name={icon} size={22} />
-      {badge ? <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-red-500" /> : null}
+      {badge ? <span className="absolute right-0.5 top-0.5 h-2 w-2 rounded-full bg-red-500" /> : null}
     </button>
   );
 }

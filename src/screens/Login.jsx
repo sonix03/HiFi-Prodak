@@ -3,15 +3,16 @@ import Button from "../components/Button";
 import appleLogo from "../assets/apple-logo.png";
 import facebookLogo from "../assets/facebook-logo.png";
 import googleLogo from "../assets/google-logo.png";
+import prodakLogo from "../assets/prodak-logo.png";
 
 export default function Login({ onNavigate }) {
   return (
     <main className="screen screen-pad flex flex-col justify-center">
       <section className="stack">
         <div className="stack gap-3">
-          <div className="prodak-mark" aria-label="Prodak">
-            <span />
-            <strong>Prodak</strong>
+          <div className="flex items-center gap-2" aria-label="Prodak">
+            <img className="h-10 w-10 object-contain" src={prodakLogo} alt="" />
+            <strong className="text-[16px] font-extrabold tracking-normal">Prodak</strong>
           </div>
           <h1 className="title">Log in to Prodak</h1>
         </div>
