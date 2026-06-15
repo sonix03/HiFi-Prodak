@@ -3,7 +3,7 @@ import Button from "../components/Button";
 import appleLogo from "../assets/apple-logo.png";
 import facebookLogo from "../assets/facebook-logo.png";
 import googleLogo from "../assets/google-logo.png";
-import prodakLogo from "../assets/prodak-logo.png";
+import prodakLogo from "../assets/prodak-logo-nobg.png";
 
 export default function Login({ onNavigate }) {
   return (

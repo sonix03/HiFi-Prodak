@@ -1,5 +1,5 @@
 import loginIntroBg from "../assets/login-intro.png";
-import prodakLogo from "../assets/prodak-logo.png";
+import prodakLogo from "../assets/prodak-logo-nobg.png";
 
 export default function LoginIntro({ onNavigate }) {
   return (
